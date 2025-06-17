@@ -1,6 +1,7 @@
 import { useNavigate } from "@solidjs/router";
+import { requestLibraryFolderAccess } from "../platform/fs";
 
-export default function Home() {
+export default function HomeView() {
     const navigate = useNavigate();
 
     return (
@@ -21,6 +22,9 @@ export default function Home() {
                     class="bg-blue-200 rounded-2xl p-1.5 hover:bg-blue-400 tr transition-colors"
                 >
                     Go to reader
+                </button>
+                <button onClick={() => requestLibraryFolderAccess()}>
+                test fs
                 </button>
             </div>
         </div>
