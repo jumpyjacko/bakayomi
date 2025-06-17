@@ -5,7 +5,7 @@ export async function requestLibraryFolderAccess(): Promise<Series[] | undefined
         const dirHandle: FileSystemDirectoryHandle = await window.showDirectoryPicker();
 
         // NOTE: unsure if dirHandle.name is the best way to get a series name
-        return [{ title: dirHandle.name, handle: dirHandle }];
+        return [{ title: dirHandle.name, handle: dirHandle, cover: undefined, volumes: undefined }];
     } catch (err) {
         console.error("User cancelled folder access or permission denied: ", err);
         return;

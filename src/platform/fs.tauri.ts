@@ -14,5 +14,5 @@ export async function requestLibraryFolderAccess(): Promise<Series[] | undefined
 
     const dirHandle = await readDir(path);
 
-    return [{ title: "name", handle: dirHandle }];
+    return [{ title: "name", handle: dirHandle, cover: undefined, volumes: undefined }];
 }
