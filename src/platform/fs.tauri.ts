@@ -18,15 +18,18 @@ export async function requestLibraryFolderAccess(): Promise<Series[] | undefined
     }
     
     const dirEntries = await readDir(path);
+    const seriesList: Series[] = [];
 
     for (const e of dirEntries) {
         if (e.isDirectory) {
-            // NOTE: wary of windows?
             const seriesPath = await join(path, e.name);
             const series: Series = await constructSeries(seriesPath, e);
-            console.log(series);
+            seriesList.push(series);
         }
     }
+
+    console.log(seriesList);
+    return seriesList;
 }
 
 async function constructSeries(path: string, parentHandle: DirEntry): Promise<Series> {
@@ -45,9 +48,10 @@ async function constructSeries(path: string, parentHandle: DirEntry): Promise<Se
     for (const e of seriesEntries) {
         if (e.isDirectory) {
             if (volumeRegex.test(e.name)) {
-                // TODO: do volume stuff
+                const volumePath = await join(path, e.name);
+                const volume: Volume = await constructVolume(volumePath, e);
+                volumes.push(volume);
             } else if (chapterRegex.test(e.name)) {
-                console.log("here");
                 const chapterPath = await join(path, e.name);
                 const chapter: Chapter = await constructChapter(chapterPath, e);
                 orphanedChapterList.push(chapter);
@@ -68,7 +72,24 @@ async function constructSeries(path: string, parentHandle: DirEntry): Promise<Se
     return { title: parentHandle.name, cover_index: 0, volumes };
 }
 
-async function constructVolume(path: string, entries: DirEntry) {
+async function constructVolume(path: string, parentHandle: DirEntry): Promise<Volume> {
+    const volumeEntries = await readDir(path);
+
+    const chapters: Chapter[] = [];
+
+    for (const e of volumeEntries) {
+        if (e.isDirectory) {
+            if (chapterRegex.test(e.name)) {
+                const chapterPath = await join(path, e.name);
+                const chapter: Chapter = await constructChapter(chapterPath, e);
+                chapters.push(chapter);
+            }
+        } else {
+            // TODO: check for cover.png, otherwise error
+        }
+    }
+
+    return { title: parentHandle.name, chapter_count: chapters.length, chapters };
 }
 
 async function constructChapter(path: string, parentHandle: DirEntry): Promise<Chapter> {
