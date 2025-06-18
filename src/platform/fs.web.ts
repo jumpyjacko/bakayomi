@@ -28,7 +28,7 @@ export async function requestLibraryFolderAccess(): Promise<Series[] | undefined
     }
 }
 
-export async function constructSeries(handle: FileSystemDirectoryHandle): Promise<Series> {
+async function constructSeries(handle: FileSystemDirectoryHandle): Promise<Series> {
     if (!handle) {
         // FIXME: proper error handling
         throw new Error("No handle.");
