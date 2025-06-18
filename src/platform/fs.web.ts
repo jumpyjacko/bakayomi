@@ -1,7 +1,7 @@
+import { volumeRegex, chapterRegex, imageRegex } from "./fs";
 import { Chapter } from "../models/Chapter";
 import { Series } from "../models/Series";
 import { Volume } from "../models/Volume";
-import { volumeRegex, chapterRegex, imageRegex } from "./fs";
 
 // TODO: make it return a Library
 export async function requestLibraryFolderAccess(): Promise<Series[] | undefined> {

@@ -1,9 +1,11 @@
 import { open } from '@tauri-apps/plugin-dialog';
-import { DirEntry, readDir, readFile } from '@tauri-apps/plugin-fs';
+import { DirEntry, readDir } from '@tauri-apps/plugin-fs';
+
+import { chapterRegex, imageRegex, volumeRegex } from './fs';
 import { Series } from '../models/Series';
 import { Chapter } from '../models/Chapter';
-import { chapterRegex, imageRegex, volumeRegex } from './fs';
 import { Volume } from '../models/Volume';
+import { join } from '@tauri-apps/api/path';
 
 export async function requestLibraryFolderAccess(): Promise<Series[] | undefined> {
     const path: string | null = await open({
@@ -20,7 +22,8 @@ export async function requestLibraryFolderAccess(): Promise<Series[] | undefined
     for (const e of dirEntries) {
         if (e.isDirectory) {
             // NOTE: wary of windows?
-            const series: Series = await constructSeries(path, e);
+            const seriesPath = await join(path, e.name);
+            const series: Series = await constructSeries(seriesPath, e);
             console.log(series);
         }
     }
@@ -33,20 +36,20 @@ async function constructSeries(path: string, parentHandle: DirEntry): Promise<Se
     if (!path) {
         throw new Error("No path provided.");
     }
-
-    const seriesPath = path + "/" + parentHandle.name;
-    const seriesEntries = await readDir(seriesPath);
     
     const orphanedChapterList: Chapter[] = [];
     const volumes: Volume[] = [];
 
+    const seriesEntries = await readDir(path);
+
     for (const e of seriesEntries) {
-        console.log(e);
         if (e.isDirectory) {
             if (volumeRegex.test(e.name)) {
                 // TODO: do volume stuff
             } else if (chapterRegex.test(e.name)) {
-                const chapter: Chapter = await constructChapter(path, e);
+                console.log("here");
+                const chapterPath = await join(path, e.name);
+                const chapter: Chapter = await constructChapter(chapterPath, e);
                 orphanedChapterList.push(chapter);
             }
         }
@@ -69,14 +72,13 @@ async function constructVolume(path: string, entries: DirEntry) {
 }
 
 async function constructChapter(path: string, parentHandle: DirEntry): Promise<Chapter> {
-    const chapterPath = path + "/" + parentHandle.name;
-    const chapterEntries = await readDir(chapterPath);
+    const chapterEntries = await readDir(path);
     
     const pagePaths: string[] = []; // TODO: change to image blobs or paths?
     for (const e of chapterEntries) {
         if (e.isFile) {
             if (imageRegex.test(e.name)) {
-                const pagePath = path + "/" + e.name;
+                const pagePath = await join(path, e.name);
                 pagePaths.push(pagePath);
             }
         }
