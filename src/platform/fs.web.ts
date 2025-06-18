@@ -43,11 +43,10 @@ export async function constructSeries(handle: FileSystemDirectoryHandle): Promis
 
     for await (const [name, h] of handle.entries() as AsyncIterable<[string, FileSystemHandle]>) {
         if (h.kind === 'directory') {
-            if (name.match(volumeRegex)) {
-                console.log("Found volume.");
+            if (volumeRegex.test(name)) {
                 const volume: Volume = await constructVolume(h as FileSystemDirectoryHandle);
                 volumes.push(volume);
-            } else if (name.match(chapterRegex)) {
+            } else if (chapterRegex.test(name)) {
                 const chapter: Chapter = await constructChapter(h as FileSystemDirectoryHandle);
                 orphanedChapterList.push(chapter);
             }
@@ -56,7 +55,7 @@ export async function constructSeries(handle: FileSystemDirectoryHandle): Promis
         }
     }
 
-    if (orphanedChapterList.length === 0) {
+    if (orphanedChapterList.length !== 0) {
         const dummyVolume: Volume = {
             title: "Orphaned Chapters",
             chapter_count: orphanedChapterList.length,
@@ -74,7 +73,7 @@ async function constructVolume(handle: FileSystemDirectoryHandle): Promise<Volum
 
     for await (const [name, h] of handle.entries() as AsyncIterable<[string, FileSystemHandle]>) {
         if (h.kind === 'directory') {
-            if (name.match(chapterRegex)) {
+            if (chapterRegex.test(name)) {
                 const chapter: Chapter = await constructChapter(h as FileSystemDirectoryHandle);
                 chapters.push(chapter);
             }
@@ -90,7 +89,7 @@ async function constructChapter(handle: FileSystemDirectoryHandle): Promise<Chap
     let pages: FileSystemFileHandle[] = [];
     for await (const [name, h] of handle.entries() as AsyncIterable<[string, FileSystemHandle]>) {
         if (h.kind === 'file') {
-            if (name.match(imageRegex)) {
+            if (imageRegex.test(name)) {
                 pages.push(h as FileSystemFileHandle);
             }
         } else {
