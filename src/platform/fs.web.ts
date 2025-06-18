@@ -2,41 +2,71 @@ import { Chapter } from "../models/Chapter";
 import { Series } from "../models/Series";
 import { Volume } from "../models/Volume";
 
+const volumeRegex = /\b[Vv]o?l?u?m?e?/;
+const chapterRegex = /\b[Cc]h?a?p?t?e?r?/;
+const imageRegex = /(\.png)?(\.jpg)?(\.gif)?/; // NOTE: Possibly replace with checking MIME type
+
+// TODO: make it return a Library
 export async function requestLibraryFolderAccess(): Promise<Series[] | undefined> {
     try {
         const dirHandle: FileSystemDirectoryHandle = await window.showDirectoryPicker();
 
-        // NOTE: unsure if dirHandle.name is the best way to get a series name
-        return [{ title: dirHandle.name, handle: dirHandle, cover: undefined, volumes: undefined }];
+        const seriesList: Series[] = [];
+        
+        for await (const [name, h] of dirHandle.entries() as AsyncIterable<[string, FileSystemHandle]>) {
+            if (h.kind === 'directory') {
+                const series: Series = await constructSeries(h as FileSystemDirectoryHandle);
+                seriesList.push(series);
+            } else {
+                // TODO: do something
+            }
+        }
+
+        console.log(seriesList); // DEBUG 
+        
+        return seriesList;
     } catch (err) {
         console.error("User cancelled folder access or permission denied: ", err);
         return;
     }
 }
 
-export async function constructSeries(handle: FileSystemDirectoryHandle): Promise<Volume[] | undefined> {
+export async function constructSeries(handle: FileSystemDirectoryHandle): Promise<Series> {
     if (!handle) {
         // FIXME: proper error handling
-        console.error("No handle provided.");
-        return undefined;
+        throw new Error("No handle.");
     }
 
+    // NOTE: holds orphaned chapters (not belonging to a volume)
+    const orphanedChapterList: Chapter[] = [];
     const volumes: Volume[] = [];
-    const structureIsVolumes = true;
 
     for await (const [name, h] of handle.entries() as AsyncIterable<[string, FileSystemHandle]>) {
         if (h.kind === 'directory') {
-            if (name.match(/\b[Vv]o?l?u?m?e?/)) {
-                // TODO: do volume stuff
-            } else {
-                // TODO: do chapter stuff (make a dummy vol 1 entry)
+            if (name.match(volumeRegex)) {
+                console.log("Found volume.");
+                const volume: Volume = await constructVolume(h as FileSystemDirectoryHandle);
+                volumes.push(volume);
+            } else if (name.match(chapterRegex)) {
+                const chapter: Chapter = await constructChapter(h as FileSystemDirectoryHandle);
+                orphanedChapterList.push(chapter);
             }
         } else {
             // TODO: do something idk
         }
     }
 
-    return volumes;
+    if (orphanedChapterList.length === 0) {
+        const dummyVolume: Volume = {
+            title: "Orphaned Chapters",
+            chapter_count: orphanedChapterList.length,
+            chapters: orphanedChapterList,
+        };
+
+        volumes.push(dummyVolume);
+    }
+
+    return { title: handle.name, cover_index: 0, volumes };
 }
 
 async function constructVolume(handle: FileSystemDirectoryHandle): Promise<Volume> {
@@ -44,7 +74,7 @@ async function constructVolume(handle: FileSystemDirectoryHandle): Promise<Volum
 
     for await (const [name, h] of handle.entries() as AsyncIterable<[string, FileSystemHandle]>) {
         if (h.kind === 'directory') {
-            if (name.match(/\b[Cc]h?a?p?t?e?r?/)) {
+            if (name.match(chapterRegex)) {
                 const chapter: Chapter = await constructChapter(h as FileSystemDirectoryHandle);
                 chapters.push(chapter);
             }
@@ -60,7 +90,7 @@ async function constructChapter(handle: FileSystemDirectoryHandle): Promise<Chap
     let pages: FileSystemFileHandle[] = [];
     for await (const [name, h] of handle.entries() as AsyncIterable<[string, FileSystemHandle]>) {
         if (h.kind === 'file') {
-            if (name.match(/(\.png)?(\.jpg)?(\.gif)?/)) {
+            if (name.match(imageRegex)) {
                 pages.push(h as FileSystemFileHandle);
             }
         } else {
@@ -71,16 +101,3 @@ async function constructChapter(handle: FileSystemDirectoryHandle): Promise<Chap
     return { title: handle.name, page_count: pages.length, pages };
 }
 
-// export async function getInnerFiles(dirHandle: FileSystemDirectoryHandle) {
-//     if (!dirHandle) {
-//         console.error("No handle provided.");
-//     }
-//
-//     const entries = [];
-//
-//     for await(const [name, handle] of dirHandle.entries()) {
-//         entries.push({ name, handle })
-//     }
-//
-//     return entries;
-// }
