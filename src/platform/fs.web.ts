@@ -1,7 +1,10 @@
-import { volumeRegex, chapterRegex, imageRegex } from "./fs";
 import { Chapter } from "../models/Chapter";
 import { Series } from "../models/Series";
 import { Volume } from "../models/Volume";
+
+const volumeRegex = /\b[Vv]o?l?u?m?e?/;
+const chapterRegex = /\b[Cc]h?a?p?t?e?r?/;
+const imageRegex = /(\.png)?(\.jpg)?(\.gif)?/;
 
 // TODO: make it return a Library
 export async function requestLibraryFolderAccess(): Promise<Series[] | undefined> {
