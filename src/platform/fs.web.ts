@@ -1,3 +1,4 @@
+import { Chapter } from "../models/Chapter";
 import { Series } from "../models/Series";
 import { Volume } from "../models/Volume";
 
@@ -39,16 +40,45 @@ export async function constructSeries(handle: FileSystemDirectoryHandle): Promis
 }
 
 async function constructVolume(handle: FileSystemDirectoryHandle): Promise<Volume | undefined> {
+    let chapters: Chapter[] = [];
+    
     for await (const [name, h] of handle.entries() as AsyncIterable<[string, FileSystemHandle]>) {
         if (h.kind === 'directory') {
             if (name.match(/\b[Cc]h?a?p?t?e?r?/)) {
+                try {
+                    const chapter: Chapter = await constructChapter(h as FileSystemDirectoryHandle);
+
+                    chapters.push(chapter);
+                } catch (err) {
+                    console.error("Failed to get chapter: ", err);
+                }
+                
+                
             } else {
                 // FIXME: do error handling (no found chapters?)
+                return undefined;
             }
         } else {
             // TODO: check for cover.png and make it the volume cover, otherwise, error handling
         }
     }
+}
+
+async function constructChapter(handle: FileSystemDirectoryHandle): Promise<Chapter> {
+    let pages: FileSystemFileHandle[] = [];
+    for await (const [name, h] of handle.entries() as AsyncIterable<[string, FileSystemHandle]>) {
+        if (h.kind === 'file') {
+            if (name.match(/(\.png)?(\.jpg)?(\.gif)?/)) {
+                pages.push(h as FileSystemFileHandle);
+            } else {
+                throw new Error("Found no pages");
+            }
+        } else {
+            // TODO: check for cover.png and make it the volume cover, otherwise, error handling
+        }
+    }
+
+    return { title: handle.name, page_count: pages.length, pages };
 }
 
 // export async function getInnerFiles(dirHandle: FileSystemDirectoryHandle) {
