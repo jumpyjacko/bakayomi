@@ -8,11 +8,16 @@
   "permissions": [
     "core:default",
     "opener:default",
-    "fs:default",
     "dialog:default",
+    "fs:default",
     {
-      "identifier": "fs:scope",
-      "allow": [{ "path": "$HOME"}]
+      "identifier": "fs:allow-read",
+      "allow": [{ "path": "$HOME/**"}]
+    },
+    {
+      "identifier": "fs:allow-read-dir",
+      "allow": [{ "path": "$HOME/**"}]
     }
+
   ]
 }
