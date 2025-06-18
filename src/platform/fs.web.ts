@@ -83,7 +83,7 @@ async function constructVolume(handle: FileSystemDirectoryHandle): Promise<Volum
 }
 
 async function constructChapter(handle: FileSystemDirectoryHandle): Promise<Chapter> {
-    let pages: FileSystemFileHandle[] = [];
+    const pages: FileSystemFileHandle[] = []; // TODO: change to image blobs or paths?
     for await (const [name, h] of handle.entries() as AsyncIterable<[string, FileSystemHandle]>) {
         if (h.kind === 'file') {
             if (imageRegex.test(name)) {
