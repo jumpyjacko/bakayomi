@@ -1,4 +1,5 @@
 import { Series } from "../models/Series";
+import { Volume } from "../models/Volume";
 
 export async function requestLibraryFolderAccess(): Promise<Series[] | undefined> {
     try {
@@ -12,16 +13,41 @@ export async function requestLibraryFolderAccess(): Promise<Series[] | undefined
     }
 }
 
-export async function getInnerFiles(dirHandle: FileSystemDirectoryHandle) {
-    if (!dirHandle) {
+export async function constructSeries(handle: FileSystemDirectoryHandle): Promise<Volume[] | undefined> {
+    if (!handle) {
+        // FIXME: proper error handling
         console.error("No handle provided.");
+        return undefined;
     }
 
-    const entries = [];
+    const volumes: Volume[] = [];
+    const structureIsVolumes = true;
 
-    for await(const [name, handle] of dirHandle.entries()) {
-        entries.push({ name, handle })
+    for await (const [name, h] of handle.entries() as AsyncIterable<[string, FileSystemHandle]>) {
+        if (h.kind === 'directory') {
+            if (name.match(/\b[Vv]o?l?u?m?e?/)) {
+                // TODO: do volume stuff
+            } else {
+                // TODO: do chapter stuff (make a dummy vol 1 entry)
+            }
+        } else {
+            // TODO: do something idk
+        }
     }
 
-    return entries;
+    return volumes;
 }
+
+// export async function getInnerFiles(dirHandle: FileSystemDirectoryHandle) {
+//     if (!dirHandle) {
+//         console.error("No handle provided.");
+//     }
+//
+//     const entries = [];
+//
+//     for await(const [name, handle] of dirHandle.entries()) {
+//         entries.push({ name, handle })
+//     }
+//
+//     return entries;
+// }
