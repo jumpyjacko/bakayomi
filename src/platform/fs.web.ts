@@ -38,6 +38,19 @@ export async function constructSeries(handle: FileSystemDirectoryHandle): Promis
     return volumes;
 }
 
+async function constructVolume(handle: FileSystemDirectoryHandle): Promise<Volume | undefined> {
+    for await (const [name, h] of handle.entries() as AsyncIterable<[string, FileSystemHandle]>) {
+        if (h.kind === 'directory') {
+            if (name.match(/\b[Cc]h?a?p?t?e?r?/)) {
+            } else {
+                // FIXME: do error handling (no found chapters?)
+            }
+        } else {
+            // TODO: check for cover.png and make it the volume cover, otherwise, error handling
+        }
+    }
+}
+
 // export async function getInnerFiles(dirHandle: FileSystemDirectoryHandle) {
 //     if (!dirHandle) {
 //         console.error("No handle provided.");
