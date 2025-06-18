@@ -3,7 +3,7 @@ import { Volume } from './Volume';
 
 export interface Series {
     title: string;
-    cover: Blob | undefined; // # TODO: don't
+    cover: Blob;
     handle: FileSystemDirectoryHandle | DirEntry[];
-    volumes: Volume[] | undefined; // # TODO: don't
-};
+    volumes: Volume[];
+}
