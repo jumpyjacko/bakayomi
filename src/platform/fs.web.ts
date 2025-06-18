@@ -19,8 +19,6 @@ export async function requestLibraryFolderAccess(): Promise<Series[] | undefined
             }
         }
 
-        console.log(seriesList); // DEBUG 
-        
         return seriesList;
     } catch (err) {
         console.error("User cancelled folder access or permission denied: ", err);
@@ -66,7 +64,7 @@ async function constructSeries(handle: FileSystemDirectoryHandle): Promise<Serie
 }
 
 async function constructVolume(handle: FileSystemDirectoryHandle): Promise<Volume> {
-    let chapters: Chapter[] = [];
+    const chapters: Chapter[] = [];
 
     for await (const [name, h] of handle.entries() as AsyncIterable<[string, FileSystemHandle]>) {
         if (h.kind === 'directory') {
