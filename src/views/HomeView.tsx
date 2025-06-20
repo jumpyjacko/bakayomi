@@ -23,7 +23,10 @@ export default function HomeView() {
                 >
                     Go to reader
                 </button>
-                <button onClick={() => requestLibraryFolderAccess()}>
+                <button onClick={async () => {
+                    const library = await requestLibraryFolderAccess();
+                    console.log(library);
+                }}>
                 test fs
                 </button>
             </div>

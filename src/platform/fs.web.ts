@@ -1,4 +1,5 @@
 import { Chapter } from "../models/Chapter";
+import { Library } from "../models/Library";
 import { Series } from "../models/Series";
 import { Volume } from "../models/Volume";
 
@@ -7,7 +8,7 @@ const chapterRegex = /\b[Cc]h?a?p?t?e?r?/;
 const imageRegex = /(\.png)?(\.jpg)?(\.gif)?/;
 
 // TODO: make it return a Library
-export async function requestLibraryFolderAccess(): Promise<Series[] | undefined> {
+export async function requestLibraryFolderAccess(): Promise<Library> {
     try {
         const dirHandle: FileSystemDirectoryHandle = await window.showDirectoryPicker();
 
@@ -22,10 +23,9 @@ export async function requestLibraryFolderAccess(): Promise<Series[] | undefined
             }
         }
 
-        return seriesList;
+        return { count: seriesList.length, seriesList };
     } catch (err) {
-        console.error("User cancelled folder access or permission denied: ", err);
-        return;
+        throw new Error(`User cancelled folder access or permission denied: ${err}`);
     }
 }
 

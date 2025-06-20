@@ -10,14 +10,14 @@ const volumeRegex = /\b[Vv]o?l?u?m?e?/;
 const chapterRegex = /\b[Cc]h?a?p?t?e?r?/;
 const imageRegex = /(\.png)?(\.jpg)?(\.gif)?/; // NOTE: Possibly replace with checking MIME type
 
-export async function requestLibraryFolderAccess(): Promise<Series[] | undefined> {
+export async function requestLibraryFolderAccess(): Promise<Library> {
     const path: string | null = await open({
         multiple: false,
         directory: true,
     });
 
     if (!path) {
-        return;
+        throw new Error("User cancelled folder access or permission denied.");
     }
     
     const dirEntries = await readDir(path);
@@ -31,8 +31,7 @@ export async function requestLibraryFolderAccess(): Promise<Series[] | undefined
         }
     }
 
-    console.log(seriesList);
-    return seriesList;
+    return { count: seriesList.length, seriesList };
 }
 
 async function constructSeries(path: string, parentHandle: DirEntry): Promise<Series> {
