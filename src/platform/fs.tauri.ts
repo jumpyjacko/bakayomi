@@ -10,7 +10,7 @@ const volumeRegex = /\b[Vv]o?l?u?m?e?/;
 const chapterRegex = /\b[Cc]h?a?p?t?e?r?/;
 const imageRegex = /(\.png)?(\.jpg)?(\.gif)?/; // NOTE: Possibly replace with checking MIME type
 
-export async function requestLibraryFolderAccess(): Promise<Library> {
+export async function requestLibraryFolderAccess(): Promise<Series[]> {
     const path: string | null = await open({
         multiple: false,
         directory: true,
@@ -31,7 +31,7 @@ export async function requestLibraryFolderAccess(): Promise<Library> {
         }
     }
 
-    return { count: seriesList.length, seriesList };
+    return seriesList;
 }
 
 async function constructSeries(path: string, parentHandle: DirEntry): Promise<Series> {
