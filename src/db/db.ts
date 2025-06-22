@@ -26,7 +26,7 @@ async function getStore(storeName: string, mode: IDBTransactionMode = "readonly"
 }
 
 export async function addItem<T>(storeName: string, item: T) {
-    const { store, tx } = await getStore(storeName, "readwrite");
+    const { store } = await getStore(storeName, "readwrite");
 
     return new Promise((resolve, reject) => {
         const request = store.add(item);
