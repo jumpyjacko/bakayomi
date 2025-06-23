@@ -8,7 +8,7 @@ import { Volume } from '../models/Volume';
 
 const volumeRegex = /\b[Vv]o?l?u?m?e?/;
 const chapterRegex = /\b[Cc]h?a?p?t?e?r?/;
-const imageRegex = /(\.png)?(\.jpg)?(\.gif)?/; // NOTE: Possibly replace with checking MIME type
+const imageRegex = /(\.png)?(\.jpg)?(\.gif)?(\.webp)?/; // NOTE: Possibly replace with checking MIME type
 
 export async function requestLibraryFolderAccess(): Promise<Series[]> {
     const path: string | null = await open({

@@ -1,11 +1,15 @@
-import { createSignal, onMount, Setter } from "solid-js";
-import { Params, useParams } from "@solidjs/router";
+import { createSignal, onMount } from "solid-js";
+import { useParams } from "@solidjs/router";
+
+import { isTauri } from "@tauri-apps/api/core";
+import { basename } from "@tauri-apps/api/path";
+import { readFile } from "@tauri-apps/plugin-fs";
 
 import { verifyPermission } from "../platform/fs.web";
 import { getItem } from "../db/db";
 import { Volume } from "../models/Volume";
 import { Library } from "../models/Library";
-import { isTauri } from "@tauri-apps/api/core";
+import { Series } from "../models/Series";
 
 export function createReaderViewModel() {
     const params = useParams();
@@ -14,53 +18,56 @@ export function createReaderViewModel() {
     const [pageList, setPageList] = createSignal([]);
 
     onMount(async () => {
-        if (isTauri()) {
-            
-        } else {
-            web_loadPages(params, setPageList, setLoaded);
+        const tauri = isTauri();
+
+        if (!tauri) {
+            const libraryHandle = await getItem<Library>("library_handle", "root");
+            await verifyPermission(libraryHandle.handle);
         }
-        
-    })
 
-    return {
-        loaded,
-        pageList
-    };
-}
-
-async function web_loadPages(params: Params, setPageList: Setter<never[]>, setLoaded: Setter<boolean>) {
-    try {
-        const libraryHandle = await getItem<Library>("library_handle", "root");
-        await verifyPermission(libraryHandle.handle);
-        
-        const series = await getItem("library", decodeURIComponent(params.title));
+        const series = await getItem<Series>(
+            "library",
+            decodeURIComponent(params.title),
+        );
 
         if (series && series.volumes.length === 1) {
             const volume: Volume = series.volumes[0];
+            const chapter = volume.chapters.find(
+                (ch) => ch.title === decodeURIComponent(params.chapter),
+            );
 
-            const chapter = volume.chapters.find((ch) => ch.title === decodeURIComponent(params.chapter));
-            
             const pages = [];
-            
+
             if (chapter) {
                 for (const page of chapter.pages) {
-                    const file = await page.getFile();
+                    if (tauri) {
+                        const path = page as string;
+                        const file = await readFile(path);
+                        const blob = new Blob([file], { type: "image/jpeg" });
+                        const blobUrl = URL.createObjectURL(blob);
 
-                    const blob = new Blob([file], { type: "image/jpeg" });
-                    
-                    const blobUrl = URL.createObjectURL(blob);
-                    pages.push({ url: blobUrl, name: file.name });
+                        pages.push({ url: blobUrl, name: await basename(path) });
+                    } else {
+                        const file = await page.getFile();
+                        const blob = new Blob([file], { type: "image/jpeg" });
+                        const blobUrl = URL.createObjectURL(blob);
+
+                        pages.push({ url: blobUrl, name: file.name });
+                    }
                 }
+            } else {
+                // TODO: handle chapter doesn't exist
             }
 
             pages.sort((a, b) => a.name.localeCompare(b.name));
 
             setPageList(pages);
             setLoaded(true);
-
-            console.log(pageList());
         }
-    } catch (err) {
-        console.log(err);
-    }
+    });
+
+    return {
+        loaded,
+        pageList,
+    };
 }
