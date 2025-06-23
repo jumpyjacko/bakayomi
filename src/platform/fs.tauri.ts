@@ -1,4 +1,4 @@
-import { DirEntry, readDir } from '@tauri-apps/plugin-fs';
+import { DirEntry, readDir, readFile } from '@tauri-apps/plugin-fs';
 import { open } from '@tauri-apps/plugin-dialog';
 import { join } from '@tauri-apps/api/path';
 
@@ -8,6 +8,7 @@ import { Series } from '../models/Series';
 import { Chapter } from '../models/Chapter';
 import { Volume } from '../models/Volume';
 import { Library } from '../models/Library';
+import { Page } from '../models/Page';
 
 const volumeRegex = /\b[Vv]o?l?u?m?e?/;
 const chapterRegex = /\b[Cc]h?a?p?t?e?r?/;
@@ -97,7 +98,7 @@ async function constructSeries(path: string, parentHandle: DirEntry): Promise<Se
         volumes.push(dummyVolume);
     }
 
-    return { title: parentHandle.name, cover_index: 0, volumes };
+    return { title: parentHandle.name, volumes };
 }
 
 async function constructVolume(path: string, parentHandle: DirEntry): Promise<Volume> {
@@ -122,16 +123,26 @@ async function constructVolume(path: string, parentHandle: DirEntry): Promise<Vo
 
 async function constructChapter(path: string, parentHandle: DirEntry): Promise<Chapter> {
     const chapterEntries = await readDir(path);
-    
-    const pagePaths: string[] = []; // TODO: change to image blobs or paths?
+
+    return { title: parentHandle.name, downloaded: true, page_count: chapterEntries.length, handle: path };
+}
+
+export async function getChapterPages(path: string): Promise<Page[]> {
+    const chapterEntries = await readDir(path);
+
+    const pages: Page[] = [];
     for (const e of chapterEntries) {
         if (e.isFile) {
             if (imageRegex.test(e.name)) {
                 const pagePath = await join(path, e.name);
-                pagePaths.push(pagePath);
+                const file = await readFile(pagePath);
+                const blob = new Blob([file], { type: "image/jpeg" });
+                const blobUrl = URL.createObjectURL(blob);
+
+                pages.push({ uri: blobUrl, name: e.name });
             }
         }
     }
 
-    return { title: parentHandle.name, page_count: pagePaths.length, pages: pagePaths };
+    return pages;
 }

@@ -4,3 +4,4 @@ const fsModule = await ((window.__TAURI_INTERNALS__)
 
 export const requestLibraryFolderAccess = fsModule.requestLibraryFolderAccess;
 export const constructLibrary = fsModule.constructLibrary;
+export const getChapterPages = fsModule.getChapterPages;

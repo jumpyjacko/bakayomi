@@ -1,5 +1,7 @@
 export interface Chapter {
     title: string;
     page_count: number;
-    pages: FileSystemFileHandle[] | string[];
+    downloaded: boolean;
+    external_link?: string;
+    handle?: FileSystemDirectoryHandle | string;
 }

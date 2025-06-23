@@ -2,6 +2,7 @@ import { putItem } from "../db/db";
 
 import { Chapter } from "../models/Chapter";
 import { Library } from "../models/Library";
+import { Page } from "../models/Page";
 import { Series } from "../models/Series";
 import { Volume } from "../models/Volume";
 
@@ -88,7 +89,7 @@ async function constructSeries(handle: FileSystemDirectoryHandle): Promise<Serie
         volumes.push(dummyVolume);
     }
 
-    return { title: handle.name, cover_index: 0, volumes };
+    return { title: handle.name, volumes };
 }
 
 async function constructVolume(handle: FileSystemDirectoryHandle): Promise<Volume> {
@@ -109,18 +110,28 @@ async function constructVolume(handle: FileSystemDirectoryHandle): Promise<Volum
 }
 
 async function constructChapter(handle: FileSystemDirectoryHandle): Promise<Chapter> {
-    const pages: FileSystemFileHandle[] = []; // TODO: change to image blobs or paths?
+    const pages = await handle.entries();
+
+    return { title: handle.name, downloaded: true, page_count: pages.length, handle };
+}
+
+export async function getChapterPages(handle: FileSystemDirectoryHandle): Promise<Page[]> {
+    const pages: Page[] = [];
+
     for await (const [name, h] of handle.entries() as AsyncIterable<[string, FileSystemHandle]>) {
         if (h.kind === 'file') {
             if (imageRegex.test(name)) {
-                pages.push(h as FileSystemFileHandle);
+                const fileHandle = h as FileSystemFileHandle;
+                const file = await fileHandle.getFile();
+                const blob = new Blob([file], { type: "image/jpeg" });
+                const blobUrl = URL.createObjectURL(blob);
+
+                pages.push({ uri: blobUrl, name });
             }
-        } else {
-            // TODO: error handle (directory found)
         }
     }
 
-    return { title: handle.name, page_count: pages.length, pages };
+    return pages;
 }
 
 

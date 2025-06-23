@@ -11,7 +11,7 @@ export default function ReaderView() {
         <Show when={vm.loaded} fallback="canvas goes here">
             <For each={vm.pageList()} fallback="loading...">
                 {(item) =>
-                    <img src={item.url} />
+                    <img src={item.uri} />
                 }
             </For>
         </Show>
