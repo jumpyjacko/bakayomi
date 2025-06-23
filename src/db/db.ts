@@ -76,6 +76,6 @@ export async function deleteItem(storeName: string, key: IDBValidKey) {
         const request = store.delete(key);
 
         request.onsuccess = () => resolve(request.result);
-        request.onerror = () => resolve(request.error);
+        request.onerror = () => reject(request.error);
     })
 }
