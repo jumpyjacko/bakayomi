@@ -1,37 +1,12 @@
 import { useNavigate } from "@solidjs/router";
-import { requestLibraryFolderAccess } from "../platform/fs";
 
-import { Series } from "../models/Series";
-import { addItem, getAllItems } from "../db/db";
+import { openLibrary } from "../models/Library";
 
 export default function HomeView() {
     const navigate = useNavigate();
 
     async function handleLibraryRequest() {
-        try {
-            const library: Series[] = await getAllItems<Series>("library");
-
-            if (library.length === 0) {
-                throw new Error("Database is empty");
-            }
-            
-            console.log("Found existing library in indexedDB");
-            console.log(library);
-        } catch (err) {
-            console.log("Didn't find existing library in indexedDB, creating...");
-            
-            const library: Series[] = await requestLibraryFolderAccess();
-
-            for (const series of library) {
-                addItem<Series>("library", series)
-                    .then(result => {
-                        console.log("Added series to indexedDB under 'library' store");
-                    })
-                    .catch(error => {
-                        console.error("Failed to add series to indexedDB under 'library' store: ", error);
-                    });
-            }
-        }
+        await openLibrary();
     }
 
     return (

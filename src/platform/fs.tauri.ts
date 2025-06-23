@@ -2,15 +2,18 @@ import { DirEntry, readDir } from '@tauri-apps/plugin-fs';
 import { open } from '@tauri-apps/plugin-dialog';
 import { join } from '@tauri-apps/api/path';
 
+import { putItem } from '../db/db';
+
 import { Series } from '../models/Series';
 import { Chapter } from '../models/Chapter';
 import { Volume } from '../models/Volume';
+import { Library } from '../models/Library';
 
 const volumeRegex = /\b[Vv]o?l?u?m?e?/;
 const chapterRegex = /\b[Cc]h?a?p?t?e?r?/;
 const imageRegex = /(\.png)?(\.jpg)?(\.gif)?(\.webp)?/; // NOTE: Possibly replace with checking MIME type
 
-export async function requestLibraryFolderAccess(): Promise<Series[]> {
+export async function requestLibraryFolderAccess() {
     const path: string | null = await open({
         multiple: false,
         directory: true,
@@ -20,6 +23,19 @@ export async function requestLibraryFolderAccess(): Promise<Series[]> {
         throw new Error("User cancelled folder access or permission denied.");
     }
     
+    constructLibrary(path);
+    putItem<Library>("library_handle", { id: "root", handle: path } as Library)
+        .then(result => {
+            console.log("Added library handle to IDB");
+        })
+        .catch(error => {
+            console.error("Failed adding library handle to IDB");
+        });
+
+    return path;
+}
+
+export async function constructLibrary(path: string): Promise<Series[]> {
     const dirEntries = await readDir(path);
     const seriesList: Series[] = [];
 
@@ -29,6 +45,16 @@ export async function requestLibraryFolderAccess(): Promise<Series[]> {
             const series: Series = await constructSeries(seriesPath, e);
             seriesList.push(series);
         }
+    }
+    
+    for (const series of seriesList) {
+        putItem<Series>("library", series)
+            .then(result => {
+                console.log("Added series to indexedDB under 'library' store");
+            })
+            .catch(error => {
+                console.error("Failed to add series to indexedDB under 'library' store: ", error);
+            });
     }
 
     return seriesList;

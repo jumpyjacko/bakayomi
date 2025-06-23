@@ -1,4 +1,5 @@
-import { addItem } from "../db/db";
+import { putItem } from "../db/db";
+
 import { Chapter } from "../models/Chapter";
 import { Library } from "../models/Library";
 import { Series } from "../models/Series";
@@ -8,22 +9,12 @@ const volumeRegex = /\b[Vv]o?l?u?m?e?/;
 const chapterRegex = /\b[Cc]h?a?p?t?e?r?/;
 const imageRegex = /(\.png)?(\.jpg)?(\.gif)?(\.webp)?/;
 
-export async function requestLibraryFolderAccess(): Promise<Series[]> {
+export async function requestLibraryFolderAccess() {
     try {
         const handle: FileSystemDirectoryHandle = await window.showDirectoryPicker();
 
-        const seriesList: Series[] = [];
-        
-        for await (const [name, h] of handle.entries() as AsyncIterable<[string, FileSystemHandle]>) {
-            if (h.kind === 'directory') {
-                const series: Series = await constructSeries(h as FileSystemDirectoryHandle);
-                seriesList.push(series);
-            } else {
-                // TODO: do something
-            }
-        }
-
-        addItem<Library>("library_handle", { id: "root", handle } as Library)
+        constructLibrary(handle);
+        putItem<Library>("library_handle", { id: "root", handle } as Library)
             .then(result => {
                 console.log("Added library handle to IDB");
             })
@@ -31,10 +22,36 @@ export async function requestLibraryFolderAccess(): Promise<Series[]> {
                 console.error("Failed adding library handle to IDB");
             });
 
-        return seriesList;
+        return handle;
     } catch (err) {
         throw new Error(`User cancelled folder access or permission denied: ${err}`);
     }
+}
+
+export async function constructLibrary(handle: FileSystemDirectoryHandle): Promise<Series[]> {
+    const seriesList: Series[] = [];
+    
+    for await (const [name, h] of handle.entries() as AsyncIterable<[string, FileSystemHandle]>) {
+        if (h.kind === 'directory') {
+            const series: Series = await constructSeries(h as FileSystemDirectoryHandle);
+            seriesList.push(series);
+        } else {
+            // TODO: do something
+        }
+    }
+
+    for (const series of seriesList) {
+        putItem<Series>("library", series)
+            .then(result => {
+                console.log("Added series to indexedDB under 'library' store");
+            })
+            .catch(error => {
+                console.error("Failed to add series to indexedDB under 'library' store: ", error);
+            });
+    }
+
+    
+    return seriesList;
 }
 
 async function constructSeries(handle: FileSystemDirectoryHandle): Promise<Series> {

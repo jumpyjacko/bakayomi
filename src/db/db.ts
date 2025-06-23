@@ -33,7 +33,7 @@ export async function addItem<T>(storeName: string, item: T) {
 
         request.onsuccess = () => resolve(request.result);
         request.onerror = () => reject(request.error);
-    })
+    });
 }
 
 export async function getItem<T>(storeName: string, key: IDBValidKey): Promise<T | undefined> {
@@ -44,7 +44,7 @@ export async function getItem<T>(storeName: string, key: IDBValidKey): Promise<T
         
         request.onsuccess = () => resolve(request.result);
         request.onerror = () => reject(request.error);
-    })
+    });
 }
 
 export async function getAllItems<T>(storeName: string): Promise<T[]> {
@@ -55,10 +55,10 @@ export async function getAllItems<T>(storeName: string): Promise<T[]> {
 
         request.onsuccess = () => resolve(request.result);
         request.onerror = () => reject(request.error);
-    })
+    });
 }
 
-export async function updateItem<T>(storeName: string, item: T) {
+export async function putItem<T>(storeName: string, item: T) {
     const { store } = await getStore(storeName, "readwrite");
 
     return new Promise((resolve, reject) => {
@@ -66,7 +66,7 @@ export async function updateItem<T>(storeName: string, item: T) {
 
         request.onsuccess = () => resolve(request.result);
         request.onerror = () => reject(request.error);
-    })
+    });
 }
 
 export async function deleteItem(storeName: string, key: IDBValidKey) {
@@ -77,5 +77,5 @@ export async function deleteItem(storeName: string, key: IDBValidKey) {
 
         request.onsuccess = () => resolve(request.result);
         request.onerror = () => reject(request.error);
-    })
+    });
 }
