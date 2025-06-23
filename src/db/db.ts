@@ -57,3 +57,25 @@ export async function getAllItems<T>(storeName: string): Promise<T[]> {
         request.onerror = () => reject(request.error);
     })
 }
+
+export async function updateItem<T>(storeName: string, item: T) {
+    const { store } = await getStore(storeName, "readwrite");
+
+    return new Promise((resolve, reject) => {
+        const request = store.put(item);
+
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => reject(request.error);
+    })
+}
+
+export async function deleteItem(storeName: string, key: IDBValidKey) {
+    const { store } = await getStore(storeName, "readwrite");
+
+    return new Promise((resolve, reject) => {
+        const request = store.delete(key);
+
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => resolve(request.error);
+    })
+}
