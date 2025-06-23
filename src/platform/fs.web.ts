@@ -106,3 +106,13 @@ async function constructChapter(handle: FileSystemDirectoryHandle): Promise<Chap
     return { title: handle.name, page_count: pages.length, pages };
 }
 
+
+export async function verifyPermission(handle, mode = 'read') {
+    const options = { mode };
+
+    let permission = await handle.queryPermission(options);
+    if (permission === 'granted') return true;
+
+    permission = await handle.requestPermission(options);
+    return permission === 'granted';
+}
