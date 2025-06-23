@@ -16,6 +16,7 @@ export default function HomeView() {
             }
             
             console.log("Found existing library in indexedDB");
+            console.log(library);
         } catch (err) {
             console.log("Didn't find existing library in indexedDB, creating...");
             
@@ -54,6 +55,10 @@ export default function HomeView() {
                 </button>
                 <button onClick={handleLibraryRequest}>
                 test fs
+                </button>
+                
+                <button onClick={() => navigate("/read/Zeikin%20de%20Katta%20Hon/Chapter%201")}>
+                test chapter loading
                 </button>
             </div>
         </div>

@@ -1,19 +1,20 @@
+import { addItem } from "../db/db";
 import { Chapter } from "../models/Chapter";
+import { Library } from "../models/Library";
 import { Series } from "../models/Series";
 import { Volume } from "../models/Volume";
 
 const volumeRegex = /\b[Vv]o?l?u?m?e?/;
 const chapterRegex = /\b[Cc]h?a?p?t?e?r?/;
-const imageRegex = /(\.png)?(\.jpg)?(\.gif)?/;
+const imageRegex = /(\.png)?(\.jpg)?(\.gif)?(\.webp)?/;
 
-// TODO: make it return a Library
 export async function requestLibraryFolderAccess(): Promise<Series[]> {
     try {
-        const dirHandle: FileSystemDirectoryHandle = await window.showDirectoryPicker();
+        const handle: FileSystemDirectoryHandle = await window.showDirectoryPicker();
 
         const seriesList: Series[] = [];
         
-        for await (const [name, h] of dirHandle.entries() as AsyncIterable<[string, FileSystemHandle]>) {
+        for await (const [name, h] of handle.entries() as AsyncIterable<[string, FileSystemHandle]>) {
             if (h.kind === 'directory') {
                 const series: Series = await constructSeries(h as FileSystemDirectoryHandle);
                 seriesList.push(series);
@@ -21,6 +22,14 @@ export async function requestLibraryFolderAccess(): Promise<Series[]> {
                 // TODO: do something
             }
         }
+
+        addItem<Library>("library_handle", { id: "root", handle } as Library)
+            .then(result => {
+                console.log("Added library handle to IDB");
+            })
+            .catch(error => {
+                console.error("Failed adding library handle to IDB");
+            });
 
         return seriesList;
     } catch (err) {

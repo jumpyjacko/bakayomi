@@ -20,7 +20,7 @@ render(() => {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <Router>
             <Route path="/" component={HomeView} />
-            <Route path="/read" component={ReaderView} />
+            <Route path="/read/:title/:chapter" component={ReaderView} />
         </Router>
         </>
     );
