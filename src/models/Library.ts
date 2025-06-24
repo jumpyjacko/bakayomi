@@ -8,7 +8,11 @@ export interface Library {
     handle: FileSystemDirectoryHandle | string,
 }
 
-export async function openLibrary() {
+/**
+* Refreshes library via recalculating disk from the handle stored in IndexedDB.
+* Deliberately leaks due to levelDB stuff. Should compact over time?
+*/
+export async function refreshLibrary() {
     const tauri = isTauri();
     const libraryHandle = await getItem<Library>("library_handle", "root")
         .then(res => res.handle)
@@ -20,3 +24,4 @@ export async function openLibrary() {
 
     constructLibrary(libraryHandle);
 }
+

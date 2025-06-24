@@ -1,12 +1,12 @@
 import { useNavigate } from "@solidjs/router";
 
-import { openLibrary } from "../models/Library";
+import { refreshLibrary } from "../models/Library";
 
 export default function HomeView() {
     const navigate = useNavigate();
 
     async function handleLibraryRequest() {
-        await openLibrary();
+        await refreshLibrary();
     }
 
     return (
