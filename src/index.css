@@ -1,1 +1,71 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap');
+
 @import 'tailwindcss';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+    --font-sans: "Source Sans 3", system-ui, Helvetica, sans-serif;
+
+    --font-title-family: theme(--font-sans);
+    --font-title-size: 36px;
+    
+    --font-subtitle-family: "Inter", "Source Sans 3", system-ui, Helvetica, sans-serif;
+    --font-subtitle-size: 14px;
+    --font-subtitle-weight: 200;
+
+    --font-heading-family: theme(--font-sans);
+    --font-heading-size: 24px;
+
+    --font-body-family: theme(--font-sans);
+    --font-body-size: 16px;
+
+    --font-thin-family: "Inter", "Source Sans 3", system-ui, Helvetica, sans-serif;
+    --font-thin-size: 12px;
+    --font-thin-weight: 200;
+
+    --font-ml-title-family: "Noto Sans", sans-serif;
+    --font-ml-title-size: 24px;
+
+    --font-ml-subtitle-family: "Noto Sans", sans-serif;
+    --font-ml-subtitle-size: 16px;
+}
+
+@layer utilities {
+    .typo-title {
+        font-family: var(--font-title-family);
+        font-size: var(--font-title-size);
+    }
+
+    .typo-subtitle {
+        font-family: var(--font-subtitle-family);
+        font-size: var(--font-subtitle-size);
+        font-weight: var(--font-subtitle-weight);
+    }
+
+    .typo-heading {
+        font-family: var(--font-heading-family);
+        font-size: var(--font-heading-size);
+    }
+
+    .typo-body {
+        font-family: var(--font-body-family);
+        font-size: var(--font-body-size);
+    }
+
+    .typo-thin {
+        font-family: var(--font-thin-family);
+        font-size: var(--font-thin-size);
+        font-weight: var(--font-thin-weight);
+    }
+
+    .typo-ml-title {
+        font-family: var(--font-ml-title-family);
+        font-size: var(--font-ml-title-size);
+    }
+    
+    .typo-ml-subtitle {
+        font-family: var(--font-ml-subtitle-family);
+        font-size: var(--font-ml-subtitle-size);
+    }
+}

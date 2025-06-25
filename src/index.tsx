@@ -1,10 +1,11 @@
 /* @refresh reload */
 import "./index.css";
 import { render } from "solid-js/web";
-import { Navigate, Route, Router } from "@solidjs/router";
+import { Route, Router } from "@solidjs/router";
 
 import HomeView from "./views/HomeView";
 import ReaderView from "./views/ReaderView";
+import HomeViewWrapper from "./views/HomeViewWrapper";
 
 const root = document.getElementById("root");
 
@@ -19,7 +20,9 @@ render(() => {
         <>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <Router>
-            <Route path="/" component={HomeView} />
+            <Route path="/" component={HomeViewWrapper}>
+                <Route path="/" component={HomeView} />
+            </Route>
             <Route path="/read/:title/:chapter" component={ReaderView} />
         </Router>
         </>
