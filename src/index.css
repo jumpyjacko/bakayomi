@@ -29,6 +29,28 @@
 
     --font-ml-subtitle-family: "Noto Sans", sans-serif;
     --font-ml-subtitle-size: 16px;
+
+    --color-surface: #ffffff;
+    --color-text: #000000;
+    --color-primary: #3b87ca;
+    --color-primary-faded: #eaf1f7;
+    --color-primary-dimmed: #356691;
+    --color-secondary: #ca506e;
+    --color-secondary-dimmed: #f7e1e7;
+}
+
+@layer theme {
+    * {
+        @variant dark {
+            --color-surface: #19191b;
+            --color-text: #ffffff;
+            --color-primary: #3b87ca;
+            --color-primary-faded: #eaf1f7;
+            --color-primary-dimmed: #356691;
+            --color-secondary: #ca506e;
+            --color-secondary-dimmed: #f7e1e7;
+        }
+    }
 }
 
 @layer utilities {

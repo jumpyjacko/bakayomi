@@ -8,7 +8,7 @@ export default function HomeViewWrapper(props) {
 
     return (
         <div class="flex flex-row w-full">
-            <div class="flex flex-col w-[58px] justify-between *:w-full *:p-[16px]">
+            <div class="flex flex-col w-[58px] justify-between *:w-full *:p-[16px] bg-surface text-text">
                 {/* Top Section */}
                 <div class="typo-ml-subtitle">
                 バカ
