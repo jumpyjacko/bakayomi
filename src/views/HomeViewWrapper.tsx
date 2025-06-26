@@ -1,20 +1,33 @@
 import { useLocation, useNavigate } from "@solidjs/router";
-import { OcBookmark3, OcGear3, OcHome3, OcHomefill3, OcSearch3, OcStar3 } from "../assets/icons";
 import { Show } from "solid-js";
+
+import { OcBookmark3, OcGear3, OcHome3, OcHomefill3, OcSearch3, OcStar3 } from "../assets/icons";
 
 export default function HomeViewWrapper(props) {
     const navigate = useNavigate();
     const location = useLocation();
 
     return (
-        <div class="flex flex-row w-full">
-            <div class="flex flex-col w-[58px] justify-between *:w-full *:p-[16px] bg-surface text-text">
+        <div class="
+        flex w-full
+        flex-col-reverse
+        md:flex-row
+        ">
+            <div class="
+            flex justify-between *:p-[16px] bg-surface text-text
+            fixed flex-row h-[58px] *:h-full w-screen bottom-0
+            md:static md:flex-col md:w-[58px] md:*:w-full md:*:h-full md:h-screen
+            ">
                 {/* Top Section */}
-                <div class="typo-ml-subtitle">
+                <div class="typo-ml-subtitle flex-1">
                 バカ
                 </div>
                 {/* Middle Section */}
-                <div class="flex flex-col items-center justify-center gap-[32px]">
+                <div class="
+                flex items-center justify-center gap-[32px] flex-1
+                flex-row
+                md:flex-col md:h-full
+                ">
                 <Show when={location.pathname === "/"} fallback={<OcHome3 />}>
                     <OcHomefill3 />
                 </Show>
@@ -22,7 +35,11 @@ export default function HomeViewWrapper(props) {
                 <OcSearch3 />
                 </div>
                 {/* Bottom Section */}
-                <div class="flex flex-col items-center justify-center gap-[16px]">
+                <div class="
+                flex items-center justify-end gap-[16px]
+                flex-1
+                md:flex-col
+                ">
                 <OcStar3 />
                 <OcGear3 />
                 </div>
