@@ -14,13 +14,13 @@ export default function HomeViewWrapper(props) {
         md:flex-row
         ">
             <div class="
-            flex justify-between *:p-[16px] bottom-0 left-0 bg-surface text-text overscroll-none
+            flex justify-between *:p-[16px] bottom-0 left-0 bg-surface text-text overscroll-none *:select-none
             fixed flex-row h-[58px] *:h-full w-screen
             md:static md:flex-col md:w-[58px] md:*:w-full md:*:h-full md:h-screen
             ">
                 {/* Top Section */}
                 <div class="typo-ml-subtitle flex-1">
-                <button onclick={() => navigate("/")}>
+                <button onclick={() => navigate("/")} aria-label="Home">
                 バカ
                 </button>
                 </div>
@@ -31,19 +31,19 @@ export default function HomeViewWrapper(props) {
                 flex-row
                 md:flex-col
                 ">
-                <button onclick={() => navigate("/")}>
+                <button onclick={() => navigate("/")} aria-label="Home">
                 <Show when={location.pathname === "/"} fallback={<OcHome3 />}>
                     <OcHomefill3 />
                 </Show>
                 </button>
                 
-                <button onclick={() => navigate("/library")}>
+                <button onclick={() => navigate("/library")} aria-label="Library">
                 <Show when={location.pathname === "/library"} fallback={<OcBookmark3 />}>
                     <OcBookmarkfill3 />
                 </Show>
                 </button>
                 
-                <button onclick={() => navigate("/browse")}>
+                <button onclick={() => navigate("/browse")} aria-label="Browse">
                 <OcSearch3 />
                 </button>
                 </div>
@@ -54,13 +54,13 @@ export default function HomeViewWrapper(props) {
                 flex-1
                 md:flex-col
                 ">
-                <button onclick={() => navigate("/updates")}>
+                <button onclick={() => navigate("/updates")} aria-label="Updates">
                 <Show when={location.pathname === "/updates"} fallback={<OcStar3 />}>
                     <OcStarfill3 />
                 </Show>
                 </button>
                 
-                <button onclick={() => navigate("/settings")}>
+                <button onclick={() => navigate("/settings")} aria-label="Settings">
                 <Show when={location.pathname === "/settings"} fallback={<OcGear3 />}>
                     <OcGear3 /> {/* Figure out a way to get this be filled*/}
                 </Show>
