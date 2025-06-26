@@ -2,8 +2,11 @@ import { Volume } from './Volume';
 
 export interface Series {
     title: string;
-    cover_index?: number; // NOTE: refers to a volume's cover to use as series cover
+    alt_titles?: string[];
+    cover_uri: string;
     extension_id?: string;
     external_link?: string;
+    author?: string;
+    description?: string;
     volumes: Volume[];
 }

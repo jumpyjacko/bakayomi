@@ -6,6 +6,10 @@ import { Route, Router } from "@solidjs/router";
 import HomeView from "./views/HomeView";
 import ReaderView from "./views/ReaderView";
 import HomeViewWrapper from "./views/HomeViewWrapper";
+import LibraryView from "./views/LibraryView";
+import BrowseView from "./views/BrowseView";
+import UpdatesView from "./views/UpdatesView";
+import SettingsView from "./views/SettingsView";
 
 const root = document.getElementById("root");
 
@@ -22,6 +26,10 @@ render(() => {
         <Router>
             <Route path="/" component={HomeViewWrapper}>
                 <Route path="/" component={HomeView} />
+                <Route path="/library" component={LibraryView} />
+                <Route path="/browse" component={BrowseView} />
+                <Route path="/updates" component={UpdatesView} />
+                <Route path="/settings" component={SettingsView} />
             </Route>
             <Route path="/read/:title/:chapter" component={ReaderView} />
         </Router>
