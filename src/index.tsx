@@ -19,21 +19,31 @@ if (import.meta.env.DEV && !(root instanceof HTMLElement)) {
     );
 }
 
+const isDark =
+    localStorage.theme === "dark" ||
+    (!("theme" in localStorage) &&
+     window.matchMedia("(prefers-color-scheme: dark)").matches);
+
+document.documentElement.classList.toggle("dark", isDark);
+
+const themeColorMeta = document.querySelector('meta[name="theme-color"]');
+if (themeColorMeta) {
+    themeColorMeta.setAttribute("content", isDark ? "#19191b" : "#ffffff");
+}
+
 render(() => {
     return (
         <>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <Router>
             <Route path="/" component={HomeViewWrapper}>
-                <Route path="/" component={HomeView} />
-                <Route path="/library" component={LibraryView} />
-                <Route path="/browse" component={BrowseView} />
-                <Route path="/updates" component={UpdatesView} />
-                <Route path="/settings" component={SettingsView} />
-            </Route>
-            <Route path="/read/:title/:chapter" component={ReaderView} />
+            <Route path="/" component={HomeView} />
+            <Route path="/library" component={LibraryView} />
+            <Route path="/browse" component={BrowseView} />
+            <Route path="/updates" component={UpdatesView} />
+            <Route path="/settings" component={SettingsView} />
+        </Route>
+        <Route path="/read/:title/:chapter" component={ReaderView} />
         </Router>
         </>
     );
-},
-root!);
+}, root!);
