@@ -29,7 +29,7 @@ export default function HomeViewWrapper(props) {
                 <div class="
                 flex items-center justify-center flex-1 *:p-[16px]
                 flex-row
-                md:flex-col md:h-full
+                md:flex-col
                 ">
                 <button onclick={() => navigate("/")}>
                 <Show when={location.pathname === "/"} fallback={<OcHome3 />}>
