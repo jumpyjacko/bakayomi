@@ -27,7 +27,7 @@ export default function HomeViewWrapper(props) {
                 
                 {/* Middle Section */}
                 <div class="
-                flex items-center justify-center gap-[32px] flex-1
+                flex items-center justify-center flex-1 *:p-[16px]
                 flex-row
                 md:flex-col md:h-full
                 ">
@@ -50,7 +50,7 @@ export default function HomeViewWrapper(props) {
                 
                 {/* Bottom Section */}
                 <div class="
-                flex items-center justify-end gap-[16px]
+                flex items-center justify-end *:p-[8px]
                 flex-1
                 md:flex-col
                 ">
