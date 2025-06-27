@@ -1,6 +1,7 @@
 import { putItem } from "../db/db";
 
 import { Chapter } from "../models/Chapter";
+import { Cover } from "../models/Cover";
 import { Library } from "../models/Library";
 import { Page } from "../models/Page";
 import { Series } from "../models/Series";
@@ -56,14 +57,10 @@ export async function constructLibrary(handle: FileSystemDirectoryHandle): Promi
 }
 
 async function constructSeries(handle: FileSystemDirectoryHandle): Promise<Series> {
-    if (!handle) {
-        // FIXME: proper error handling
-        throw new Error("No handle.");
-    }
-
     // NOTE: holds orphaned chapters (not belonging to a volume)
     const orphanedChapterList: Chapter[] = [];
     const volumes: Volume[] = [];
+    let covers: Cover[] = [];
 
     for await (const [name, h] of handle.entries() as AsyncIterable<[string, FileSystemHandle]>) {
         if (h.kind === 'directory') {
@@ -73,6 +70,8 @@ async function constructSeries(handle: FileSystemDirectoryHandle): Promise<Serie
             } else if (chapterRegex.test(name)) {
                 const chapter: Chapter = await constructChapter(h as FileSystemDirectoryHandle);
                 orphanedChapterList.push(chapter);
+            } else if (name === "_covers") {
+                covers = await createCoversList(h as FileSystemDirectoryHandle);
             }
         } else {
             // TODO: do something idk
@@ -89,7 +88,20 @@ async function constructSeries(handle: FileSystemDirectoryHandle): Promise<Serie
         volumes.push(dummyVolume);
     }
 
-    return { title: handle.name, volumes };
+    // TODO: determine original language from some metadata (mal/al, idk?)
+    return { title: handle.name, original_lang: "jp", volumes, covers };
+}
+
+async function createCoversList(handle: FileSystemDirectoryHandle): Promise<Cover[]> {
+    const covers: Cover[] = [];
+
+    for await (const [name, h] of handle.entries() as AsyncIterable<[string, FileSystemHandle]>) {
+        if (h.kind === "file") {
+            covers.push({ name, cover_image: h as FileSystemFileHandle});
+        }
+    }
+
+    return covers;
 }
 
 async function constructVolume(handle: FileSystemDirectoryHandle): Promise<Volume> {
@@ -101,8 +113,6 @@ async function constructVolume(handle: FileSystemDirectoryHandle): Promise<Volum
                 const chapter: Chapter = await constructChapter(h as FileSystemDirectoryHandle);
                 chapters.push(chapter);
             }
-        } else {
-            // TODO: check for cover.png and make it the volume cover, otherwise, error handling
         }
     }
 

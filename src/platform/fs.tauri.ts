@@ -9,6 +9,7 @@ import { Chapter } from '../models/Chapter';
 import { Volume } from '../models/Volume';
 import { Library } from '../models/Library';
 import { Page } from '../models/Page';
+import { Cover } from '../models/Cover';
 
 const volumeRegex = /\b[Vv]o?l?u?m?e?/;
 const chapterRegex = /\b[Cc]h?a?p?t?e?r?/;
@@ -71,6 +72,7 @@ async function constructSeries(path: string, parentHandle: DirEntry): Promise<Se
     
     const orphanedChapterList: Chapter[] = [];
     const volumes: Volume[] = [];
+    let covers: Cover[] = [];
 
     const seriesEntries = await readDir(path);
 
@@ -84,6 +86,9 @@ async function constructSeries(path: string, parentHandle: DirEntry): Promise<Se
                 const chapterPath = await join(path, e.name);
                 const chapter: Chapter = await constructChapter(chapterPath, e);
                 orphanedChapterList.push(chapter);
+            } else if (e.name === "_covers") {
+                const coversPath = await join(path, e.name);
+                covers = await createCoversList(coversPath);
             }
         }
     }
@@ -98,7 +103,23 @@ async function constructSeries(path: string, parentHandle: DirEntry): Promise<Se
         volumes.push(dummyVolume);
     }
 
-    return { title: parentHandle.name, volumes };
+    // TODO: look at web.ts for todo
+    return { title: parentHandle.name, original_lang: "jp", volumes, covers };
+}
+
+async function createCoversList(path: string): Promise<Cover[]> {
+    const coverEntries = await readDir(path);
+
+    const covers: Cover[] = [];
+
+    for (const e of coverEntries) {
+        if (e.isFile) {
+            const coverPath = await join(path, e.name);
+            covers.push({ name: e.name, cover_image: coverPath });
+        }
+    }
+
+    return covers;
 }
 
 async function constructVolume(path: string, parentHandle: DirEntry): Promise<Volume> {
@@ -113,8 +134,6 @@ async function constructVolume(path: string, parentHandle: DirEntry): Promise<Vo
                 const chapter: Chapter = await constructChapter(chapterPath, e);
                 chapters.push(chapter);
             }
-        } else {
-            // TODO: check for cover.png, otherwise error
         }
     }
 
