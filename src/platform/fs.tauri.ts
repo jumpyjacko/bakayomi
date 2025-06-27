@@ -146,3 +146,7 @@ export async function getChapterPages(path: string): Promise<Page[]> {
 
     return pages;
 }
+
+export async function verifyPermission() {
+    return true;
+}

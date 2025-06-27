@@ -1,7 +1,30 @@
-const fsModule = await ((window.__TAURI_INTERNALS__)
-    ? import("./fs.tauri")
-    : import("./fs.web"));
+let fsModulePromise: Promise<any> | null = null;
 
-export const requestLibraryFolderAccess = fsModule.requestLibraryFolderAccess;
-export const constructLibrary = fsModule.constructLibrary;
-export const getChapterPages = fsModule.getChapterPages;
+function loadFsModule() {
+  if (!fsModulePromise) {
+    fsModulePromise = (window.__TAURI_INTERNALS__)
+      ? import("./fs.tauri")
+      : import("./fs.web");
+  }
+  return fsModulePromise;
+}
+
+export async function requestLibraryFolderAccess(...args) {
+  const mod = await loadFsModule();
+  return mod.requestLibraryFolderAccess(...args);
+}
+
+export async function constructLibrary(...args) {
+  const mod = await loadFsModule();
+  return mod.constructLibrary(...args);
+}
+
+export async function getChapterPages(...args) {
+  const mod = await loadFsModule();
+  return mod.getChapterPages(...args);
+}
+
+export async function verifyPermission(...args) {
+    const mod = await loadFsModule();
+    return mod.verifyPermission(...args);
+}

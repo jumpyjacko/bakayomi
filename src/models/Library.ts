@@ -1,7 +1,6 @@
 import { isTauri } from "@tauri-apps/api/core";
-import { verifyPermission } from "../platform/fs.web";
 import { getItem } from "../db/db";
-import { constructLibrary, requestLibraryFolderAccess } from "../platform/fs";
+import { constructLibrary, requestLibraryFolderAccess, verifyPermission } from "../platform/fs";
 
 export interface Library {
     id: string,
