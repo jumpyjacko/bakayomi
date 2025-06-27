@@ -4,8 +4,7 @@ import { lazy, Show } from "solid-js";
 import { render } from "solid-js/web";
 import { Route, Router } from "@solidjs/router";
 
-import { isTauri } from "@tauri-apps/api/core";
-const Titlebar = isTauri() ? lazy(() => import("./components/Titlebar")) : null;
+const Titlebar = window.__TAURI_INTERNALS__ ? lazy(() => import("./components/Titlebar")) : null;
 
 import HomeView from "./views/HomeView";
 import ReaderView from "./views/ReaderView";
