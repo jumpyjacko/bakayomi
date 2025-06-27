@@ -1,7 +1,11 @@
 /* @refresh reload */
 import "./index.css";
+import { lazy, Show } from "solid-js";
 import { render } from "solid-js/web";
 import { Route, Router } from "@solidjs/router";
+
+import { isTauri } from "@tauri-apps/api/core";
+const Titlebar = isTauri() ? lazy(() => import("./components/Titlebar")) : null;
 
 import HomeView from "./views/HomeView";
 import ReaderView from "./views/ReaderView";
@@ -34,8 +38,11 @@ if (themeColorMeta) {
 render(() => {
     return (
         <>
+        <Show when={Titlebar && (localStorage.useTitlebar === "true" || !("useTitlebar" in localStorage))}>
+            <Titlebar />
+        </Show>
         <Router>
-            <Route path="/" component={HomeViewWrapper}>
+        <Route path="/" component={HomeViewWrapper}>
             <Route path="/" component={HomeView} />
             <Route path="/library" component={LibraryView} />
             <Route path="/browse" component={BrowseView} />
