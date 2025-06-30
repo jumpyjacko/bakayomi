@@ -1,6 +1,7 @@
 import { useNavigate } from "@solidjs/router";
 
 import { refreshLibrary } from "../models/Library";
+import MangaVerticalCard from "../components/MangaVerticalCard";
 
 export default function HomeView() {
     const navigate = useNavigate();
@@ -36,6 +37,7 @@ export default function HomeView() {
                 test chapter loading
                 </button>
             </div>
+            <MangaVerticalCard coverURI="https://s4.anilist.co/file/anilistcdn/media/manga/cover/medium/bx174790-7wZ1sDAhcofd.jpg" title="Tonari no Neko to Koi Shirazu" authors="Akinoko" totalChapters="38" type="Manga"/>
         </div>
     )
 }

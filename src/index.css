@@ -73,6 +73,7 @@
     .typo-body {
         font-family: var(--font-body-family);
         font-size: var(--font-body-size);
+        line-height: 1.2;
     }
 
     .typo-thin {
