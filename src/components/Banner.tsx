@@ -28,7 +28,7 @@ export default function Banner(props: any) {
                 <p class="typo-body text-wrap line-clamp-2 md:line-clamp-4">
                 Minato Seno’s high school life had just begun when his homeroom teacher requested his help with Nekozane, the cat-like chronic napper who sits next to him in class. Timid and socially anxious, Minato has never talked to her or even seen her face. But when he finally musters up the courage to wake Nekozane, she unexpectedly hugs him on the spot! Thus begins a sweet tale of two teens awkwardly stumbling into a new friendship, unaware that their feelings are slowly turning into something more!<br />(Source: Manga UP! Global)<br /><br /><i>Note: Originally self-published on Twitter, it was picked up for commercial publication with two volumes collecting the Twitter comics releasing on 2024-03-25 and 2024-04-25, with subsequent serialization in Big Gangan starting 2024-04-25.</i>
                 </p>
-                <div class="absolute bottom-[-60px] flex flex-row flex-wrap gap-x-[6px]">
+                <div class="absolute bottom-[-60px] flex flex-row flex-nowrap gap-x-[6px]">
                 <IconButton icon={OcBookmark3} />
                 <IconButton icon={OcBook3} text="Start Reading" />
                 <TextButton text="View Details" />
@@ -39,7 +39,7 @@ export default function Banner(props: any) {
             <div class="absolute top-0 left-0 w-full h-[100px] md:h-[300px] md:overflow-clip">
                 <div class="hidden md:block md:absolute h-full md:w-1/2 xl:w-1/3
                 bg-gradient-to-r from-surface from-10% via-surface/80 via-60% to-transparent" />
-                <div class="absolute bottom-0 h-3/4 md:h-[30px] w-full
+                <div class="absolute bottom-0 h-3/4 md:h-[30px] w-full mb-[-1px]
                 bg-gradient-to-t from-surface via-surface/75 via-50% md:via-25% to-transparent
                 " />
                 <img class="h-full w-full object-cover" src="https://s4.anilist.co/file/anilistcdn/media/manga/banner/174790-gsKNVMaPpORb.jpg" />
