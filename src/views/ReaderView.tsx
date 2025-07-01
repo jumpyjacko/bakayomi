@@ -16,19 +16,6 @@ export default function ReaderView() {
             </For>
         </Show>
         </div>
-
-        <style>
-        {`
-            ::-webkit-scrollbar {
-                display: none;
-            }
-
-            * {
-                scrollbar-width: none;
-                -ms-overflow-style: none;
-            }
-        `}
-        </style>
         </>
     )
 }
