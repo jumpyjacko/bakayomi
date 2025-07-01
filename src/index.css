@@ -57,6 +57,7 @@
     .typo-title {
         font-family: var(--font-title-family);
         font-size: var(--font-title-size);
+        line-height: 1.2;
     }
 
     .typo-subtitle {
