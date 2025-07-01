@@ -25,7 +25,7 @@ export default function Banner(props: any) {
                     Publishing
                     </p>
                 </div>
-                <p class="typo-body text-wrap line-clamp-4">
+                <p class="typo-body text-wrap line-clamp-2 md:line-clamp-4">
                 Minato Seno’s high school life had just begun when his homeroom teacher requested his help with Nekozane, the cat-like chronic napper who sits next to him in class. Timid and socially anxious, Minato has never talked to her or even seen her face. But when he finally musters up the courage to wake Nekozane, she unexpectedly hugs him on the spot! Thus begins a sweet tale of two teens awkwardly stumbling into a new friendship, unaware that their feelings are slowly turning into something more!<br />(Source: Manga UP! Global)<br /><br /><i>Note: Originally self-published on Twitter, it was picked up for commercial publication with two volumes collecting the Twitter comics releasing on 2024-03-25 and 2024-04-25, with subsequent serialization in Big Gangan starting 2024-04-25.</i>
                 </p>
                 <div class="absolute bottom-[-60px] flex flex-row flex-wrap gap-x-[6px]">
