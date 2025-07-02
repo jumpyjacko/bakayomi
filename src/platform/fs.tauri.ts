@@ -104,7 +104,7 @@ async function constructSeries(path: string, parentHandle: DirEntry): Promise<Se
     }
 
     // TODO: look at web.ts for todo
-    return { title: parentHandle.name, original_lang: "jp", volumes, covers };
+    return { title: parentHandle.name, volumes, covers };
 }
 
 async function createCoversList(path: string): Promise<Cover[]> {

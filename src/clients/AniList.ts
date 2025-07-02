@@ -6,7 +6,7 @@ const limiter = new Bottleneck({
     reservoir: 90,
     reservoirRefreshAmount: 90,
     reservoirRefreshInterval: 60 * 1000,
-    maxConcurrent: 10,
+    maxConcurrent: 3,
     minTime: 100
 })
 
@@ -67,6 +67,7 @@ export async function searchMangaSeriesByName(search: string) {
             }
             type
             description
+            countryOfOrigin
         }
     }
     `;
@@ -105,6 +106,7 @@ export async function searchMangaSeriesById(id: number) {
             }
             type
             description
+            countryOfOrigin
         }
     }
     `;

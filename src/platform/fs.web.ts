@@ -89,7 +89,7 @@ async function constructSeries(handle: FileSystemDirectoryHandle): Promise<Serie
     }
 
     // TODO: determine original language from some metadata (mal/al, idk?)
-    return { title: handle.name, original_lang: "jp", volumes, covers };
+    return { title: handle.name, volumes, covers };
 }
 
 async function createCoversList(handle: FileSystemDirectoryHandle): Promise<Cover[]> {

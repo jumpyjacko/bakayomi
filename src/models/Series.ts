@@ -6,7 +6,8 @@ export interface Series {
     alt_titles?: string[];
     author?: string;
     description?: string;
-    original_lang: string;
+    status?: string;
+    original_lang?: string;
     
     extension_id?: string;
     external_link?: string;
