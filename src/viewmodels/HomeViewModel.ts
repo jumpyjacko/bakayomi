@@ -1,5 +1,5 @@
 import { createSignal, onMount } from "solid-js";
-import { getAllItems } from "../db/db";
+import { getAllItems, putItem } from "../db/db";
 import { Series } from "../models/Series";
 import { searchMangaSeriesByName } from "../clients/AniList";
 
@@ -10,7 +10,7 @@ export function createHomeViewModel() {
         const library: Series[] = await getAllItems<Series>("library");
 
         for (let series of library) {
-            if (series.al_id) {
+            if (series.al_id) { // TODO: Handle series not found on anilist (probably use some marker)
                 continue;
             }
 
@@ -23,11 +23,13 @@ export function createHomeViewModel() {
                 
                 const res = data.data.Media;
                 series.al_id = res.id;
-                series.author = res.staff.nodes[0]; // TODO: change this to handle multiple authors
+                series.author = res.staff.nodes[0]; // TODO: change this to handle multiple authors and filter for 'Mangaka' occupation
                 series.description = res.description;
                 series.original_lang = res.countryOfOrigin;
                 series.status = res.status;
                 series.covers.push({ name: "AniList Cover", cover_image: res.coverImage.extraLarge})
+
+                putItem<Series>("library", series);
             }
 
             async function handleError(error) {
@@ -36,7 +38,7 @@ export function createHomeViewModel() {
         }
     }
 
-    // onMount(async () => createLocalLibraryCarousel());
+    onMount(async () => createLocalLibraryCarousel());
     
     return {
         carousels

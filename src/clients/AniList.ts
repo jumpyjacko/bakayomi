@@ -37,7 +37,7 @@ async function sendQuery(query: string, variables: string): Promise<Object> {
     }
 
     function handleData(data) {
-        console.log(limiter.queued(), limiter.currentReservoir()); // DEBUG
+        // console.log(limiter.queued(), limiter.currentReservoir()); // DEBUG
         return data;
     }
 }
@@ -78,7 +78,7 @@ export async function searchMangaSeriesByName(search: string) {
     }
     `
 
-    console.log(await sendQuery(query, variables));
+    return await sendQuery(query, variables);
 }
 
 export async function searchMangaSeriesById(id: number) {
@@ -117,5 +117,5 @@ export async function searchMangaSeriesById(id: number) {
     }
     `
 
-    console.log(await sendQuery(query, variables));
+    return await sendQuery(query, variables);
 }
