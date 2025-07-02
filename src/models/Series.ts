@@ -13,7 +13,10 @@ export interface Series {
 
     mal_rating?: number;
     al_rating?: number;
+
+    al_id?: number;
     
     volumes: Volume[];
     covers: Cover[];
+    banner?: string;
 }
