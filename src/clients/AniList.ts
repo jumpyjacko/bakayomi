@@ -1,4 +1,14 @@
+import Bottleneck from "bottleneck";
+
+// Limiter configuration from https://github.com/RockinChaos/Shiru/blob/master/common/modules/anilist.js#L152
 const ANILST_URL = "https://graphql.anilist.co";
+const limiter = new Bottleneck({
+    reservoir: 90,
+    reservoirRefreshAmount: 90,
+    reservoirRefreshInterval: 60 * 1000,
+    maxConcurrent: 10,
+    minTime: 100
+})
 
 // Example taken from https://docs.anilist.co/guide/graphql/
 async function sendQuery(query: string, variables: string): Promise<Object> {
@@ -14,7 +24,7 @@ async function sendQuery(query: string, variables: string): Promise<Object> {
         })
     };
 
-    return fetch(ANILST_URL, options).then(handleResponse).then(handleData).catch(handleError);
+    return limiter.schedule(() => fetch(ANILST_URL, options)).then(handleResponse).then(handleData).catch(handleError);
 
     async function handleResponse(response: Response) {
         return response.json().then(function (json) {
@@ -27,6 +37,7 @@ async function sendQuery(query: string, variables: string): Promise<Object> {
     }
 
     function handleData(data) {
+        console.log(limiter.queued()); // DEBUG
         return data;
     }
 }
