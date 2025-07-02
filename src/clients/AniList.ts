@@ -37,15 +37,15 @@ async function sendQuery(query: string, variables: string): Promise<Object> {
     }
 
     function handleData(data) {
-        console.log(limiter.queued()); // DEBUG
+        console.log(limiter.queued(), limiter.currentReservoir()); // DEBUG
         return data;
     }
 }
 
-export async function searchMangaSeries(search: string) {
+export async function searchMangaSeriesByName(search: string) {
     const query = `
     query Query($search: String) {
-        Media(search: $search) {
+        Media(search: $search, type: MANGA) {
             bannerImage
             coverImage {
                 extraLarge
@@ -74,6 +74,44 @@ export async function searchMangaSeries(search: string) {
     const variables = `
     {
         "search": "${search}"
+    }
+    `
+
+    console.log(await sendQuery(query, variables));
+}
+
+export async function searchMangaSeriesById(id: number) {
+    const query = `
+    query Query($id: Int) {
+        Media(id: $id, type: MANGA) {
+            bannerImage
+            coverImage {
+                extraLarge
+                color
+            }
+            staff {
+                nodes {
+                    name {
+                        full
+                    }
+                    primaryOccupations
+                }
+            }
+            chapters
+            id
+            status
+            title {
+                userPreferred
+            }
+            type
+            description
+        }
+    }
+    `;
+
+    const variables = `
+    {
+        "id": ${id}
     }
     `
 
