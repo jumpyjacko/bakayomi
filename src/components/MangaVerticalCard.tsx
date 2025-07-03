@@ -3,11 +3,14 @@ import { toBlobUrl } from "../platform/fs";
 
 export default function MangaVerticalCard(props) {
     const [cover, setCover] = createSignal("");
+    const [title, setTitle] = createSignal("");
+    const [author, setAuthor] = createSignal("");
+    const [chapters, setChapters] = createSignal(0);
+    const [type, setType] = createSignal("");
     
     onMount(async () => {
         // const AniListCover = props.covers.find(c => c.name === "AniList Cover");
-
-        const cover = props.covers[0].cover_image;
+        const cover = props.series.covers[0].cover_image;
 
         if (typeof(cover) === "string" && cover.startsWith("http")) {
             setCover(cover);
@@ -18,6 +21,18 @@ export default function MangaVerticalCard(props) {
                 });
             setCover(coverUri);
         }
+
+        setTitle(props.series.title);
+        setAuthor(props.series.author);
+        setType(props.series.type);
+        
+        let chapterCount = 0;
+        for (const vol of props.series.volumes) {
+            for (const chapter of vol) {
+                chapterCount++;
+            }
+        }
+        setChapters(chapterCount);
     })
     
     return (
@@ -35,17 +50,17 @@ export default function MangaVerticalCard(props) {
             </div>
             
             <div class="w-full text-wrap typo-body overflow-ellipsis line-clamp-2">
-            {props.title}
+            {title()}
             </div>
             <div class="w-full flex-1 typo-thin line-clamp-1">
-            {props.authors}
+            {author()}
             </div>
             <div class="flex flex-row typo-subtitle">
                 <div class="flex-1">
-                {props.totalChapters} Chapters
+                {chapters()} Chapters
                 </div>
                 <div class="w-fit">
-                {props.type}
+                {type()}
                 </div>
             </div>
         </div>

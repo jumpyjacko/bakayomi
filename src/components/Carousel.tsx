@@ -8,13 +8,7 @@ export default function Carousel(props: any) {
             <div class="flex flex-row overflow-x-auto">
             <For each={props.entries} fallback={<div class="ml-[12px]">Loading...</div>}>
             {(card) => (
-                <MangaVerticalCard
-                    covers={card.covers}
-                    title={card.title}
-                    authors={card.author.name.full}
-                    totalChapters={card.chapters}
-                    type={card.type}
-                />
+                <MangaVerticalCard series={card}/>
             )}
             </For>
             </div>
