@@ -9,11 +9,7 @@ export interface Library {
     handle: FileSystemDirectoryHandle | string,
 }
 
-/**
-* Refreshes library via recalculating disk from the handle stored in IndexedDB.
-* Deliberately leaks due to levelDB stuff. Should compact over time?
-*/
-export async function refreshLibrary() {
+export async function getPermissions() {
     const tauri = isTauri();
     const libraryHandle = await getItem<Library>("library_handle", "root")
         .then(res => res.handle)
@@ -22,7 +18,18 @@ export async function refreshLibrary() {
     if (!tauri) {
         await verifyPermission(libraryHandle);
     }
+}
 
+/**
+* Refreshes library via recalculating disk from the handle stored in IndexedDB.
+* Deliberately leaks due to levelDB stuff. Should compact over time?
+*/
+export async function refreshLibrary() {
+    await getPermissions();
+    
+    const libraryHandle = await getItem<Library>("library_handle", "root")
+        .then(res => res.handle);
+    
     constructLibrary(libraryHandle);
 }
 

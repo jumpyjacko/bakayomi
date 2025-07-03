@@ -1,7 +1,8 @@
 import { useLocation, useNavigate } from "@solidjs/router";
 import { Show } from "solid-js";
 
-import { OcBookmark3, OcBookmarkfill3, OcGear3, OcHome3, OcHomefill3, OcSearch3, OcStar3, OcStarfill3 } from "../assets/icons";
+import { OcBookmark3, OcBookmarkfill3, OcGear3, OcHome3, OcHomefill3, OcPackagedependencies3, OcSearch3, OcStar3, OcStarfill3 } from "../assets/icons";
+import { AniListToLocalMetadata, refreshLibrary } from "../models/Library";
 
 export default function HomeViewWrapper(props) {
     const navigate = useNavigate();
@@ -55,6 +56,10 @@ export default function HomeViewWrapper(props) {
                 flex-1
                 md:flex-col
                 ">
+                <button onclick={async () => {await refreshLibrary(); AniListToLocalMetadata(); } } aria-label="Updates">
+                <OcPackagedependencies3 />
+                </button>
+                
                 <button onclick={() => navigate("/updates")} aria-label="Updates">
                 <Show when={location.pathname === "/updates"} fallback={<OcStar3 />}>
                     <OcStarfill3 />

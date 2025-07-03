@@ -1,14 +1,23 @@
 import { createSignal, onMount } from "solid-js"
 import { toBlobUrl } from "../platform/fs";
+import { getPermissions } from "../models/Library";
 
 export default function MangaVerticalCard(props) {
     const [cover, setCover] = createSignal("");
     
     onMount(async () => {
-        if (props.cover.startsWith("http")) {
-            setCover(props.cover);
+        const AniListCover = props.covers.find(c => c.name === "AniList Cover");
+
+        const cover = AniListCover.cover_image;
+
+        if (typeof(cover) === "string" && cover.startsWith("http")) {
+            setCover(cover);
         } else {
-            setCover(await toBlobUrl(props.cover));
+            const coverUri = await toBlobUrl(cover)
+                .catch(() => {
+                    console.log("no permissions");
+                });
+            setCover(coverUri);
         }
     })
     

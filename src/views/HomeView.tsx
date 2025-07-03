@@ -1,7 +1,7 @@
 import { createHomeViewModel } from "../viewmodels/HomeViewModel";
 
 import Banner from "../components/Banner";
-import { For } from "solid-js";
+import { For, Show } from "solid-js";
 import Carousel from "../components/Carousel";
 
 export default function HomeView() {

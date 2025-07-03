@@ -9,7 +9,7 @@ export default function Carousel(props: any) {
             <For each={props.entries}>
             {(card) => (
                 <MangaVerticalCard
-                    cover={card.covers[0].cover_image}
+                    covers={card.covers}
                     title={card.title}
                     authors={card.author.name.full}
                     totalChapters={card.chapters}
