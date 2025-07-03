@@ -27,10 +27,9 @@ export default function MangaVerticalCard(props) {
         setType(props.series.type);
         
         let chapterCount = 0;
+
         for (const vol of props.series.volumes) {
-            for (const chapter of vol) {
-                chapterCount++;
-            }
+            chapterCount += vol.chapter_count;
         }
         setChapters(chapterCount);
     })
