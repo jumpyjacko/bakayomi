@@ -8,7 +8,7 @@ export default function Titlebar() {
         <div data-tauri-drag-region class="
         h-[24px] w-screen select-none flex justify-end fixed t-0 l-0 r-0 z-50
         text-text
-        *:bg-surface *:transition-colors *:select-none
+        *:bg-transparent *:transition-colors *:select-none
         *:w-[24px] *:h-[24px] *:inline-flex *:justify-center *:items-center
         ">
             <button class="titlebar-button hover:bg-primary-dimmed" onclick={appWindow.minimize}>

@@ -48,16 +48,6 @@ export async function constructLibrary(path: string): Promise<Series[]> {
             seriesList.push(series);
         }
     }
-    
-    for (const series of seriesList) {
-        putItem<Series>("library", series)
-            .then(result => {
-                console.log("Added series to indexedDB under 'library' store");
-            })
-            .catch(error => {
-                console.error("Failed to add series to indexedDB under 'library' store: ", error);
-            });
-    }
 
     return seriesList;
 }

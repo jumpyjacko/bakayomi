@@ -41,17 +41,6 @@ export async function constructLibrary(handle: FileSystemDirectoryHandle): Promi
             // TODO: do something
         }
     }
-
-    for (const series of seriesList) {
-        putItem<Series>("library", series)
-            .then(result => {
-                console.log("Added series to indexedDB under 'library' store");
-            })
-            .catch(error => {
-                console.error("Failed to add series to indexedDB under 'library' store: ", error);
-            });
-    }
-
     
     return seriesList;
 }
@@ -148,7 +137,6 @@ export async function verifyPermission(handle, mode = 'read') {
 
     let permission = await handle.queryPermission(options);
     if (permission === 'granted') {
-        alert("Permission already granted");
         return true;
     }
 

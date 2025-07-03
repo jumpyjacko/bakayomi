@@ -1,6 +1,5 @@
 import { createSignal, onMount } from "solid-js"
 import { toBlobUrl } from "../platform/fs";
-import { getPermissions } from "../models/Library";
 
 export default function MangaVerticalCard(props) {
     const [cover, setCover] = createSignal("");

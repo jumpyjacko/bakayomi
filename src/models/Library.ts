@@ -30,52 +30,63 @@ export async function refreshLibrary() {
     const libraryHandle = await getItem<Library>("library_handle", "root")
         .then(res => res.handle);
     
-    constructLibrary(libraryHandle);
+    const library = await constructLibrary(libraryHandle);
+    const seriesList = await AniListToLocalMetadata(library);
+
+    console.log(seriesList);
+
+    for (const series of seriesList) {
+        console.log(series);
+        putItem<Series>("library", series)
+            .then(result => {
+                console.log("Added series to indexedDB under 'library' store");
+            })
+            .catch(error => {
+                console.error("Failed to add series to indexedDB under 'library' store: ", error);
+            });
+    }
 }
 
-export async function AniListToLocalMetadata() {
-    const library: Series[] = await getAllItems<Series>("library");
-
-    for (let series of library) {
-        console.log("here");
+export async function AniListToLocalMetadata(seriesList: Series[]): Promise<Series[]> {
+    const updatedSeriesList: Series[] = [];
+    
+    for (let series of seriesList) {
         if (series.al_id) { // TODO: Handle series not found on anilist (probably use some marker)
             continue;
         }
 
-        searchMangaSeriesByName(series.title)
-            .then(updateSeries)
-            .catch(handleError);
-
-        async function updateSeries(data) {
-            console.log(data);
+        try {
+            let data = await searchMangaSeriesByName(series.title)
+            
+            let updatedSeries = series;
 
             const res = data.data.Media;
-            series.al_id = res.id;
-            series.author = res.staff.nodes[0]; // TODO: change this to handle multiple authors and filter for 'Mangaka' occupation
-            series.description = res.description;
-            series.original_lang = res.countryOfOrigin;
-            series.status = res.status;
-            series.covers.push({ name: "AniList Cover", cover_image: res.coverImage.extraLarge})
+            updatedSeries.al_id = res.id;
+            updatedSeries.author = res.staff.nodes[0]; // TODO: change this to handle multiple authors and filter for 'Mangaka' occupation
+            updatedSeries.description = res.description;
+            updatedSeries.original_lang = res.countryOfOrigin;
+            updatedSeries.status = res.status;
+            updatedSeries.covers.push({ name: "AniList Cover", cover_image: res.coverImage.extraLarge})
 
-            switch (series.original_lang) {
+            switch (updatedSeries.original_lang) {
                 case "JP":
-                    series.type = "Manga";
+                    updatedSeries.type = "Manga";
                     break;
                 case "KR":
-                    series.type = "Manhwa";
+                    updatedSeries.type = "Manhwa";
                     break;
                 case "CN":
-                    series.type = "Manhua";
+                    updatedSeries.type = "Manhua";
                     break;
                 default:
-                    series.type = "Unknown";
+                    updatedSeries.type = "Unknown";
             }
 
-            putItem<Series>("library", series);
-        }
-
-        async function handleError(error) {
+            updatedSeriesList.push(updatedSeries);
+        } catch (error) {
             console.log(error);
         }
     }
+
+    return updatedSeriesList;
 }

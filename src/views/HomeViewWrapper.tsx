@@ -53,7 +53,7 @@ export default function HomeViewWrapper(props) {
                 
                 {/* Bottom Section */}
                 <div class="
-                flex items-center justify-end *:p-[8px]
+                flex items-center justify-end *:p-[6px]
                 flex-1
                 md:flex-col
                 ">
@@ -62,8 +62,7 @@ export default function HomeViewWrapper(props) {
                         await refreshLibrary();
                     }
                     getPermissions();
-                    await AniListToLocalMetadata();
-                } } aria-label="Updates">
+                } } aria-label="Import Local">
                 <OcPackagedependencies3 />
                 </button>
                 

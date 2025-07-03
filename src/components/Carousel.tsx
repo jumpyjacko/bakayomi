@@ -6,7 +6,7 @@ export default function Carousel(props: any) {
         <div class="mt-10">
             <h1 class="typo-heading ml-[12px]">{props.title}</h1>
             <div class="flex flex-row overflow-x-auto">
-            <For each={props.entries}>
+            <For each={props.entries} fallback={<div class="ml-[12px]">Loading...</div>}>
             {(card) => (
                 <MangaVerticalCard
                     covers={card.covers}
