@@ -3,12 +3,20 @@ import MangaVerticalCard from "./MangaVerticalCard";
 
 export default function Carousel(props: any) {
     return (
-        <div>
-            {props.title}
+        <div class="mt-10">
+            <h1 class="typo-heading ml-[12px]">{props.title}</h1>
             <div class="flex flex-row overflow-x-auto">
-                <For each={props.entries}>
-                    {(card) => <MangaVerticalCard coverURI={card.coverURI} title={card.title} authors={card.authors} totalChapters={card.chapters} type={card.type}/>}
-                </For>
+            <For each={props.entries}>
+            {(card) => (
+                <MangaVerticalCard
+                    cover={card.covers[0].cover_image}
+                    title={card.title}
+                    authors={card.author.name.full}
+                    totalChapters={card.chapters}
+                    type={card.type}
+                />
+            )}
+            </For>
             </div>
         </div>
     );

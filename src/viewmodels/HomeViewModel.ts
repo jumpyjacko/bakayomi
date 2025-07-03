@@ -1,41 +1,15 @@
-import { createSignal, onMount } from "solid-js";
-import { getAllItems, putItem } from "../db/db";
+import { createSignal, For, onMount } from "solid-js";
+import { getAllItems } from "../db/db";
 import { Series } from "../models/Series";
-import { searchMangaSeriesByName } from "../clients/AniList";
+import { Carousel } from "../models/Carousel";
 
 export function createHomeViewModel() {
-    const [carousels, setCarousels] = createSignal([]); // NOTE: Purely data
+    const [carousels, setCarousels] = createSignal<Carousel[]>([]); // NOTE: Purely data
     
     async function createLocalLibraryCarousel() {
         const library: Series[] = await getAllItems<Series>("library");
 
-        for (let series of library) {
-            if (series.al_id) { // TODO: Handle series not found on anilist (probably use some marker)
-                continue;
-            }
-
-            searchMangaSeriesByName(series.title)
-                .then(updateSeries)
-                .catch(handleError);
-            
-            async function updateSeries(data) {
-                console.log(data);
-                
-                const res = data.data.Media;
-                series.al_id = res.id;
-                series.author = res.staff.nodes[0]; // TODO: change this to handle multiple authors and filter for 'Mangaka' occupation
-                series.description = res.description;
-                series.original_lang = res.countryOfOrigin;
-                series.status = res.status;
-                series.covers.push({ name: "AniList Cover", cover_image: res.coverImage.extraLarge})
-
-                putItem<Series>("library", series);
-            }
-
-            async function handleError(error) {
-                console.log(error);
-            }
-        }
+        setCarousels(list => [...list, { title: "Local", entries: library }]);
     }
 
     onMount(async () => createLocalLibraryCarousel());

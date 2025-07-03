@@ -132,9 +132,7 @@ export async function getChapterPages(handle: FileSystemDirectoryHandle): Promis
         if (h.kind === 'file') {
             if (imageRegex.test(name)) {
                 const fileHandle = h as FileSystemFileHandle;
-                const file = await fileHandle.getFile();
-                const blob = new Blob([file], { type: "image/jpeg" });
-                const blobUrl = URL.createObjectURL(blob);
+                const blobUrl = await toBlobUrl(fileHandle);
 
                 pages.push({ uri: blobUrl, name });
             }
@@ -153,4 +151,12 @@ export async function verifyPermission(handle, mode = 'read') {
 
     permission = await handle.requestPermission(options);
     return permission === 'granted';
+}
+
+export async function toBlobUrl(handle: FileSystemFileHandle): Promise<string> {
+    const file = await handle.getFile();
+    const blob = new Blob([file], { type: "image/jpeg" });
+    const blobUrl = URL.createObjectURL(blob);
+
+    return blobUrl;
 }

@@ -28,3 +28,8 @@ export async function verifyPermission(...args) {
     const mod = await loadFsModule();
     return mod.verifyPermission(...args);
 }
+
+export async function toBlobUrl(...args) {
+    const mod = await loadFsModule();
+    return mod.toBlobUrl(...args);
+}
