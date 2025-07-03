@@ -2,8 +2,7 @@ import { useLocation, useNavigate } from "@solidjs/router";
 import { Show } from "solid-js";
 
 import { OcBookmark3, OcBookmarkfill3, OcGear3, OcHome3, OcHomefill3, OcPackagedependencies3, OcSearch3, OcStar3, OcStarfill3 } from "../assets/icons";
-import { getPermissions, Library, softRefreshLibrary } from "../models/Library";
-import { getItem } from "../db/db";
+import { softRefreshLibrary } from "../platform/fs";
 
 export default function HomeViewWrapper(props) {
     const navigate = useNavigate();
