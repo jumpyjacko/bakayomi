@@ -1,6 +1,8 @@
 import { isTauri } from "@tauri-apps/api/core";
-import { getItem } from "../db/db";
+import { getAllItems, getItem, putItem } from "../db/db";
 import { constructLibrary, requestLibraryFolderAccess, verifyPermission } from "../platform/fs";
+import { searchMangaSeriesByName } from "../clients/AniList";
+import { Series } from "./Series";
 
 export interface Library {
     id: string,
@@ -46,6 +48,20 @@ export async function AniListToLocalMetadata() {
             series.original_lang = res.countryOfOrigin;
             series.status = res.status;
             series.covers.push({ name: "AniList Cover", cover_image: res.coverImage.extraLarge})
+
+            switch (series.original_lang) {
+                case "JP":
+                    series.type = "Manga";
+                    break;
+                case "KR":
+                    series.type = "Manhwa";
+                    break;
+                case "CN":
+                    series.type = "Manhua";
+                    break;
+                default:
+                    series.type = "Unknown";
+            }
 
             putItem<Series>("library", series);
         }

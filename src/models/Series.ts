@@ -8,6 +8,7 @@ export interface Series {
     description?: string;
     status?: string;
     original_lang?: string;
+    type?: string;
     
     extension_id?: string;
     external_link?: string;

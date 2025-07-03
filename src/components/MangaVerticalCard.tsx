@@ -5,10 +5,10 @@ export default function MangaVerticalCard(props) {
     const [cover, setCover] = createSignal("");
     
     onMount(async () => {
-        if (typeof(props.cover) === "object") {
-            setCover(await toBlobUrl(props.cover));
-        } else {
+        if (props.cover.startsWith("http")) {
             setCover(props.cover);
+        } else {
+            setCover(await toBlobUrl(props.cover));
         }
     })
     

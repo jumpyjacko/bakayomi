@@ -154,9 +154,7 @@ export async function getChapterPages(path: string): Promise<Page[]> {
         if (e.isFile) {
             if (imageRegex.test(e.name)) {
                 const pagePath = await join(path, e.name);
-                const file = await readFile(pagePath);
-                const blob = new Blob([file], { type: "image/jpeg" });
-                const blobUrl = URL.createObjectURL(blob);
+                const blobUrl = await toBlobUrl(pagePath);
 
                 pages.push({ uri: blobUrl, name: e.name });
             }
@@ -164,6 +162,14 @@ export async function getChapterPages(path: string): Promise<Page[]> {
     }
 
     return pages;
+}
+
+export async function toBlobUrl(path: string): Promise<string> {
+    const file = await readFile(path);
+    const blob = new Blob([file], { type: "image/jpeg" });
+    const blobUrl = URL.createObjectURL(blob);
+
+    return blobUrl;
 }
 
 export async function verifyPermission() {
