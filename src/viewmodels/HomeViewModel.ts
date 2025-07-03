@@ -12,7 +12,7 @@ export function createHomeViewModel() {
     }
 
     onMount(async () => {
-        const library: Series[] = await getAllItems<Series>("library");
+        const library: Series[] = await getAllItems<Series>("local_library");
         setLibrary(library);
         
         createLocalLibraryCarousel();

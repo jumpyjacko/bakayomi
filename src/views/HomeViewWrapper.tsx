@@ -2,7 +2,7 @@ import { useLocation, useNavigate } from "@solidjs/router";
 import { Show } from "solid-js";
 
 import { OcBookmark3, OcBookmarkfill3, OcGear3, OcHome3, OcHomefill3, OcPackagedependencies3, OcSearch3, OcStar3, OcStarfill3 } from "../assets/icons";
-import { AniListToLocalMetadata, getPermissions, Library, refreshLibrary } from "../models/Library";
+import { getPermissions, Library, softRefreshLibrary } from "../models/Library";
 import { getItem } from "../db/db";
 
 export default function HomeViewWrapper(props) {
@@ -57,12 +57,7 @@ export default function HomeViewWrapper(props) {
                 flex-1
                 md:flex-col
                 ">
-                <button onclick={async () => {
-                    if (!await getItem<Library>("library_handle", "root")) {
-                        await refreshLibrary();
-                    }
-                    getPermissions();
-                } } aria-label="Import Local">
+                <button onclick={async () => await softRefreshLibrary()} aria-label="Import Local">
                 <OcPackagedependencies3 />
                 </button>
                 

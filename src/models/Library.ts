@@ -24,7 +24,7 @@ export async function getPermissions() {
 * Refreshes library via recalculating disk from the handle stored in IndexedDB.
 * Deliberately leaks due to levelDB stuff. Should compact over time?
 */
-export async function refreshLibrary() {
+export async function hardRefreshLibrary() {
     await getPermissions();
     
     const libraryHandle = await getItem<Library>("library_handle", "root")
@@ -37,13 +37,29 @@ export async function refreshLibrary() {
 
     for (const series of seriesList) {
         console.log(series);
-        putItem<Series>("library", series)
+        putItem<Series>("local_library", series)
             .then(result => {
-                console.log("Added series to indexedDB under 'library' store");
+                console.log("Added series to indexedDB under 'local_library' store");
             })
             .catch(error => {
-                console.error("Failed to add series to indexedDB under 'library' store: ", error);
+                console.error("Failed to add series to indexedDB under 'local_library' store: ", error);
             });
+    }
+}
+
+export async function softRefreshLibrary() {
+    await getPermissions();
+
+    const libraryHandle = await getItem<Library>("library_handle", "root")
+        .then(res => res.handle);
+    
+    const oldLibrary = await getAllItems<Series>("local_library");
+
+    console.log(oldLibrary);
+
+    if (oldLibrary.length === 0) {
+        await hardRefreshLibrary();
+        return;
     }
 }
 
@@ -62,12 +78,15 @@ export async function AniListToLocalMetadata(seriesList: Series[]): Promise<Seri
 
             const res = data.data.Media;
             updatedSeries.al_id = res.id;
-            updatedSeries.author = res.staff.nodes[0]; // TODO: change this to handle multiple authors and filter for 'Mangaka' occupation
             updatedSeries.description = res.description;
-            updatedSeries.original_lang = res.countryOfOrigin;
             updatedSeries.status = res.status;
             updatedSeries.covers.push({ name: "AniList Cover", cover_image: res.coverImage.extraLarge})
 
+            for (const author of res.staff.nodes) {
+                console.log(author);
+            }
+            
+            updatedSeries.original_lang = res.countryOfOrigin;
             switch (updatedSeries.original_lang) {
                 case "JP":
                     updatedSeries.type = "Manga";
