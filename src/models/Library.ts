@@ -37,13 +37,14 @@ export async function AniListToLocalMetadata() {
     const library: Series[] = await getAllItems<Series>("library");
 
     for (let series of library) {
+        console.log("here");
         if (series.al_id) { // TODO: Handle series not found on anilist (probably use some marker)
             continue;
         }
 
         searchMangaSeriesByName(series.title)
-        .then(updateSeries)
-        .catch(handleError);
+            .then(updateSeries)
+            .catch(handleError);
 
         async function updateSeries(data) {
             console.log(data);

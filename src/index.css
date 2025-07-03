@@ -44,9 +44,9 @@
         @variant dark {
             --color-surface: #19191b;
             --color-text: #ffffff;
-            --color-primary: #3b87ca;
-            --color-primary-faded: #eaf1f7;
-            --color-primary-dimmed: #356691;
+            --color-primary: #ffffff;
+            --color-primary-faded: #19191b;
+            --color-primary-dimmed: #bbbbbb;
             --color-secondary: #ca506e;
             --color-secondary-dimmed: #f7e1e7;
         }

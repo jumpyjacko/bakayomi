@@ -6,9 +6,9 @@ export default function MangaVerticalCard(props) {
     const [cover, setCover] = createSignal("");
     
     onMount(async () => {
-        const AniListCover = props.covers.find(c => c.name === "AniList Cover");
+        // const AniListCover = props.covers.find(c => c.name === "AniList Cover");
 
-        const cover = AniListCover.cover_image;
+        const cover = props.covers[0].cover_image;
 
         if (typeof(cover) === "string" && cover.startsWith("http")) {
             setCover(cover);
