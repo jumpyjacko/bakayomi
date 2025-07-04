@@ -9,7 +9,7 @@ export default function HomeView() {
 
     return (
         <div class="flex flex-col bg-surface text-text">
-            <Banner series={vm.bannerSeries()}/>
+            <Banner series={vm.bannerSeries}/>
             <For each={vm.carousels()}>
                 {(carousel) => <Carousel title={carousel.title} entries={carousel.entries} />}
             </For>
