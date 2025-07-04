@@ -37,7 +37,8 @@ export default function Banner(props: any) {
                 <p class="typo-body text-wrap line-clamp-2 md:line-clamp-4">
                 {currentBanner().description}
                 </p>
-                <div class="absolute bottom-[-60px] flex flex-row flex-nowrap gap-x-[6px]">
+                
+                <div class="absolute top-[280px] flex flex-row flex-nowrap gap-x-[6px]">
                 <IconButton icon={OcBookmark3} />
                 <IconButton icon={OcBook3} text="Start Reading" />
                 <TextButton text="View Details" />
