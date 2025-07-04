@@ -49,7 +49,6 @@ export async function searchMangaSeriesByName(search: string) {
             bannerImage
             coverImage {
                 extraLarge
-                color
             }
             staff {
                 nodes {
@@ -65,7 +64,6 @@ export async function searchMangaSeriesByName(search: string) {
             title {
                 userPreferred
             }
-            type
             description
             countryOfOrigin
         }
@@ -88,7 +86,6 @@ export async function searchMangaSeriesById(id: number) {
             bannerImage
             coverImage {
                 extraLarge
-                color
             }
             staff {
                 nodes {
@@ -98,7 +95,6 @@ export async function searchMangaSeriesById(id: number) {
                     primaryOccupations
                 }
             }
-            chapters
             id
             status
             title {
