@@ -58,7 +58,7 @@ export async function getPermissions() {
 * Refreshes library, wipes metadata, refetches metadata, only use on first startup
 * and total database rewrites.
 */
-export async function hardRefreshLibrary() {
+export async function hardRefreshLibrary(refreshIndicator) {
     await getPermissions();
     
     const libraryHandle = await getItem<Library>("library_handle", "root")
@@ -76,6 +76,8 @@ export async function hardRefreshLibrary() {
                 console.error("Failed to add series to indexedDB under 'local_library' store: ", error);
             });
     }
+
+    await refreshIndicator(false);
 }
 
 /**
@@ -87,7 +89,7 @@ export async function softRefreshLibrary(refreshIndicator) {
     
     const oldLibrary = await getAllItems<Series>("local_library");
     if (oldLibrary.length === 0) {
-        await hardRefreshLibrary();
+        await hardRefreshLibrary(refreshIndicator);
         return;
     }
     
