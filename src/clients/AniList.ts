@@ -74,7 +74,7 @@ export async function searchMangaSeriesByName(search: string) {
     {
         "search": "${search}"
     }
-    `
+    `;
 
     return await sendQuery(query, variables);
 }
@@ -111,7 +111,55 @@ export async function searchMangaSeriesById(id: number) {
     {
         "id": ${id}
     }
-    `
+    `;
+
+    return await sendQuery(query, variables);
+}
+
+export async function getTrendingSeries() {
+    const query = `
+    query Query($page: Int, $perPage: Int, $averageScoreGreater: Int, $status: MediaStatus, $sort: [MediaSort]) {
+        Page(page: $page, perPage: $perPage) {
+            media(
+                type: MANGA
+                averageScore_greater: $averageScoreGreater
+                status: $status
+                sort: $sort
+            ) {
+                id
+                bannerImage
+                coverImage {
+                    extraLarge
+                }
+                staff {
+                    nodes {
+                        name {
+                            full
+                        }
+                        primaryOccupations
+                    }
+                }
+                status
+                title {
+                    userPreferred
+                }
+                description
+                countryOfOrigin
+                averageScore
+            }
+        }
+    }
+    `;
+
+    const variables = `
+    {
+        "page": 0,
+        "perPage": 15,
+        "averageScoreGreater": 80,
+        "status": "RELEASING",
+        "sort": ["TRENDING"]
+    }
+    `;
 
     return await sendQuery(query, variables);
 }

@@ -79,3 +79,14 @@ export async function deleteItem(storeName: string, key: IDBValidKey) {
         request.onerror = () => reject(request.error);
     });
 }
+
+export async function clearStore(storeName: string) {
+    const { store } = await getStore(storeName, "readwrite");
+
+    return new Promise((resolve, reject) => {
+        const request = store.clear();
+
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => reject(request.error);
+    })
+}

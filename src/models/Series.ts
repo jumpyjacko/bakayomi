@@ -18,7 +18,7 @@ export interface Series {
 
     al_id?: number;
     
-    volumes: Volume[];
+    volumes?: Volume[];
     covers: Cover[];
     banner?: string;
 }
