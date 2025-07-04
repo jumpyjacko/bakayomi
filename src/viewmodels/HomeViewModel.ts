@@ -1,5 +1,5 @@
 import { createSignal, onMount } from "solid-js";
-import { addItem, getAllItems } from "../db/db";
+import { addItem, clearStore, getAllItems } from "../db/db";
 import { Series } from "../models/Series";
 import { Carousel } from "../models/Carousel";
 import { getTrendingSeries } from "../clients/AniList";
@@ -42,6 +42,7 @@ export function createHomeViewModel() {
         }
         
         if (shouldUpdateBannerStore()) {
+            await clearStore("banner_series");
             const trendingSeries = await getTrendingSeries();
 
             const VALID_STAFF_OCCUPATIONS = ["Mangaka", "Writer", "Illustrator", "Artist"];
@@ -57,6 +58,21 @@ export function createHomeViewModel() {
                     
                     al_rating: res.averageScore,
                     al_id: res.id,
+                }
+
+                series.original_lang = res.countryOfOrigin;
+                switch (series.original_lang) {
+                    case "JP":
+                        series.type = "Manga";
+                    break;
+                    case "KR":
+                        series.type = "Manhwa";
+                    break;
+                    case "CN":
+                        series.type = "Manhua";
+                    break;
+                    default:
+                        series.type = "Unknown";
                 }
 
                 for (const staff of res.staff.nodes) {

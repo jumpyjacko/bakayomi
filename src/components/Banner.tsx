@@ -6,10 +6,12 @@ import { Series } from "../models/Series";
 
 export default function Banner(props: any) {
     const [currentBanner, setCurrentBanner] = createSignal<Series>();
+    const [chapters, setChapters] = createSignal(0);
 
     createEffect(() => {
-        setCurrentBanner(props.series()[0]);
-    })
+        const series = props.series()[0];
+        setCurrentBanner(series);
+    });
     
     return (
         <div class="h-[300px] relative">
@@ -28,7 +30,7 @@ export default function Banner(props: any) {
                     {currentBanner().type}
                     </p>
                     <p class="typo-subtitle">
-                     Chapters
+                    {chapters()} Chapters
                     </p>
                     <p class="typo-subtitle">
                     Publishing
