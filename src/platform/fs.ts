@@ -111,6 +111,7 @@ export async function softRefreshLibrary() {
     }
 }
 
+const VALID_STAFF_OCCUPATIONS = ["Mangaka", "Writer", "Illustrator", "Artist"];
 export async function AniListToLocalMetadata(seriesList: Series[]): Promise<Series[]> {
     const updatedSeriesList: Series[] = [];
     
@@ -130,8 +131,16 @@ export async function AniListToLocalMetadata(seriesList: Series[]): Promise<Seri
             updatedSeries.status = res.status;
             updatedSeries.covers.push({ name: "AniList Cover", cover_image: res.coverImage.extraLarge})
 
-            for (const author of res.staff.nodes) {
-                console.log(author);
+            for (const staff of res.staff.nodes) {
+                if (res.staff.nodes.length === 1) {
+                    updatedSeries.staff.push(staff.name.full);
+                }
+
+                for (const occupation of staff.primaryOccupations) {
+                    if (VALID_STAFF_OCCUPATIONS.includes(occupation)) {
+                        updatedSeries.staff.push(staff.name.full);
+                    }
+                }
             }
             
             updatedSeries.original_lang = res.countryOfOrigin;

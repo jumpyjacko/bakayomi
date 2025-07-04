@@ -62,6 +62,7 @@ async function constructSeries(path: string, parentHandle: DirEntry): Promise<Se
     
     const orphanedChapterList: Chapter[] = [];
     const volumes: Volume[] = [];
+    const staff: string[] = [];
     let covers: Cover[] = [];
 
     const seriesEntries = await readDir(path);
@@ -93,8 +94,7 @@ async function constructSeries(path: string, parentHandle: DirEntry): Promise<Se
         volumes.push(dummyVolume);
     }
 
-    // TODO: look at web.ts for todo
-    return { title: parentHandle.name, volumes, covers };
+    return { title: parentHandle.name, volumes, covers, staff };
 }
 
 async function createCoversList(path: string): Promise<Cover[]> {

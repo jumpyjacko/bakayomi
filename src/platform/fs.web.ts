@@ -49,6 +49,7 @@ async function constructSeries(handle: FileSystemDirectoryHandle): Promise<Serie
     // NOTE: holds orphaned chapters (not belonging to a volume)
     const orphanedChapterList: Chapter[] = [];
     const volumes: Volume[] = [];
+    const staff: string[] = [];
     let covers: Cover[] = [];
 
     for await (const [name, h] of handle.entries() as AsyncIterable<[string, FileSystemHandle]>) {
@@ -77,8 +78,7 @@ async function constructSeries(handle: FileSystemDirectoryHandle): Promise<Serie
         volumes.push(dummyVolume);
     }
 
-    // TODO: determine original language from some metadata (mal/al, idk?)
-    return { title: handle.name, volumes, covers };
+    return { title: handle.name, volumes, covers, staff };
 }
 
 async function createCoversList(handle: FileSystemDirectoryHandle): Promise<Cover[]> {

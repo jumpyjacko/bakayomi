@@ -4,7 +4,7 @@ import { Volume } from './Volume';
 export interface Series {
     title: string;
     alt_titles?: string[];
-    authors?: string[];
+    staff: string[];
     description?: string;
     status?: string;
     original_lang?: string;
