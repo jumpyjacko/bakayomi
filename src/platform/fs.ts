@@ -82,7 +82,9 @@ export async function hardRefreshLibrary() {
 * Refreshes library by getting new series from disk and checking if it exists
 * already with metadata before adding to the database.
 */
-export async function softRefreshLibrary() {
+export async function softRefreshLibrary(refreshIndicator) {
+    refreshIndicator(true);
+    
     const oldLibrary = await getAllItems<Series>("local_library");
     if (oldLibrary.length === 0) {
         await hardRefreshLibrary();
@@ -109,6 +111,8 @@ export async function softRefreshLibrary() {
                 console.error("Failed to add series to indexedDB under 'local_library' store: ", error);
             });
     }
+    
+    await refreshIndicator(false);
 }
 
 const VALID_STAFF_OCCUPATIONS = ["Mangaka", "Writer", "Illustrator", "Artist"];

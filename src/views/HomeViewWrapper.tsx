@@ -1,12 +1,14 @@
 import { useLocation, useNavigate } from "@solidjs/router";
-import { Show } from "solid-js";
+import { createSignal, Show } from "solid-js";
 
-import { OcBookmark3, OcBookmarkfill3, OcGear3, OcHome3, OcHomefill3, OcPackagedependencies3, OcSearch3, OcStar3, OcStarfill3 } from "../assets/icons";
+import { MdiSpinner, OcBookmark3, OcBookmarkfill3, OcGear3, OcHome3, OcHomefill3, OcPackagedependencies3, OcSearch3, OcStar3, OcStarfill3 } from "../assets/icons";
 import { softRefreshLibrary } from "../platform/fs";
 
 export default function HomeViewWrapper(props) {
     const navigate = useNavigate();
     const location = useLocation();
+
+    const [refreshing, setRefreshing] = createSignal(false);
 
     return (
         <div class="
@@ -56,8 +58,10 @@ export default function HomeViewWrapper(props) {
                 flex-1
                 md:flex-col
                 ">
-                <button onclick={async () => await softRefreshLibrary()} aria-label="Import Local">
-                <OcPackagedependencies3 />
+                <button onclick={async () => await softRefreshLibrary(setRefreshing)} aria-label="Import Local">
+                <Show when={refreshing()} fallback={<OcPackagedependencies3 />}>
+                    <MdiSpinner />
+                </Show>
                 </button>
                 
                 <button onclick={() => navigate("/updates")} aria-label="Updates">
