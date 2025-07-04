@@ -94,7 +94,12 @@ async function constructSeries(path: string, parentHandle: DirEntry): Promise<Se
         volumes.push(dummyVolume);
     }
 
-    return { title: parentHandle.name, volumes, covers, staff };
+    let chapter_count = 0;
+    for (const vol of volumes) {
+        chapter_count += vol.chapter_count;
+    }
+
+    return { title: parentHandle.name, volumes, covers, staff, chapter_count };
 }
 
 async function createCoversList(path: string): Promise<Cover[]> {

@@ -18,6 +18,7 @@ export interface Series {
 
     al_id?: number;
     
+    chapter_count?: number;
     volumes?: Volume[];
     covers: Cover[];
     banner?: string;

@@ -78,7 +78,13 @@ async function constructSeries(handle: FileSystemDirectoryHandle): Promise<Serie
         volumes.push(dummyVolume);
     }
 
-    return { title: handle.name, volumes, covers, staff };
+    let chapter_count = 0;
+    for (const vol of volumes) {
+        chapter_count += vol.chapter_count;
+    }
+
+
+    return { title: handle.name, volumes, covers, staff, chapter_count };
 }
 
 async function createCoversList(handle: FileSystemDirectoryHandle): Promise<Cover[]> {

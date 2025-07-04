@@ -6,10 +6,10 @@ import { Series } from "../models/Series";
 
 export default function Banner(props: any) {
     const [currentBanner, setCurrentBanner] = createSignal<Series>();
-    const [chapters, setChapters] = createSignal(0);
+    const [bannerIndex, setBannerIndex] = createSignal(0);
 
     createEffect(() => {
-        const series = props.series()[0];
+        const series = props.series()[bannerIndex()];
         setCurrentBanner(series);
     });
     
@@ -30,7 +30,7 @@ export default function Banner(props: any) {
                     {currentBanner().type}
                     </p>
                     <p class="typo-subtitle">
-                    {chapters()} Chapters
+                    {currentBanner()?.al_rating}% Rating
                     </p>
                     <p class="typo-subtitle">
                     Publishing
@@ -40,7 +40,7 @@ export default function Banner(props: any) {
                 {currentBanner().description}
                 </p>
                 
-                <div class="absolute top-[280px] flex flex-row flex-nowrap gap-x-[6px]">
+                <div class="absolute bottom-[-60px] md:top-[270px] flex flex-row flex-nowrap gap-x-[6px]">
                 <IconButton icon={OcBookmark3} />
                 <IconButton icon={OcBook3} text="Start Reading" />
                 <TextButton text="View Details" />
