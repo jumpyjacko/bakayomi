@@ -1,6 +1,8 @@
 import { isTauri } from "@tauri-apps/api/core";
-import { getAllItems, getItem, putItem } from "../db/db";
+import { addItem, getAllItems, getItem, putItem } from "../db/db";
 import { searchMangaSeriesByName } from "../clients/AniList";
+import { Series } from "../models/Series";
+import { Library } from "../models/Library";
 
 let fsModulePromise: Promise<any> | null = null;
 
@@ -53,8 +55,8 @@ export async function getPermissions() {
 }
 
 /**
-* Refreshes library via recalculating disk from the handle stored in IndexedDB.
-* Deliberately leaks due to levelDB stuff. Should compact over time?
+* Refreshes library, wipes metadata, refetches metadata, only use on first startup
+* and total database rewrites.
 */
 export async function hardRefreshLibrary() {
     await getPermissions();
@@ -65,11 +67,8 @@ export async function hardRefreshLibrary() {
     const library = await constructLibrary(libraryHandle);
     const seriesList = await AniListToLocalMetadata(library);
 
-    console.log(seriesList);
-
     for (const series of seriesList) {
-        console.log(series);
-        putItem<Series>("local_library", series)
+        addItem<Series>("local_library", series)
             .then(result => {
                 console.log("Added series to indexedDB under 'local_library' store");
             })
@@ -79,19 +78,36 @@ export async function hardRefreshLibrary() {
     }
 }
 
+/**
+* Refreshes library by getting new series from disk and checking if it exists
+* already with metadata before adding to the database.
+*/
 export async function softRefreshLibrary() {
-    await getPermissions();
-
-    const libraryHandle = await getItem<Library>("library_handle", "root")
-        .then(res => res.handle);
-    
     const oldLibrary = await getAllItems<Series>("local_library");
-
-    console.log(oldLibrary);
-
     if (oldLibrary.length === 0) {
         await hardRefreshLibrary();
         return;
+    }
+    
+    await getPermissions();
+    const libraryHandle = await getItem<Library>("library_handle", "root")
+        .then(res => res?.handle);
+    
+    const newLibrary = await constructLibrary(libraryHandle);
+
+    const existingTitles = new Set(oldLibrary.map(item => item.title));
+    const newTitles = newLibrary.filter(item => !existingTitles.has(item.title));
+
+    const newSeriesList = await AniListToLocalMetadata(newTitles);
+
+    for (const series of newSeriesList) {
+        addItem<Series>("local_library", series)
+            .then(result => {
+                console.log("Added series to indexedDB under 'local_library' store");
+            })
+            .catch(error => {
+                console.error("Failed to add series to indexedDB under 'local_library' store: ", error);
+            });
     }
 }
 
