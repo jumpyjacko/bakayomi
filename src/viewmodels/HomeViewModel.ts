@@ -3,6 +3,7 @@ import { addItem, getAllItems } from "../db/db";
 import { Series } from "../models/Series";
 import { Carousel } from "../models/Carousel";
 import { getTrendingSeries } from "../clients/AniList";
+import { shuffleArray } from "../utils/utils";
 
 export function createHomeViewModel() {
     const [carousels, setCarousels] = createSignal<Carousel[]>([]);
@@ -75,6 +76,11 @@ export function createHomeViewModel() {
                 addItem<Series>("banner_series", series);
             }
         }
+
+        let banners = await getAllItems<Series>("banner_series");
+        shuffleArray(banners);
+
+        setBannerSeries(banners.slice(0, 5));
     });
     
     return {
