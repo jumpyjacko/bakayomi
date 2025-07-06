@@ -1,4 +1,4 @@
-import { createEffect, createSignal, Show } from "solid-js";
+import { createEffect, createSignal, onCleanup, onMount, Show } from "solid-js";
 import { MdiLanguage, OcBook3, OcBookmark3, OcShareandroid3 } from "../assets/icons";
 import IconButton from "./IconButton";
 import TextButton from "./TextButton";
@@ -7,6 +7,18 @@ import { Series } from "../models/Series";
 export default function Banner(props: any) {
     const [currentBanner, setCurrentBanner] = createSignal<Series>();
     const [bannerIndex, setBannerIndex] = createSignal(0);
+
+    function goNextBanner() {
+        setBannerIndex((prev) => (prev + 1) % 5);
+    }
+    
+    onMount(() => {
+        const bannerInterval = setInterval(goNextBanner, 20000);
+        
+        onCleanup(() => {
+            clearInterval(bannerInterval);
+        });
+    });
 
     createEffect(() => {
         const series = props.series()[bannerIndex()];
