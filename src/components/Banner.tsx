@@ -1,19 +1,21 @@
-import { createEffect, createSignal, onCleanup, onMount, Show } from "solid-js";
+import { createEffect, createSignal, For, onCleanup, onMount, Show } from "solid-js";
+
+import { Series } from "../models/Series";
+
 import { MdiLanguage, OcBook3, OcBookmark3, OcShareandroid3 } from "../assets/icons";
 import IconButton from "./IconButton";
 import TextButton from "./TextButton";
-import { Series } from "../models/Series";
 
 export default function Banner(props: any) {
     const [currentBanner, setCurrentBanner] = createSignal<Series>();
     const [bannerIndex, setBannerIndex] = createSignal(0);
 
-    function goNextBanner() {
+    function incBanner() {
         setBannerIndex((prev) => (prev + 1) % 5);
     }
     
     onMount(() => {
-        const bannerInterval = setInterval(goNextBanner, 20000);
+        const bannerInterval = setInterval(incBanner, 20000);
         
         onCleanup(() => {
             clearInterval(bannerInterval);
@@ -61,6 +63,14 @@ export default function Banner(props: any) {
                 </div>
             </div>
             <div class="absolute top-0 left-0 w-full h-[100px] md:h-[300px] md:overflow-clip">
+                <div class="absolute bottom-0 right-0 z-10 p-3 flex flex-row gap-1">
+                <For each={props.series()}>
+                {(_, index) => ( 
+                    <div id={`banner-${index()}`} class="bg-surface/40 w-10 h-0.5 shadow-2 rounded-2xl"/>
+                )}
+                </For>
+                </div>
+                
                 <div class="hidden md:block md:absolute h-full md:w-1/2 xl:w-1/3
                 bg-gradient-to-r from-surface from-10% via-surface/80 via-60% to-transparent" />
                 <div class="absolute bottom-0 h-3/4 md:h-[30px] w-full mb-[-1px]
