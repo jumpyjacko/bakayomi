@@ -31,9 +31,9 @@ export function createHomeViewModel() {
             const lastTime = parseInt(storedTimestamp, 10);
             const now = Date.now();
 
-            const oneDay = 86400000;
+            const eighteenHours = 64800000;
 
-            if (now - lastTime >= oneDay) {
+            if (now - lastTime >= eighteenHours) {
                 localStorage.setItem("last_banner_fetch", now.toString());
                 return true;
             }
