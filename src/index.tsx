@@ -13,6 +13,7 @@ import LibraryView from "./views/LibraryView";
 import BrowseView from "./views/BrowseView";
 import UpdatesView from "./views/UpdatesView";
 import SettingsView from "./views/SettingsView";
+import SeriesView from "./views/SeriesView";
 
 const root = document.getElementById("root");
 
@@ -49,6 +50,7 @@ render(() => {
             <Route path="/settings" component={SettingsView} />
         </Route>
         <Route path="/read/:title/:chapter" component={ReaderView} />
+        <Route path="/series/:title" component={SeriesView} />
         </Router>
         </>
     );

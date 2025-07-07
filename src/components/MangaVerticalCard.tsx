@@ -1,7 +1,11 @@
 import { createSignal, onMount } from "solid-js"
+import { useNavigate } from "@solidjs/router";
+
 import { toBlobUrl } from "../platform/fs";
 
 export default function MangaVerticalCard(props) {
+    const navigate = useNavigate();
+    
     const [cover, setCover] = createSignal("");
     const [title, setTitle] = createSignal("");
     const [author, setAuthor] = createSignal("");
@@ -29,7 +33,7 @@ export default function MangaVerticalCard(props) {
     })
     
     return (
-        <div class="m-[12px] w-[170px] h-[340px] flex flex-col">
+        <button class="m-[12px] w-[170px] h-[340px] flex flex-col text-left" onclick={() => navigate(`series/${title()}`)}>
             <div class="
             w-[170px] h-[245px]
             flex flex-row flex-nowrap
@@ -56,6 +60,6 @@ export default function MangaVerticalCard(props) {
                 {type()}
                 </div>
             </div>
-        </div>
+        </button>
     )
 }
