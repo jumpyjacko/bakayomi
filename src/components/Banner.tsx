@@ -14,6 +14,8 @@ export default function Banner(props: any) {
         setBannerIndex((prev) => (prev + 1) % 5);
     }
     
+    let prevIndicatorRef: HTMLElement | null;
+    let prevInd2Ref: HTMLElement | null;
     onMount(() => {
         const bannerInterval = setInterval(incBanner, 20000);
         
@@ -25,6 +27,17 @@ export default function Banner(props: any) {
     createEffect(() => {
         const series = props.series()[bannerIndex()];
         setCurrentBanner(series);
+        
+        const activeIndicatorRef = document.getElementById(`banner-${bannerIndex()}`);
+        const activeInd2Ref = document.getElementById(`banner-track-${bannerIndex()}`);
+
+        prevIndicatorRef?.classList.remove("w-10");
+        prevInd2Ref?.classList.remove("duration-20000", "w-full", "ease-linear");
+        activeIndicatorRef?.classList.add("w-10");
+        activeInd2Ref?.classList.add("duration-20000", "w-full", "ease-linear");
+        
+        prevIndicatorRef = activeIndicatorRef;
+        prevInd2Ref = activeInd2Ref;
     });
     
     return (
@@ -33,7 +46,7 @@ export default function Banner(props: any) {
             <div class="
             flex flex-col relative top-0 z-1 pl-[25px] pt-[25px] pr-[10%] gap-[8px] mt-8
             md:mt-0 md:w-1/2 xl:w-1/3">
-                <h1 class="typo-title line-clamp-2">
+                <h1 class="typo-title line-clamp-2 shadow-2">
                 {currentBanner().title}
                 </h1>
                 <p class="typo-body line-clamp-1">
@@ -66,7 +79,9 @@ export default function Banner(props: any) {
                 <div class="absolute bottom-0 right-0 z-10 p-3 flex flex-row gap-1">
                 <For each={props.series()}>
                 {(_, index) => ( 
-                    <div id={`banner-${index()}`} class="bg-surface/40 w-10 h-0.5 shadow-2 rounded-2xl"/>
+                    <button onclick={() => setBannerIndex(index)} id={`banner-${index()}`} class="bg-surface/40 w-5 h-0.5 shadow-2 rounded-2xl transition-all overflow-clip duration-300">
+                        <div id={`banner-track-${index()}`} class="w-0 h-full bg-text transition-all"/>
+                    </button>
                 )}
                 </For>
                 </div>
