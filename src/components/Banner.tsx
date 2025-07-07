@@ -36,7 +36,7 @@ export default function Banner(props: any) {
                 <h1 class="typo-title line-clamp-2">
                 {currentBanner().title}
                 </h1>
-                <p class="typo-body">
+                <p class="typo-body line-clamp-1">
                 {currentBanner().staff.join(", ")}
                 </p>
                 <div class="flex flex-row gap-[12px]">
@@ -72,9 +72,9 @@ export default function Banner(props: any) {
                 </div>
                 
                 <div class="hidden md:block md:absolute h-full md:w-1/2 xl:w-1/3
-                bg-gradient-to-r from-surface from-10% via-surface/80 via-60% to-transparent" />
+                bg-gradient-to-r from-surface from-10% via-surface/60 via-75% to-transparent" />
                 <div class="absolute bottom-0 h-3/4 md:h-[30px] w-full mb-[-1px]
-                bg-gradient-to-t from-surface via-surface/75 via-50% md:via-25% to-transparent
+                bg-gradient-to-t from-surface via-surface/50 via-50% md:via-25% to-transparent
                 " />
                 <img class="h-full w-full object-cover" src={currentBanner().banner} />
             </div>
