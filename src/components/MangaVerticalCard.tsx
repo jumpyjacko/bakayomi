@@ -52,7 +52,7 @@ export default function MangaVerticalCard(props) {
             <div class="w-full flex-1 typo-thin line-clamp-1">
             {author()}
             </div>
-            <div class="flex flex-row typo-subtitle">
+            <div class="flex flex-row typo-subtitle w-full">
                 <div class="flex-1">
                 {chapters()} Chapters
                 </div>
