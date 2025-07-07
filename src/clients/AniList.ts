@@ -154,7 +154,7 @@ export async function getTrendingSeries() {
     const variables = `
     {
         "page": 0,
-        "perPage": 15,
+        "perPage": 30,
         "averageScoreGreater": 80,
         "status": "RELEASING",
         "sort": ["TRENDING"]
