@@ -46,7 +46,7 @@ export default function Banner(props: any) {
             <div class="
             flex flex-col relative top-0 z-1 pl-[25px] pt-[25px] pr-[10%] gap-[8px] mt-8
             md:mt-0 md:w-1/2 xl:w-1/3">
-                <h1 class="typo-title line-clamp-2 shadow-2">
+                <h1 class="typo-title line-clamp-2">
                 {currentBanner().title}
                 </h1>
                 <p class="typo-body line-clamp-1">
