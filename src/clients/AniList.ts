@@ -118,13 +118,14 @@ export async function searchMangaSeriesById(id: number) {
 
 export async function getTrendingSeries() {
     const query = `
-    query Query($page: Int, $perPage: Int, $averageScoreGreater: Int, $status: MediaStatus, $sort: [MediaSort]) {
+    query Query($page: Int, $perPage: Int, $averageScoreGreater: Int, $status: MediaStatus, $sort: [MediaSort], $isAdult: Boolean) {
         Page(page: $page, perPage: $perPage) {
             media(
                 type: MANGA
                 averageScore_greater: $averageScoreGreater
                 status: $status
                 sort: $sort
+                isAdult: $isAdult
             ) {
                 id
                 bannerImage
@@ -157,7 +158,8 @@ export async function getTrendingSeries() {
         "perPage": 30,
         "averageScoreGreater": 80,
         "status": "RELEASING",
-        "sort": ["TRENDING"]
+        "sort": ["TRENDING"],
+        "isAdult": false
     }
     `;
 

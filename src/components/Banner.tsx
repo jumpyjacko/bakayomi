@@ -67,7 +67,7 @@ export default function Banner(props: any) {
                 {currentBanner().description}
                 </p>
                 
-                <div class="absolute bottom-[-60px] md:top-[270px] flex flex-row flex-nowrap gap-x-[6px]">
+                <div class="absolute bottom-[-60px] md:top-[260px] flex flex-row flex-nowrap gap-x-[6px]">
                 <IconButton icon={OcBookmark3} />
                 <IconButton icon={OcBook3} text="Start Reading" />
                 <TextButton text="View Details" />
@@ -75,7 +75,7 @@ export default function Banner(props: any) {
                 <IconButton icon={MdiLanguage} invert={() => true} />
                 </div>
             </div>
-            <div class="absolute top-0 left-0 w-full h-[100px] md:h-[300px] md:overflow-clip">
+            <div class="absolute top-0 left-0 w-full h-[100px] md:h-[280px] md:overflow-clip">
                 <div class="absolute bottom-0 right-0 z-10 p-3 flex flex-row gap-1">
                 <For each={props.series()}>
                 {(_, index) => ( 
