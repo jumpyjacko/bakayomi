@@ -46,11 +46,11 @@ render(() => {
             <Route path="/" component={HomeView} />
             <Route path="/library" component={LibraryView} />
             <Route path="/browse" component={BrowseView} />
+            <Route path="/series/:title" component={SeriesView} />
             <Route path="/updates" component={UpdatesView} />
             <Route path="/settings" component={SettingsView} />
         </Route>
         <Route path="/read/:title/:chapter" component={ReaderView} />
-        <Route path="/series/:title" component={SeriesView} />
         </Router>
         </>
     );

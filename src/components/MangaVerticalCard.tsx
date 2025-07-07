@@ -31,9 +31,19 @@ export default function MangaVerticalCard(props) {
         setType(props.series.type);
         setChapters(props.series.chapter_count);
     })
+
+    function navigateTo() {
+        if (document.startViewTransition) {
+            document.startViewTransition(() => {
+                navigate(`series/${title()}`);
+            });
+        } else {
+            navigate(`series/${title()}`);
+        }
+    }
     
     return (
-        <button class="m-[12px] w-[170px] h-[340px] flex flex-col text-left" onclick={() => navigate(`series/${title()}`)}>
+        <button class="m-[12px] w-[170px] h-[340px] flex flex-col text-left" onclick={navigateTo}>
             <div class="
             w-[170px] h-[245px]
             flex flex-row flex-nowrap
