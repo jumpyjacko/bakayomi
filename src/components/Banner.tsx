@@ -72,8 +72,8 @@ export default function Banner(props: any) {
                 <IconButton icon={OcBookmark3} />
                 <IconButton icon={OcBook3} text="Start Reading" />
                 <TextButton text="View Details" />
-                <IconButton class="hidden md:block" icon={OcShareandroid3} invert={() => true} />
-                <IconButton icon={MdiLanguage} invert={() => true} />
+                <IconButton class="hidden md:block" icon={OcShareandroid3} invert={true} />
+                <IconButton icon={MdiLanguage} invert={true} />
                 </div>
             </div>
             <div class="absolute top-0 left-0 w-full h-[100px] md:h-[280px] md:overflow-clip">
