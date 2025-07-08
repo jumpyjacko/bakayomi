@@ -60,7 +60,7 @@ export default function SeriesView() {
                     <h1 class="typo-heading">
                     Synopsis
                     </h1>
-                    <p>
+                    <p class="whitespace-pre-line">
                     {vm.series().description}
                     </p>
                 </div>

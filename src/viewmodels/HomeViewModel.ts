@@ -51,7 +51,7 @@ export function createHomeViewModel() {
                     title: res.title.userPreferred,
                     staff: [],
                     covers: [],
-                    description: res.description,
+                    description: res.description.replace(/<br\s*\/?>/gi, ''),
                     status: res.status,
                     original_lang: res.countryOfOrigin,
                     banner: res.bannerImage,
