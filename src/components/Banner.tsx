@@ -52,14 +52,14 @@ export default function Banner(props: any) {
                 <p class="typo-body line-clamp-1">
                 {currentBanner().staff.join(", ")}
                 </p>
-                <div class="flex flex-row gap-[12px]">
-                    <p class="typo-subtitle">
+                <div class="flex flex-row gap-[12px] typo-subtitle">
+                    <p>
                     {currentBanner().type}
                     </p>
-                    <p class="typo-subtitle">
+                    <p>
                     {currentBanner()?.al_rating}% Rating
                     </p>
-                    <p class="typo-subtitle">
+                    <p>
                     Publishing
                     </p>
                 </div>
