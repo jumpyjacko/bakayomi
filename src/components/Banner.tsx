@@ -6,10 +6,12 @@ import { MdiLanguage, OcBook3, OcBookmark3, OcShareandroid3 } from "../assets/ic
 import IconButton from "./IconButton";
 import TextButton from "./TextButton";
 import { convertAniListStatus } from "../utils/utils";
+import { toBlobUrl } from "../platform/fs";
 
 export default function Banner(props: any) {
     const [currentBanner, setCurrentBanner] = createSignal<Series>();
     const [bannerIndex, setBannerIndex] = createSignal(0);
+    const [cover, setCover] = createSignal("");
 
     function incBanner() {
         setBannerIndex((prev) => (prev + 1) % 5);
@@ -19,13 +21,13 @@ export default function Banner(props: any) {
     let prevInd2Ref: HTMLElement | null;
     onMount(() => {
         const bannerInterval = setInterval(incBanner, 20000);
-        
+
         onCleanup(() => {
             clearInterval(bannerInterval);
         });
     });
 
-    createEffect(() => {
+    createEffect(async () => {
         const series = props.series()[bannerIndex()];
         setCurrentBanner(series);
         
@@ -39,6 +41,17 @@ export default function Banner(props: any) {
         
         prevIndicatorRef = activeIndicatorRef;
         prevInd2Ref = activeInd2Ref;
+
+        const cover = currentBanner().covers[0].cover_image;
+        if (typeof(cover) === "string" && cover.startsWith("http")) {
+            setCover(cover);
+        } else {
+            const coverUri = await toBlobUrl(cover)
+                .catch(() => {
+                    console.log("no permissions");
+                });
+            setCover(coverUri);
+        }
     });
     
     return (
@@ -92,7 +105,7 @@ export default function Banner(props: any) {
                 <div class="absolute bottom-0 h-3/4 md:h-[30px] w-full mb-[-1px]
                 bg-gradient-to-t from-surface via-surface/50 via-50% md:via-25% to-transparent
                 " />
-                <img class="h-full w-full object-cover" src={currentBanner().banner} />
+                <img class="h-full w-full object-cover" src={currentBanner().banner ? currentBanner().banner : cover()} />
             </div>
             </Show>
         </div>
