@@ -148,6 +148,7 @@
     .typo-heading {
         font-family: var(--font-heading-family);
         font-size: var(--font-heading-size);
+        line-height: 1.2;
     }
 
     .typo-body {

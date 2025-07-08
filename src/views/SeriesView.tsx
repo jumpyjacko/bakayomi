@@ -11,7 +11,7 @@ export default function SeriesView() {
         <div class="text-text min-h-screen w-full flex flex-col xl:flex-row" style={{ "view-transition-name": "main-content"}}>
         <Show when={vm.series()}>
             <div class="flex flex-col xl:w-2/3">
-                <div class="flex flex-row w-full pl-8 md:pl-16 pt-[116px] gap-[16px]">
+                <div class="flex flex-row mx-2 md:mx-16 mt-[116px] gap-[16px]">
                     <div class="
                     flex flex-row flex-shrink-0
                     items-center justify-start overflow-hidden shadow-2
@@ -22,10 +22,10 @@ export default function SeriesView() {
                     </div>
                     <div class="flex flex-col">
                         <div class="typo-title h-[4.7em]">
-                            <h1 class="line-clamp-3">
+                            <h1 class="line-clamp-3 break-all typo-title md:break-keep hypens-auto">
                             {vm.series().title}
                             </h1>
-                            <h2 class="typo-heading line-clamp-1">
+                            <h2 class="typo-body md:typo-heading line-clamp-1">
                             {vm.series().staff.join(", ")}
                             </h2>
                         </div>
@@ -39,8 +39,7 @@ export default function SeriesView() {
                             <IconButton icon={SiMyAnimeList} invert={true} action={vm.malClick}/>
                         </div>
                         
-                        
-                        <div class="flex flex-row flex-wrap gap-[16px] typo-subtitle py-4">
+                        <div class="hidden md:flex flex-row flex-wrap gap-[16px] typo-subtitle py-4">
                             <p>
                             {vm.series().type}
                             </p>
@@ -75,7 +74,7 @@ export default function SeriesView() {
                 <div class="absolute bottom-0 h-full xl:h-[30px] w-full mb-[-1px]
                 bg-gradient-to-t from-surface via-surface/50 via-70% xl:via-25% to-transparent
                 " />
-                <img class="h-full w-full object-cover" src={vm.series().banner} />
+                <img class="h-full w-full object-cover" src={vm.series().banner ? vm.series().banner : vm.cover()} />
             </div>
         </Show>
         </div>

@@ -18,9 +18,9 @@ export default function HomeViewWrapper(props) {
         h-screen
         ">
             <div class="
-            flex justify-between *:p-[16px] bottom-0 left-0 bg-surface text-text overscroll-none *:select-none
-            flex-row h-[58px] *:h-full w-screen
-            md:static md:flex-col md:w-[58px] md:*:w-full md:*:h-full md:h-screen
+            fixed flex justify-between *:p-[16px] bottom-0 left-0 bg-surface text-text overscroll-none *:select-none
+            flex-row h-[58px] *:h-full w-screen z-50
+            md:static md:flex-col md:w-[58px] md:*:w-full md:*:h-full md:h-screen 
             ">
                 {/* Top Section */}
                 <div class="typo-ml-subtitle flex-1">
