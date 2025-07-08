@@ -1,7 +1,6 @@
 import { Show } from "solid-js";
 import { createSeriesViewModel } from "../viewmodels/SeriesViewModel"
 import IconButton from "../components/IconButton";
-import TextButton from "../components/TextButton";
 import { MdiLanguage, OcBook3, OcBookmark3, OcShareandroid3 } from "../assets/icons";
 import { convertAniListStatus } from "../utils/utils";
 
@@ -11,8 +10,8 @@ export default function SeriesView() {
     return (
         <div class="text-text min-h-screen w-full flex flex-col xl:flex-row" style={{ "view-transition-name": "main-content"}}>
         <Show when={vm.series()}>
-            <div class="flex flex-col">
-                <div class="flex flex-row w-full justify-center pl-8 md:pl-20 pt-[116px] gap-[16px]">
+            <div class="flex flex-col xl:w-2/3">
+                <div class="flex flex-row w-full pl-8 md:pl-16 pt-[116px] gap-[16px]">
                     <div class="
                     flex flex-row flex-shrink-0
                     items-center justify-start overflow-hidden shadow-2
@@ -22,7 +21,7 @@ export default function SeriesView() {
                         <img class="h-full flex-1 self-center overflow-hidden" src={vm.cover()} />
                     </div>
                     <div class="flex flex-col">
-                        <div class="typo-title h-[4.7em] w-2/3">
+                        <div class="typo-title h-[4.7em]">
                             <h1 class="line-clamp-3">
                             {vm.series().title}
                             </h1>
@@ -54,6 +53,14 @@ export default function SeriesView() {
                             </p>
                         </div>
                     </div>
+                </div>
+                <div class="flex flex-col w-full items-center justify-center px-8 md:px-16 pt-8">
+                    <h1 class="typo-heading">
+                    Synopsis
+                    </h1>
+                    <p>
+                    {vm.series().description}
+                    </p>
                 </div>
             </div>
             <div class="flex flex-col">
