@@ -1,5 +1,8 @@
 import { Show } from "solid-js";
 import { createSeriesViewModel } from "../viewmodels/SeriesViewModel"
+import IconButton from "../components/IconButton";
+import TextButton from "../components/TextButton";
+import { MdiLanguage, OcBook3, OcBookmark3, OcShareandroid3 } from "../assets/icons";
 
 export default function SeriesView() {
     const vm = createSeriesViewModel();
@@ -18,14 +21,22 @@ export default function SeriesView() {
                         <img class="h-full flex-1 self-center overflow-hidden" src={vm.cover()} />
                     </div>
                     <div class="flex flex-col">
-                        <h1 class="typo-title">
-                        {vm.series().title}
-                        </h1>
-                        <h2 class="typo-heading">
-                        {vm.series().staff.join(", ")}
-                        </h2>
-                    </div>
-                    <div class="flex flex-row">
+                        <div class="typo-title h-[4.7em] w-2/3">
+                            <h1 class="line-clamp-3">
+                            {vm.series().title}
+                            </h1>
+                            <h2 class="typo-heading line-clamp-1">
+                            {vm.series().staff.join(", ")}
+                            </h2>
+                        </div>
+                        
+                        <div class="flex flex-row gap-x-[6px]">
+                            <IconButton icon={OcBookmark3} />
+                            <IconButton icon={OcBook3} text="Start Reading" />
+                            <TextButton text="View Details" />
+                            <IconButton class="hidden md:block" icon={OcShareandroid3} invert={() => true} />
+                            <IconButton icon={MdiLanguage} invert={() => true} />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -34,10 +45,10 @@ export default function SeriesView() {
             </div>
             
             <div class="h-[300px] absolute top-0 w-full z-[-1]">
-                <div class="hidden md:block md:absolute h-full md:w-2/3
-                bg-gradient-to-r from-surface from-30% via-surface/60 via-75% to-transparent" />
-                <div class="absolute bottom-0 h-full md:h-[30px] w-full mb-[-1px]
-                bg-gradient-to-t from-surface via-surface/50 via-70% md:via-25% to-transparent
+                <div class="hidden md:block md:absolute h-full md:w-1/3 xl:w-2/3
+                bg-gradient-to-r from-surface xl:from-30% via-surface/60 via-75% to-transparent" />
+                <div class="absolute bottom-0 h-full xl:h-[30px] w-full mb-[-1px]
+                bg-gradient-to-t from-surface via-surface/50 via-70% xl:via-25% to-transparent
                 " />
                 <img class="h-full w-full object-cover" src={vm.series().banner} />
             </div>
