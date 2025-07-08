@@ -140,6 +140,8 @@ export async function AniListToLocalMetadata(seriesList: Series[]): Promise<Seri
             updatedSeries.banner = res.bannerImage;
             updatedSeries.start_year = res.startDate.year;
             updatedSeries.end_year = res.endDate.year;
+            updatedSeries.mal_id = res.idMal;
+            updatedSeries.al_link = res.siteUrl;
 
             for (const staff of res.staff.nodes) {
                 if (res.staff.nodes.length === 1) {

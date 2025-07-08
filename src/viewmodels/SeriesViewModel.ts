@@ -33,8 +33,14 @@ export function createSeriesViewModel() {
         console.log(request);
     });
 
+    const aniListClick = () => {
+        window.open(series().al_link);
+    }
+
     return {
        series,
-       cover
+       cover,
+
+       aniListClick
     };
 }

@@ -33,10 +33,10 @@ export default function SeriesView() {
                         <div class="flex flex-row flex-wrap gap-[6px]">
                             <IconButton icon={OcBookmark3} />
                             <IconButton icon={OcBook3} text="Start Reading" />
-                            <IconButton icon={OcShareandroid3} invert={() => true} />
-                            <IconButton icon={MdiLanguage} invert={() => true} />
-                            <IconButton icon={SiAniList} invert={() => true} />
-                            <IconButton icon={SiMyAnimeList} invert={() => true} />
+                            <IconButton icon={OcShareandroid3} invert={true} />
+                            <IconButton icon={MdiLanguage} invert={true} />
+                            <IconButton icon={SiAniList} invert={true} action={vm.aniListClick} />
+                            <IconButton icon={SiMyAnimeList} invert={true} />
                         </div>
                         
                         

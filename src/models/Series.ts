@@ -15,12 +15,14 @@ export interface Series {
     
     extension_id?: string;
     external_link?: string;
+    al_link?: string;
 
     mal_rating?: number;
     al_rating?: number;
     al_popularity?: number;
 
     al_id?: number;
+    mal_id?: number;
     
     chapter_count?: number;
     volumes?: Volume[];

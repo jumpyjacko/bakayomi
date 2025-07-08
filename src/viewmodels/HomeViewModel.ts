@@ -62,7 +62,9 @@ export function createHomeViewModel() {
                     
                     al_rating: res.averageScore,
                     al_id: res.id,
-                }
+                    mal_id: res.idMal,
+                    al_link: res.siteUrl,
+                };
 
                 series.original_lang = res.countryOfOrigin;
                 switch (series.original_lang) {

@@ -60,11 +60,13 @@ export async function searchMangaSeriesByName(search: string) {
             }
             chapters
             id
+            idMal
             status
             title {
                 userPreferred
             }
             description
+            siteUrl
             countryOfOrigin
             averageScore
             popularity
@@ -104,12 +106,13 @@ export async function searchMangaSeriesById(id: number) {
                 }
             }
             id
+            idMal
             status
             title {
                 userPreferred
             }
-            type
             description
+            siteUrl
             countryOfOrigin
             averageScore
             popularity
@@ -145,6 +148,7 @@ export async function getTrendingSeries() {
                 isAdult: $isAdult
             ) {
                 id
+                idMal
                 bannerImage
                 coverImage {
                     extraLarge
@@ -162,6 +166,7 @@ export async function getTrendingSeries() {
                     userPreferred
                 }
                 description
+                siteUrl
                 countryOfOrigin
                 averageScore
                 popularity
