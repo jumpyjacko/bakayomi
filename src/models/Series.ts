@@ -9,12 +9,16 @@ export interface Series {
     status?: string;
     original_lang?: string;
     type?: string;
+
+    start_year?: number;
+    end_year?: number;
     
     extension_id?: string;
     external_link?: string;
 
     mal_rating?: number;
     al_rating?: number;
+    al_popularity?: number;
 
     al_id?: number;
     

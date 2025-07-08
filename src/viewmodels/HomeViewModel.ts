@@ -55,6 +55,10 @@ export function createHomeViewModel() {
                     status: res.status,
                     original_lang: res.countryOfOrigin,
                     banner: res.bannerImage,
+
+                    start_year: res.startDate.year,
+                    end_year: res.endDate.year,
+                    al_popularity: res.popularity,
                     
                     al_rating: res.averageScore,
                     al_id: res.id,

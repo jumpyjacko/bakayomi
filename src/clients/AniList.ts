@@ -66,6 +66,13 @@ export async function searchMangaSeriesByName(search: string) {
             }
             description
             countryOfOrigin
+            popularity
+            startDate {
+                year
+            }
+            endDate {
+                year
+            }
         }
     }
     `;
@@ -103,6 +110,13 @@ export async function searchMangaSeriesById(id: number) {
             type
             description
             countryOfOrigin
+            popularity
+            startDate {
+                year
+            }
+            endDate {
+                year
+            }
         }
     }
     `;
@@ -147,6 +161,13 @@ export async function getTrendingSeries() {
                 description
                 countryOfOrigin
                 averageScore
+                popularity
+                startDate {
+                    year
+                }
+                endDate {
+                    year
+                }
             }
         }
     }
