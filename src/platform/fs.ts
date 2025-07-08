@@ -136,6 +136,7 @@ export async function AniListToLocalMetadata(seriesList: Series[]): Promise<Seri
             updatedSeries.description = res.description;
             updatedSeries.status = res.status;
             updatedSeries.covers.push({ name: "AniList Cover", cover_image: res.coverImage.extraLarge})
+            updatedSeries.banner = res.bannerImage;
 
             for (const staff of res.staff.nodes) {
                 if (res.staff.nodes.length === 1) {
