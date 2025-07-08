@@ -86,7 +86,7 @@ export default function Banner(props: any) {
                 </For>
                 </div>
                 
-                <div class="hidden md:block md:absolute h-full md:w-1/2 xl:w-1/3
+                <div class="hidden md:block md:absolute h-full md:w-1/2
                 bg-gradient-to-r from-surface from-10% via-surface/60 via-75% to-transparent" />
                 <div class="absolute bottom-0 h-3/4 md:h-[30px] w-full mb-[-1px]
                 bg-gradient-to-t from-surface via-surface/50 via-50% md:via-25% to-transparent
