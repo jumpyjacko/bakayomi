@@ -196,8 +196,8 @@ button {
 
 ::view-transition-old(main-content),
 ::view-transition-new(main-content) {
-  animation-duration: 200ms;
-  animation-timing-function: ease;
+  animation-duration: 400ms;
+  animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 ::view-transition-new(main-content) {
@@ -207,7 +207,7 @@ button {
 @keyframes slide-up {
   from {
     transform: translateY(100%);
-    opacity: 1;
+    opacity: 0;
   }
   to {
     transform: translateY(0);
