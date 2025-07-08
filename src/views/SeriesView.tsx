@@ -1,7 +1,7 @@
 import { Show } from "solid-js";
 import { createSeriesViewModel } from "../viewmodels/SeriesViewModel"
 import IconButton from "../components/IconButton";
-import { MdiLanguage, OcBook3, OcBookmark3, OcShareandroid3 } from "../assets/icons";
+import { MdiLanguage, OcBook3, OcBookmark3, OcShareandroid3, SiAniList, SiMyAnimeList } from "../assets/icons";
 import { convertAniListStatus } from "../utils/utils";
 
 export default function SeriesView() {
@@ -33,8 +33,10 @@ export default function SeriesView() {
                         <div class="flex flex-row flex-wrap gap-[6px]">
                             <IconButton icon={OcBookmark3} />
                             <IconButton icon={OcBook3} text="Start Reading" />
-                            <IconButton class="hidden md:block" icon={OcShareandroid3} invert={() => true} />
+                            <IconButton icon={OcShareandroid3} invert={() => true} />
                             <IconButton icon={MdiLanguage} invert={() => true} />
+                            <IconButton icon={SiAniList} invert={() => true} />
+                            <IconButton icon={SiMyAnimeList} invert={() => true} />
                         </div>
                         
                         
