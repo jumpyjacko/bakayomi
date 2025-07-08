@@ -46,7 +46,7 @@ export default function MangaVerticalCard(props) {
         <button class="m-[12px] w-[170px] h-[340px] flex flex-col text-left" onclick={navigateTo}>
             <div class="
             w-[170px] h-[245px]
-            flex flex-row flex-nowrap
+            flex flex-row
             items-center justify-start overflow-hidden
             rounded-[4px]
             mb-[0.3rem]
