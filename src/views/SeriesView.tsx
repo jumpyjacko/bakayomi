@@ -20,7 +20,7 @@ export default function SeriesView() {
                         <img class="h-full flex-1 self-center overflow-hidden" src={vm.cover()} />
                     </div>
                     <div class="flex flex-col">
-                        <div class="typo-title flex flex-col h-[4.7em] justify-end mb-4">
+                        <div class="typo-title flex flex-col h-[4.5em] justify-end pb-4">
                             <h1 class="line-clamp-3 break-all typo-title md:break-keep hypens-auto">
                             {vm.series().title}
                             </h1>
