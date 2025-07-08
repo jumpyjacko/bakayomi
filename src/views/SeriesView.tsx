@@ -3,15 +3,16 @@ import { createSeriesViewModel } from "../viewmodels/SeriesViewModel"
 import IconButton from "../components/IconButton";
 import TextButton from "../components/TextButton";
 import { MdiLanguage, OcBook3, OcBookmark3, OcShareandroid3 } from "../assets/icons";
+import { convertAniListStatus } from "../utils/utils";
 
 export default function SeriesView() {
     const vm = createSeriesViewModel();
     
     return (
-        <div class="text-text min-h-screen w-full flex md:flex-row" style={{ "view-transition-name": "main-content"}}>
+        <div class="text-text min-h-screen w-full flex flex-col xl:flex-row" style={{ "view-transition-name": "main-content"}}>
         <Show when={vm.series()}>
             <div class="flex flex-col">
-                <div class="flex flex-row pl-20 pt-[116px] gap-[32px]">
+                <div class="flex flex-row w-full justify-center pl-8 md:pl-20 pt-[116px] gap-[16px]">
                     <div class="
                     flex flex-row flex-shrink-0
                     items-center justify-start overflow-hidden shadow-2
@@ -30,12 +31,27 @@ export default function SeriesView() {
                             </h2>
                         </div>
                         
-                        <div class="flex flex-row gap-x-[6px]">
+                        <div class="flex flex-row flex-wrap gap-[6px]">
                             <IconButton icon={OcBookmark3} />
                             <IconButton icon={OcBook3} text="Start Reading" />
-                            <TextButton text="View Details" />
                             <IconButton class="hidden md:block" icon={OcShareandroid3} invert={() => true} />
                             <IconButton icon={MdiLanguage} invert={() => true} />
+                        </div>
+                        
+                        
+                        <div class="flex flex-row flex-wrap gap-[16px] typo-subtitle py-4">
+                            <p>
+                            {vm.series().type}
+                            </p>
+                            <p>
+                            {vm.series().chapter_count} Chapters
+                            </p>
+                            <p>
+                            Published {vm.series().start_year} - {vm.series().end_year ? vm.series().end_year : "?"}
+                            </p>
+                            <p>
+                            {convertAniListStatus(vm.series()?.status)}
+                            </p>
                         </div>
                     </div>
                 </div>

@@ -66,6 +66,7 @@ export async function searchMangaSeriesByName(search: string) {
             }
             description
             countryOfOrigin
+            averageScore
             popularity
             startDate {
                 year
@@ -110,6 +111,7 @@ export async function searchMangaSeriesById(id: number) {
             type
             description
             countryOfOrigin
+            averageScore
             popularity
             startDate {
                 year
