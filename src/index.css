@@ -116,6 +116,8 @@
     --color-primary-dimmed: #356691;
     --color-secondary: #ca506e;
     --color-secondary-dimmed: #f7e1e7;
+    
+    --breakpoint-md: 50rem;
 }
 
 @layer theme {
