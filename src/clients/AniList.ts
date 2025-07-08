@@ -45,7 +45,7 @@ async function sendQuery(query: string, variables: string): Promise<Object> {
 export async function searchMangaSeriesByName(search: string) {
     const query = `
     query Query($search: String) {
-        Media(search: $search, type: MANGA) {
+        Media(search: $search, type: MANGA, format: MANGA) {
             bannerImage
             coverImage {
                 extraLarge
@@ -90,7 +90,7 @@ export async function searchMangaSeriesByName(search: string) {
 export async function searchMangaSeriesById(id: number) {
     const query = `
     query Query($id: Int) {
-        Media(id: $id, type: MANGA) {
+        Media(id: $id, type: MANGA, format: MANGA) {
             bannerImage
             coverImage {
                 extraLarge
@@ -138,6 +138,7 @@ export async function getTrendingSeries() {
         Page(page: $page, perPage: $perPage) {
             media(
                 type: MANGA
+                format: MANGA
                 averageScore_greater: $averageScoreGreater
                 status: $status
                 sort: $sort
