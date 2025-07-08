@@ -5,6 +5,7 @@ import { Series } from "../models/Series";
 import { MdiLanguage, OcBook3, OcBookmark3, OcShareandroid3 } from "../assets/icons";
 import IconButton from "./IconButton";
 import TextButton from "./TextButton";
+import { convertAniListStatus } from "../utils/utils";
 
 export default function Banner(props: any) {
     const [currentBanner, setCurrentBanner] = createSignal<Series>();
@@ -60,7 +61,7 @@ export default function Banner(props: any) {
                     {currentBanner()?.al_rating}% Rating
                     </p>
                     <p>
-                    Publishing
+                    {convertAniListStatus(currentBanner()?.status)}
                     </p>
                 </div>
                 <p class="typo-body text-wrap line-clamp-2 md:line-clamp-4">
