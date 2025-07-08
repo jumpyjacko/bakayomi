@@ -15,10 +15,9 @@ export default function HomeViewWrapper(props) {
         flex w-full
         flex-col-reverse
         md:flex-row
-        h-screen
         ">
             <div class="
-            fixed flex justify-between *:p-[16px] bottom-0 left-0 bg-surface text-text overscroll-none *:select-none
+            fixed flex justify-between *:p-[16px] bottom-0 left-0 bg-surface text-text *:select-none
             flex-row h-[58px] *:h-full w-screen z-50
             md:static md:flex-col md:w-[58px] md:*:w-full md:*:h-full md:h-screen 
             ">
@@ -77,7 +76,7 @@ export default function HomeViewWrapper(props) {
                 </button>
                 </div>
             </div>
-            <div class="flex-1 overflow-y-auto">
+            <div class="flex-1">
                 {props.children}
             </div>
         </div>

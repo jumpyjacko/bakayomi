@@ -11,17 +11,16 @@ export default function SeriesView() {
         <div class="text-text min-h-screen w-full flex flex-col xl:flex-row" style={{ "view-transition-name": "main-content"}}>
         <Show when={vm.series()}>
             <div class="flex flex-col xl:w-2/3">
-                <div class="flex flex-row mx-2 md:mx-16 mt-[116px] gap-[16px]">
+                <div class="flex flex-row mx-4 md:mx-16 mt-[116px] gap-[16px]">
                     <div class="
-                    flex flex-row flex-shrink-0
+                    hidden md:flex flex-row flex-shrink-0
                     items-center justify-start overflow-hidden shadow-2
-                    w-[170px] h-[245px] rounded-[4px]
-                    md:w-[340px] md:h-[490px] md:rounded-[8px]
+                    w-[340px] h-[490px] md:rounded-[8px]
                     ">
                         <img class="h-full flex-1 self-center overflow-hidden" src={vm.cover()} />
                     </div>
                     <div class="flex flex-col">
-                        <div class="typo-title h-[4.7em]">
+                        <div class="typo-title flex flex-col h-[4.7em] justify-end mb-4">
                             <h1 class="line-clamp-3 break-all typo-title md:break-keep hypens-auto">
                             {vm.series().title}
                             </h1>
