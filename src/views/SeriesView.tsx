@@ -36,7 +36,7 @@ export default function SeriesView() {
                             <IconButton icon={OcShareandroid3} invert={true} />
                             <IconButton icon={MdiLanguage} invert={true} />
                             <IconButton icon={SiAniList} invert={true} action={vm.aniListClick} />
-                            <IconButton icon={SiMyAnimeList} invert={true} />
+                            <IconButton icon={SiMyAnimeList} invert={true} action={vm.malClick}/>
                         </div>
                         
                         
@@ -45,7 +45,7 @@ export default function SeriesView() {
                             {vm.series().type}
                             </p>
                             <p>
-                            {vm.series().chapter_count} Chapters
+                            {vm.series().chapter_count ? vm.series().chapter_count : "?"} Chapters
                             </p>
                             <p>
                             Published {vm.series().start_year} - {vm.series().end_year ? vm.series().end_year : "?"}

@@ -29,18 +29,21 @@ export function createSeriesViewModel() {
                 });
             setCover(coverUri);
         }
-
-        console.log(request);
     });
 
     const aniListClick = () => {
         window.open(series().al_link);
+    }
+    
+    const malClick = () => {
+        window.open(`https://myanimelist.net/manga/${series().mal_id}`);
     }
 
     return {
        series,
        cover,
 
-       aniListClick
+       aniListClick,
+       malClick,
     };
 }
