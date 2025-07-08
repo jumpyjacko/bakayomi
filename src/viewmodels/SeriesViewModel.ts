@@ -2,11 +2,13 @@ import { createSignal, onMount } from "solid-js";
 import { useParams } from "@solidjs/router";
 import { getItem } from "../db/db";
 import { Series } from "../models/Series";
+import { toBlobUrl } from "../platform/fs";
 
 export function createSeriesViewModel() {
     const params = useParams();
 
     const [series, setSeries] = createSignal();
+    const [cover, setCover] = createSignal("");
 
     onMount(async () => {
         const request = await getItem<Series>(
@@ -15,11 +17,24 @@ export function createSeriesViewModel() {
         );
 
         setSeries(request);
+        
+        const cover = request?.covers[0].cover_image;
+
+        if (typeof(cover) === "string" && cover.startsWith("http")) {
+            setCover(cover);
+        } else {
+            const coverUri = await toBlobUrl(cover)
+                .catch(() => {
+                    console.log("no permissions");
+                });
+            setCover(coverUri);
+        }
 
         console.log(request);
     });
 
     return {
-       series 
+       series,
+       cover
     };
 }
