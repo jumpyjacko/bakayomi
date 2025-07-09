@@ -3,6 +3,7 @@ import { createSeriesViewModel } from "../viewmodels/SeriesViewModel"
 import IconButton from "../components/IconButton";
 import { MdiLanguage, OcBook3, OcBookmark3, OcShareandroid3, SiAniList, SiMyAnimeList } from "../assets/icons";
 import { convertAniListStatus } from "../utils/utils";
+import i18next from "i18next";
 
 export default function SeriesView() {
     const vm = createSeriesViewModel();
@@ -43,10 +44,10 @@ export default function SeriesView() {
                             {vm.series().type}
                             </p>
                             <p>
-                            {vm.series().chapter_count ? vm.series().chapter_count : "?"} Chapters
+                            {i18next.t("chapterWithCount", {count: vm.series().chapter_count})}
                             </p>
                             <p>
-                            Published {vm.series().start_year} - {vm.series().end_year ? vm.series().end_year : "?"}
+                            {i18next.t("series_v:published")} {vm.series().start_year} - {vm.series().end_year ? vm.series().end_year : "?"}
                             </p>
                             <p>
                             {convertAniListStatus(vm.series()?.status)}
@@ -56,7 +57,7 @@ export default function SeriesView() {
                 </div>
                 <div class="flex flex-col w-full items-center justify-center px-8 md:px-16 pt-8">
                     <h1 class="typo-heading">
-                    Synopsis
+                    {i18next.t("series_v:description")}
                     </h1>
                     <p class="whitespace-pre-line">
                     {vm.series().description}
