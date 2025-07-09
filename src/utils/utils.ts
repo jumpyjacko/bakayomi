@@ -1,3 +1,5 @@
+import i18next from "i18next";
+
 /* Fisher-Yates (Knuth) Shuffle */
 export function shuffleArray<T>(array: T[]) {
     let currentIndex = array.length;
@@ -14,15 +16,15 @@ export function shuffleArray<T>(array: T[]) {
 export function convertAniListStatus(status: string): string {
     switch (status) {
         case "FINISHED":
-            return "Publishing Finished";
+            return i18next.t("statusFinished");
         case "RELEASING":
-            return "Currently Publishing";
+            return i18next.t("statusReleasing");
         case "CANCELLED":
-            return "Cancelled";
+            return i18next.t("statusCancelled");
         case "HIATUS":
-            return "On Hiatus";
+            return i18next.t("statusHiatus");
         case "NOT_YET_RELEASED":
-            return "Not Released";
+            return i18next.t("statusNotReleased");
         default:
             return "?";
     }

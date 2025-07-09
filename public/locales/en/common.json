@@ -2,5 +2,10 @@
     "chapter_one": "Chapter",
     "chapter_other": "Chapters",
     "chapterWithCount_one": "{{count}} Chapter",
-    "chapterWithCount_other": "{{count}} Chapters"
+    "chapterWithCount_other": "{{count}} Chapters",
+    "statusFinished": "Publishing Finished",
+    "statusReleasing": "Currently Publishing",
+    "statusCancelled": "Cancelled",
+    "statusHiatus": "Hiatus",
+    "statusNotReleased": "Not Released"
 }
