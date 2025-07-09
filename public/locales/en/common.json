@@ -11,6 +11,11 @@
     "statusNotReleased": "Not Released",
     "rating": "Rating",
 
+    "nativeComic": "Comic",
+    "japaneseComic": "Manga",
+    "chineseeComic": "Manhua",
+    "koreanComic": "Manhwa",
+
     "startReading": "Start Reading",
     "continueReading": "Continue Reading",
     "details": "View Details"

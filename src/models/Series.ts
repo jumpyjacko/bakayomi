@@ -8,7 +8,6 @@ export interface Series {
     description?: string;
     status?: string;
     original_lang?: string;
-    type?: string;
 
     start_year?: number;
     end_year?: number;

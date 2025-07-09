@@ -67,21 +67,6 @@ export function createHomeViewModel() {
                     al_link: res.siteUrl,
                 };
 
-                series.original_lang = res.countryOfOrigin;
-                switch (series.original_lang) {
-                    case "JP":
-                        series.type = "Manga";
-                    break;
-                    case "KR":
-                        series.type = "Manhwa";
-                    break;
-                    case "CN":
-                        series.type = "Manhua";
-                    break;
-                    default:
-                        series.type = "Unknown";
-                }
-
                 for (const staff of res.staff.nodes) {
                     if (res.staff.nodes.length === 1) {
                         series.staff.push(staff.name.full);

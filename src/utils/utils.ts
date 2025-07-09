@@ -13,7 +13,7 @@ export function shuffleArray<T>(array: T[]) {
     }
 }
 
-export function convertAniListStatus(status: string): string {
+export function convertAniListStatus(status: string | undefined): string {
     switch (status) {
         case "FINISHED":
             return i18next.t("statusFinished");
@@ -27,5 +27,18 @@ export function convertAniListStatus(status: string): string {
             return i18next.t("statusNotReleased");
         default:
             return "?";
+    }
+}
+
+export function convertLngToType(lng: string | undefined): string {
+    switch (lng) {
+        case "JP":
+            return i18next.t("japaneseComic");
+        case "CN":
+            return i18next.t("chineseComic");
+        case "KR":
+            return i18next.t("koreanComic");
+        default:
+            return i18next.t("nativeComic");
     }
 }

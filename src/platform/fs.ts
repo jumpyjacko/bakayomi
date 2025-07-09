@@ -142,6 +142,7 @@ export async function AniListToLocalMetadata(seriesList: Series[]): Promise<Seri
             updatedSeries.end_year = res.endDate.year;
             updatedSeries.mal_id = res.idMal;
             updatedSeries.al_link = res.siteUrl;
+            updatedSeries.original_lang = res.countryOfOrigin;
 
             for (const staff of res.staff.nodes) {
                 if (res.staff.nodes.length === 1) {
@@ -154,22 +155,7 @@ export async function AniListToLocalMetadata(seriesList: Series[]): Promise<Seri
                     }
                 }
             }
-            
-            updatedSeries.original_lang = res.countryOfOrigin;
-            switch (updatedSeries.original_lang) {
-                case "JP":
-                    updatedSeries.type = "Manga";
-                    break;
-                case "KR":
-                    updatedSeries.type = "Manhwa";
-                    break;
-                case "CN":
-                    updatedSeries.type = "Manhua";
-                    break;
-                default:
-                    updatedSeries.type = "Unknown";
-            }
-
+           
             updatedSeriesList.push(updatedSeries);
         } catch (error) {
             console.log(error);

@@ -3,6 +3,7 @@ import { useNavigate } from "@solidjs/router";
 import i18next from "i18next";
 
 import { toBlobUrl } from "../platform/fs";
+import { convertLngToType } from "../utils/utils";
 
 export default function MangaVerticalCard(props) {
     const navigate = useNavigate();
@@ -29,7 +30,7 @@ export default function MangaVerticalCard(props) {
 
         setTitle(props.series.title);
         setAuthor(props.series.staff.join(", "));
-        setType(props.series.type);
+        setType(convertLngToType(props.series.original_lang));
         setChapters(props.series.chapter_count);
     })
 

@@ -5,7 +5,7 @@ import { Series } from "../models/Series";
 import { MdiLanguage, OcBook3, OcBookmark3, OcShareandroid3 } from "../assets/icons";
 import IconButton from "./IconButton";
 import TextButton from "./TextButton";
-import { convertAniListStatus } from "../utils/utils";
+import { convertAniListStatus, convertLngToType } from "../utils/utils";
 import { toBlobUrl } from "../platform/fs";
 import i18next from "i18next";
 
@@ -69,7 +69,7 @@ export default function Banner(props: any) {
                 </p>
                 <div class="flex flex-row gap-[12px] typo-subtitle">
                     <p>
-                    {currentBanner().type}
+                    {convertLngToType(currentBanner()?.original_lang)}
                     </p>
                     <p>
                     {currentBanner()?.al_rating}% {i18next.t("rating")}
