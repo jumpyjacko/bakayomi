@@ -4,6 +4,7 @@ import { Series } from "../models/Series";
 import { Carousel } from "../models/Carousel";
 import { getTrendingSeries } from "../clients/AniList";
 import { shuffleArray } from "../utils/utils";
+import i18next from "i18next";
 
 export function createHomeViewModel() {
     const [carousels, setCarousels] = createSignal<Carousel[]>([]);
@@ -12,7 +13,7 @@ export function createHomeViewModel() {
     const [library, setLibrary] = createSignal<Series[]>([]);
     
     async function createLocalLibraryCarousel() { // TODO: URGENT, need to make carousels reactive
-        setCarousels(list => [...list, { title: "Local", entries: library() }]);
+        setCarousels(list => [...list, { title: i18next.t("home_v:local"), entries: library() }]);
     }
 
     onMount(async () => {

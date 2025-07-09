@@ -1,5 +1,6 @@
 /* @refresh reload */
 import "./index.css";
+import "./i18n.ts";
 import { lazy, Show } from "solid-js";
 import { render } from "solid-js/web";
 import { Route, Router } from "@solidjs/router";
