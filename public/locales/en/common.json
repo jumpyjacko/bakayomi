@@ -1,0 +1,6 @@
+{
+    "chapter_one": "Chapter",
+    "chapter_other": "Chapters",
+    "chapterWithCount_one": "{{count}} Chapter",
+    "chapterWithCount_other": "{{count}} Chapters"
+}

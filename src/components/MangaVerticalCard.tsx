@@ -1,5 +1,6 @@
 import { createSignal, onMount } from "solid-js"
 import { useNavigate } from "@solidjs/router";
+import i18next from "i18next";
 
 import { toBlobUrl } from "../platform/fs";
 
@@ -64,7 +65,7 @@ export default function MangaVerticalCard(props) {
             </div>
             <div class="flex flex-row typo-subtitle w-full">
                 <div class="flex-1">
-                {chapters()} Chapters
+                {i18next.t("chapterWithCount", {count: chapters()})}
                 </div>
                 <div class="w-fit">
                 {type()}
