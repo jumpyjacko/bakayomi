@@ -7,6 +7,7 @@ import IconButton from "./IconButton";
 import TextButton from "./TextButton";
 import { convertAniListStatus } from "../utils/utils";
 import { toBlobUrl } from "../platform/fs";
+import i18next from "i18next";
 
 export default function Banner(props: any) {
     const [currentBanner, setCurrentBanner] = createSignal<Series>();
@@ -71,7 +72,7 @@ export default function Banner(props: any) {
                     {currentBanner().type}
                     </p>
                     <p>
-                    {currentBanner()?.al_rating}% Rating
+                    {currentBanner()?.al_rating}% {i18next.t("rating")}
                     </p>
                     <p>
                     {convertAniListStatus(currentBanner()?.status)}
@@ -83,8 +84,8 @@ export default function Banner(props: any) {
                 
                 <div class="absolute bottom-[-60px] md:top-[260px] flex flex-row flex-nowrap gap-x-[6px]">
                 <IconButton icon={OcBookmark3} />
-                <IconButton icon={OcBook3} text="Start Reading" />
-                <TextButton text="View Details" />
+                <IconButton icon={OcBook3} text={i18next.t("startReading")} />
+                <TextButton text={i18next.t("details")} />
                 <IconButton class="hidden md:block" icon={OcShareandroid3} invert={true} />
                 <IconButton icon={MdiLanguage} invert={true} />
                 </div>
