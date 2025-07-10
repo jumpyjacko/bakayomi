@@ -15,7 +15,7 @@ export default function SeriesView() {
         <div class="text-text min-h-screen w-full flex flex-col xl:flex-row" style={{ "view-transition-name": "main-content"}}>
         <Show when={vm.series()}>
             <div class="flex flex-col xl:w-2/3">
-                <div class="flex flex-row mx-4 md:mx-16 mt-[116px] gap-[16px]">
+                <div class="flex flex-row mx-8 md:mx-16 mt-[116px] gap-[16px]">
                     <div class="
                     hidden md:flex flex-row flex-shrink-0
                     items-center justify-start overflow-hidden shadow-2
