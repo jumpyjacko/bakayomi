@@ -69,6 +69,8 @@ async function constructSeries(handle: FileSystemDirectoryHandle): Promise<Serie
     }
 
     if (orphanedChapterList.length !== 0) {
+        orphanedChapterList.sort((a, b) => b.title.localeCompare(a.title));
+
         const dummyVolume: Volume = {
             title: "Orphaned Chapters",
             chapter_count: orphanedChapterList.length,
@@ -110,6 +112,8 @@ async function constructVolume(handle: FileSystemDirectoryHandle): Promise<Volum
             }
         }
     }
+
+    chapters.sort((a, b) => b.title.localeCompare(a.title));
 
     return { title: handle.name, chapter_count: chapters.length, chapters };
 }
