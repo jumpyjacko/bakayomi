@@ -1,4 +1,6 @@
 import { createEffect, createSignal, For, onCleanup, onMount, Show } from "solid-js";
+import { useNavigate } from "@solidjs/router";
+import i18next from "i18next";
 
 import { Series } from "../models/Series";
 
@@ -7,9 +9,10 @@ import IconButton from "./IconButton";
 import TextButton from "./TextButton";
 import { convertAniListStatus, convertLngToType } from "../utils/utils";
 import { toBlobUrl } from "../platform/fs";
-import i18next from "i18next";
 
 export default function Banner(props: any) {
+    const navigate = useNavigate();
+    
     const [currentBanner, setCurrentBanner] = createSignal<Series>();
     const [bannerIndex, setBannerIndex] = createSignal(0);
     const [cover, setCover] = createSignal("");
@@ -54,6 +57,16 @@ export default function Banner(props: any) {
             setCover(coverUri);
         }
     });
+
+    const handleViewDetails = () => {
+        if (document.startViewTransition) {
+            document.startViewTransition(() => {
+                navigate(`series/${currentBanner()?.title}`);
+            });
+        } else {
+            navigate(`series/${currentBanner()?.title}`);
+        }
+    }
     
     return (
         <div class="h-[300px] relative">
@@ -85,7 +98,7 @@ export default function Banner(props: any) {
                 <div class="absolute bottom-[-60px] md:top-[260px] flex flex-row flex-nowrap gap-x-[6px]">
                 <IconButton icon={OcBookmark3} />
                 <IconButton icon={OcBook3} text={i18next.t("startReading")} />
-                <TextButton text={i18next.t("details")} />
+                <TextButton text={i18next.t("details")} action={handleViewDetails} />
                 <IconButton class="hidden md:block" icon={OcShareandroid3} invert={true} />
                 <IconButton icon={MdiLanguage} invert={true} />
                 </div>
