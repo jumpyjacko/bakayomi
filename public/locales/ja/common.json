@@ -1,0 +1,22 @@
+{
+    "chapter_one": "章",
+    "chapter_other": "章",
+    "chapterWithCount_one": "{{count}}章",
+    "chapterWithCount_other": "{{count}}章",
+    
+    "statusFinished": "Publishing Finished",
+    "statusReleasing": "Currently Publishing",
+    "statusCancelled": "Cancelled",
+    "statusHiatus": "Hiatus",
+    "statusNotReleased": "Not Released",
+    "rating": "Rating",
+
+    "nativeComic": "漫画",
+    "japaneseComic": "漫画",
+    "chineseComic": "中国漫画",
+    "koreanComic": "韓国漫画",
+
+    "startReading": "始める",
+    "continueReading": "続ける",
+    "details": "漫画を表示"
+}
