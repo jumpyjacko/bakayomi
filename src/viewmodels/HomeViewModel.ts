@@ -8,12 +8,18 @@ import i18next from "i18next";
 
 export function createHomeViewModel() {
     const [carousels, setCarousels] = createSignal<Carousel[]>([]);
-    const [bannerSeries, setBannerSeries] = createSignal<Series[]>([]);
     
     const [library, setLibrary] = createSignal<Series[]>([]);
+    const [trendingSeries, setTrendingSeries] = createSignal<Series[]>([]);
     
-    async function createLocalLibraryCarousel() { // TODO: URGENT, need to make carousels reactive
+    const [bannerSeries, setBannerSeries] = createSignal<Series[]>([]);
+    
+    async function createLocalLibraryCarousel() { // TODO: need to make carousels reactive
         setCarousels(list => [...list, { title: i18next.t("home_v:local"), entries: library() }]);
+    }
+
+    async function createALTrendingCarousel() {
+        setCarousels(list => [...list, { title: i18next.t("home_v:trending"), entries: trendingSeries()}]);
     }
 
     onMount(async () => {
@@ -43,7 +49,7 @@ export function createHomeViewModel() {
         }
         
         if (shouldUpdateBannerStore()) {
-            await clearStore("banner_series");
+            await clearStore("trending_series");
             const trendingSeries = await getTrendingSeries();
 
             const VALID_STAFF_OCCUPATIONS = ["Mangaka", "Writer", "Illustrator", "Artist"];
@@ -81,14 +87,18 @@ export function createHomeViewModel() {
 
                 series.covers.push({ name: "AniList Cover", cover_image: res.coverImage.extraLarge });
                 
-                addItem<Series>("banner_series", series);
+                addItem<Series>("trending_series", series);
             }
         }
 
-        let banners = await getAllItems<Series>("banner_series");
-        shuffleArray(banners);
+        let trending = await getAllItems<Series>("trending_series");
+        setTrendingSeries(trending);
+        createALTrendingCarousel();
+        
+        shuffleArray(trending);
 
-        setBannerSeries(banners.slice(0, 5));
+        setBannerSeries(trending.slice(0, 5));
+
     });
     
     return {

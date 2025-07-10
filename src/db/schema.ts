@@ -4,5 +4,5 @@ export const DB_VERSION = 1;
 export const STORES = {
     library_handle: { keyPath: "id" },
     local_library: { keyPath: "title" },
-    banner_series: { keyPath: "title" },
+    trending_series: { keyPath: "title" },
 };
