@@ -24,7 +24,7 @@ export function createReaderViewModel() {
         }
 
         const series = await getItem<Series>(
-            "library",
+            "local_library",
             decodeURIComponent(params.title),
         );
 

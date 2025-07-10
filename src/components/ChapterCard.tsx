@@ -1,10 +1,15 @@
+import { useNavigate } from "@solidjs/router"
+
 export default function ChapterCard(props) {
+    const navigate = useNavigate();
+    
     return (
-        <div class="
+        <button onclick={() => navigate(`/read/${props.seriesTitle}/${props.title}`)}
+        class="
         w-full flex flex-row p-2 rounded-[8px]
         bg-surface text-text shadow-1
         ">
-            <div class="flex flex-col flex-1">
+            <div class="flex flex-col flex-1 items-start">
             <h3 class="typo-body">
             {props.title}
             </h3>
@@ -16,6 +21,6 @@ export default function ChapterCard(props) {
             <div>
             
             </div>
-        </div>
+        </button>
     )
 }
