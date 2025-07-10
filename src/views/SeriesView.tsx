@@ -44,7 +44,7 @@ export default function SeriesView() {
                             {convertLngToType(vm.series().original_lang)}
                             </p>
                             <p>
-                            {i18next.t("chapterWithCount", {count: vm.series().chapter_count})}
+                            {i18next.t("chapterWithCount", {count: vm.series().chapter_count ? vm.series().chapter_count : 0})}
                             </p>
                             <p>
                             {i18next.t("series_v:published")} {vm.series().start_year} - {vm.series().end_year ? vm.series().end_year : "?"}
