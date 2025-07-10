@@ -1,6 +1,6 @@
 import { createSignal, onMount } from "solid-js";
 import { useParams } from "@solidjs/router";
-import { getItem } from "../db/db";
+import { getFromAllStores } from "../db/db";
 import { Series } from "../models/Series";
 import { toBlobUrl } from "../platform/fs";
 
@@ -11,8 +11,7 @@ export function createSeriesViewModel() {
     const [cover, setCover] = createSignal("");
 
     onMount(async () => {
-        const request = await getItem<Series>(
-            "local_library",
+        const request = await getFromAllStores<Series>(
             decodeURIComponent(params.title)
         );
 

@@ -90,3 +90,21 @@ export async function clearStore(storeName: string) {
         request.onerror = () => reject(request.error);
     })
 }
+
+export async function getFromAllStores<T>(key: IDBValidKey): Promise<T | null> {
+    const db = await openDB();
+    
+    const storeNames = Array.from(db.objectStoreNames);
+    for (const storeName of storeNames) {
+        try {
+            const result = await getItem<T>(storeName, key);
+            if (result !== undefined) {
+                return result;
+            }
+        } catch {
+            // do nothing
+        }
+    }
+
+    return null;
+}
