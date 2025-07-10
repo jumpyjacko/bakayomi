@@ -1,9 +1,12 @@
-import { Show } from "solid-js";
-import { createSeriesViewModel } from "../viewmodels/SeriesViewModel"
-import IconButton from "../components/IconButton";
-import { MdiLanguage, MdiTrendingUp, OcBook3, OcBookmark3, OcBookmarkfill3, OcShareandroid3, SiAniList, SiMyAnimeList } from "../assets/icons";
-import { convertAniListStatus, convertLngToType } from "../utils/utils";
+import { For, Show } from "solid-js";
 import i18next from "i18next";
+
+import { MdiLanguage, MdiTrendingUp, OcBook3, OcBookmark3, OcBookmarkfill3, OcShareandroid3, SiAniList, SiMyAnimeList } from "../assets/icons";
+import { createSeriesViewModel } from "../viewmodels/SeriesViewModel";
+import { convertAniListStatus, convertLngToType } from "../utils/utils";
+import IconButton from "../components/IconButton";
+import VolumeSeparator from "../components/VolumeSeparator";
+import ChapterCard from "../components/ChapterCard";
 
 export default function SeriesView() {
     const vm = createSeriesViewModel();
@@ -72,8 +75,22 @@ export default function SeriesView() {
                     </p>
                 </div>
             </div>
-            <div class="flex flex-col">
-            chapters
+            <div class="flex flex-col flex-1 px-8 mt-8 xl:mt-[200px]">
+            <For each={vm.series().volumes}>
+            {(volume) => (
+                <div>
+                <VolumeSeparator />
+                
+                    <div class="flex flex-col gap-[12px]">
+                    <For each={volume.chapters}>
+                    {(chapter) => (
+                        <ChapterCard title={chapter.title}/>
+                    )}
+                    </For>
+                    </div>
+                </div>
+            )}
+            </For>
             </div>
             
             <div class="h-[300px] absolute top-0 w-full z-[-1]">

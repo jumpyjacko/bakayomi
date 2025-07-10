@@ -9,6 +9,7 @@ export function createSeriesViewModel() {
 
     const [series, setSeries] = createSignal();
     const [cover, setCover] = createSignal("");
+    const [chapters, setChapters] = createSignal([]);
 
     onMount(async () => {
         const request = await getFromAllStores<Series>(
