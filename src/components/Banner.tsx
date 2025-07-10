@@ -104,8 +104,8 @@ export default function Banner(props: any) {
                 </div>
             </div>
             <div class="absolute top-0 left-0 w-full h-[100px] md:h-[280px] md:overflow-clip">
-                <div class="absolute bottom-0 right-0 z-10 p-3 flex flex-row gap-1">
-                <For each={props.series()}>
+                <div class="absolute top-0 md:top-auto md:bottom-0 right-0 z-10 p-3 flex flex-row gap-1">
+                <For each={[...Array(5)]}>
                 {(_, index) => ( 
                     <button onclick={() => setBannerIndex(index)} id={`banner-${index()}`} class="bg-surface/40 w-5 h-0.5 shadow-2 rounded-2xl transition-all overflow-clip duration-300">
                         <div id={`banner-track-${index()}`} class="w-0 h-full bg-text transition-all"/>
