@@ -75,11 +75,11 @@ export default function SeriesView() {
                     </p>
                 </div>
             </div>
-            <div class="flex flex-col-reverse flex-1 px-8 mt-8 xl:mt-[200px] h-fit">
+            <div class="flex flex-col-reverse flex-1 px-8 mt-8 xl:mt-[310px] h-fit justify-end">
             <For each={vm.series().volumes}>
             {(volume) => (
                 <div>
-                <VolumeSeparator />
+                <VolumeSeparator title={volume.title}/>
                 
                     <div class="flex flex-col-reverse gap-[12px]">
                     <For each={volume.chapters}>
