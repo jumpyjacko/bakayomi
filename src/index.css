@@ -145,6 +145,7 @@
         font-family: var(--font-subtitle-family);
         font-size: var(--font-subtitle-size);
         font-weight: var(--font-subtitle-weight);
+        line-height: 1.2;
     }
 
     .typo-heading {
@@ -163,6 +164,7 @@
         font-family: var(--font-thin-family);
         font-size: var(--font-thin-size);
         font-weight: var(--font-thin-weight);
+        line-height: 1.2;
     }
 
     .typo-ml-title {

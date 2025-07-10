@@ -1,7 +1,7 @@
 import { Show } from "solid-js";
 import { createSeriesViewModel } from "../viewmodels/SeriesViewModel"
 import IconButton from "../components/IconButton";
-import { MdiLanguage, OcBook3, OcBookmark3, OcShareandroid3, SiAniList, SiMyAnimeList } from "../assets/icons";
+import { MdiLanguage, MdiTrendingUp, OcBook3, OcBookmark3, OcBookmarkfill3, OcShareandroid3, SiAniList, SiMyAnimeList } from "../assets/icons";
 import { convertAniListStatus, convertLngToType } from "../utils/utils";
 import i18next from "i18next";
 
@@ -39,7 +39,7 @@ export default function SeriesView() {
                             <IconButton icon={SiMyAnimeList} invert={true} action={vm.malClick}/>
                         </div>
                         
-                        <div class="hidden md:flex flex-row flex-wrap gap-[16px] typo-subtitle py-4">
+                        <div class="flex flex-row flex-wrap gap-x-[16px] typo-subtitle mt-6 md:mt-4">
                             <p>
                             {convertLngToType(vm.series().original_lang)}
                             </p>
@@ -53,13 +53,21 @@ export default function SeriesView() {
                             {convertAniListStatus(vm.series()?.status)}
                             </p>
                         </div>
+                        <div class="flex flex-row flex-wrap gap-x-[16px] typo-subtitle mt-2">
+                            <p class="flex flex-row gap-1 items-center">
+                            <MdiTrendingUp />{vm.series()?.al_rating ? vm.series()?.al_rating : "??"}%
+                            </p>
+                            <p class="flex flex-row gap-1 items-center">
+                            <OcBookmarkfill3 />{i18next.t("intlNumber", { val: vm.series()?.al_popularity})}
+                            </p>
+                        </div>
                     </div>
                 </div>
-                <div class="flex flex-col w-full items-center justify-center px-8 md:px-16 pt-8">
+                <div class="flex flex-col w-full md:items-center px-8 md:px-16 pt-8">
                     <h1 class="typo-heading">
                     {i18next.t("series_v:description")}
                     </h1>
-                    <p class="whitespace-pre-line">
+                    <p class="pt-2 whitespace-pre-line">
                     {vm.series().description}
                     </p>
                 </div>
