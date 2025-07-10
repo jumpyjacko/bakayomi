@@ -66,7 +66,7 @@ export default function MangaVerticalCard(props) {
             </div>
             <div class="flex flex-row typo-subtitle w-full">
                 <div class="flex-1">
-                {i18next.t("chapterWithCount", {count: chapters()})}
+                {i18next.t("chapterWithCount", {count: chapters() ? chapters() : 0})}
                 </div>
                 <div class="w-fit">
                 {type()}
