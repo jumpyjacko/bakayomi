@@ -2,7 +2,7 @@ import { createEffect, createSignal, For, onCleanup, onMount, Show } from "solid
 
 import { Series } from "../models/Series";
 
-import { MdiLanguage, OcBook3, OcBookmark3, OcShareandroid3 } from "../assets/icons";
+import { MdiLanguage, MdiTrendingUp, OcBook3, OcBookmark3, OcShareandroid3 } from "../assets/icons";
 import IconButton from "./IconButton";
 import TextButton from "./TextButton";
 import { convertAniListStatus, convertLngToType } from "../utils/utils";
@@ -72,10 +72,10 @@ export default function Banner(props: any) {
                     {convertLngToType(currentBanner()?.original_lang)}
                     </p>
                     <p>
-                    {currentBanner()?.al_rating}% {i18next.t("rating")}
-                    </p>
-                    <p>
                     {convertAniListStatus(currentBanner()?.status)}
+                    </p>
+                    <p class="flex flex-row gap-1 items-center">
+                    <MdiTrendingUp />{currentBanner()?.al_rating}%
                     </p>
                 </div>
                 <p class="typo-body text-wrap line-clamp-2 md:line-clamp-4">
