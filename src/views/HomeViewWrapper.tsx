@@ -12,7 +12,7 @@ export default function HomeViewWrapper(props) {
 
     return (
         <div class="
-        flex w-full
+        flex w-screen
         flex-col-reverse
         md:flex-row
         ">
@@ -76,7 +76,7 @@ export default function HomeViewWrapper(props) {
                 </button>
                 </div>
             </div>
-            <div class="flex-1">
+            <div class="flex-1 min-w-0">
                 {props.children}
             </div>
         </div>
