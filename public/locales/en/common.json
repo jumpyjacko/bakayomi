@@ -1,8 +1,10 @@
 {
+    "intlNumber": "{{val, number}}",
+    
     "chapter_one": "Chapter",
     "chapter_other": "Chapters",
-    "chapterWithCount_one": "{{count}} Chapter",
-    "chapterWithCount_other": "{{count}} Chapters",
+    "chapterWithCount_one": "{{count, number}} Chapter",
+    "chapterWithCount_other": "{{count, number}} Chapters",
     
     "statusFinished": "Publishing Finished",
     "statusReleasing": "Currently Publishing",

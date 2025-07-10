@@ -1,8 +1,10 @@
 {
+    "intlNumber": "{{val, numbers}}",
+    
     "chapter_one": "話",
     "chapter_other": "話",
-    "chapterWithCount_one": "{{count}} 話",
-    "chapterWithCount_other": "{{count}} 話",
+    "chapterWithCount_one": "{{count, number}} 話",
+    "chapterWithCount_other": "{{count, number}} 話",
     
     "statusFinished": "連載終了",
     "statusReleasing": "連載中",
