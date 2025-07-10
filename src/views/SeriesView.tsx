@@ -2,7 +2,7 @@ import { Show } from "solid-js";
 import { createSeriesViewModel } from "../viewmodels/SeriesViewModel"
 import IconButton from "../components/IconButton";
 import { MdiLanguage, OcBook3, OcBookmark3, OcShareandroid3, SiAniList, SiMyAnimeList } from "../assets/icons";
-import { convertAniListStatus } from "../utils/utils";
+import { convertAniListStatus, convertLngToType } from "../utils/utils";
 import i18next from "i18next";
 
 export default function SeriesView() {
@@ -41,7 +41,7 @@ export default function SeriesView() {
                         
                         <div class="hidden md:flex flex-row flex-wrap gap-[16px] typo-subtitle py-4">
                             <p>
-                            {vm.series().type}
+                            {convertLngToType(vm.series().original_lang)}
                             </p>
                             <p>
                             {i18next.t("chapterWithCount", {count: vm.series().chapter_count})}
