@@ -100,6 +100,22 @@ export async function softRefreshLibrary(refreshIndicator) {
     const newLibrary = await constructLibrary(libraryHandle);
 
     const existingTitles = new Set(oldLibrary.map(item => item.title));
+
+    const notNewTitles = newLibrary.filter(item => existingTitles.has(item.title));
+    for (let updated of notNewTitles) {
+        let old = oldLibrary.find(s => s.title === updated.title);
+        old.volumes = updated.volumes;
+        old.covers = [...new Set([...old.covers, ...updated.covers])];
+
+        putItem<Series>("local_library", old)
+            .then(result => {
+                console.log("Put series to indexedDB under 'local_library' store");
+            })
+            .catch(error => {
+                console.error("Failed to add series to indexedDB under 'local_library' store: ", error);
+            });
+    }
+    
     const newTitles = newLibrary.filter(item => !existingTitles.has(item.title));
 
     const newSeriesList = await AniListToLocalMetadata(newTitles);
