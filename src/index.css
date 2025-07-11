@@ -201,7 +201,7 @@ button {
 
 ::view-transition-old(main-content),
 ::view-transition-new(main-content) {
-  animation-duration: 400ms;
+  animation-duration: 300ms;
   animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
 }
 
