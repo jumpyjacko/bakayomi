@@ -12,7 +12,7 @@ export default function SeriesView() {
     const vm = createSeriesViewModel();
     
     return (
-        <div class="text-text min-h-screen w-full flex flex-col xl:flex-row" style={{ "view-transition-name": "main-content"}}>
+        <div class="text-text w-full flex flex-col xl:flex-row" style={{ "view-transition-name": "main-content"}}>
         <Show when={vm.series()}>
             <div class="flex flex-col xl:w-2/3">
                 <div class="flex flex-row mx-8 md:mx-16 mt-[116px] gap-[16px]">
@@ -25,7 +25,7 @@ export default function SeriesView() {
                     </div>
                     <div class="flex flex-col">
                         <div class="typo-title flex flex-col h-[4.5em] justify-end pb-4">
-                            <h1 class="line-clamp-3 break-all typo-title md:break-keep hypens-auto">
+                            <h1 class="line-clamp-3 break-all typo-title md:break-keep">
                             {vm.series().title}
                             </h1>
                             <h2 class="typo-body md:typo-heading line-clamp-1">
