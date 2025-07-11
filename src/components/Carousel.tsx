@@ -2,7 +2,7 @@ import { createEffect, createSignal, For, onCleanup } from "solid-js";
 import MangaVerticalCard from "./MangaVerticalCard";
 
 export default function Carousel(props: any) {
-    const BATCH_SIZE = 5;
+    const BATCH_SIZE = 10;
     const [visibleCount, setVisibleCount] = createSignal(BATCH_SIZE);
     const visibleEntries = () => props.entries.slice(0, visibleCount());
     

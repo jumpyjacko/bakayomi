@@ -16,19 +16,6 @@ export default function MangaVerticalCard(props) {
     const [type, setType] = createSignal("");
     
     onMount(async () => {
-        // const AniListCover = props.covers.find(c => c.name === "AniList Cover");
-        // const cover = props.series.covers[0].cover_image;
-        //
-        // if (typeof(cover) === "string" && cover.startsWith("http")) {
-        //     setCover(cover);
-        // } else {
-        //     const coverUri = await toBlobUrl(cover)
-        //         .catch(() => {
-        //             console.log("no permissions");
-        //         });
-        //     setCover(coverUri);
-        // }
-
         let cover;
         const localCovers: Cover[] = props.series.covers.filter((c) => c.local);
         if (localCovers.length === 0) {
@@ -57,10 +44,10 @@ export default function MangaVerticalCard(props) {
     function navigateTo() {
         if (document.startViewTransition) {
             document.startViewTransition(() => {
-                navigate(`series/${title()}`);
+                navigate(`series/${encodeURIComponent(title())}`);
             });
         } else {
-            navigate(`series/${title()}`);
+            navigate(`series/${encodeURIComponent(title())}`);
         }
     }
     

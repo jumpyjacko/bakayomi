@@ -4,7 +4,7 @@ export default function ChapterCard(props) {
     const navigate = useNavigate();
     
     return (
-        <button onclick={() => navigate(`/read/${props.seriesTitle}/${props.title}`)}
+        <button onclick={() => navigate(`/read/${encodeURIComponent(props.seriesTitle)}/${encodeURIComponent(props.title)}`)}
         class="
         w-full flex flex-row p-2 rounded-[8px]
         bg-surface text-text shadow-1

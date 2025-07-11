@@ -61,10 +61,10 @@ export default function Banner(props: any) {
     const handleViewDetails = () => {
         if (document.startViewTransition) {
             document.startViewTransition(() => {
-                navigate(`series/${currentBanner()?.title}`);
+                navigate(`series/${encodeURIComponent(currentBanner()?.title)}`);
             });
         } else {
-            navigate(`series/${currentBanner()?.title}`);
+            navigate(`series/${encodeURIComponent(currentBanner()?.title)}`);
         }
     }
     
