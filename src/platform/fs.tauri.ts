@@ -112,7 +112,7 @@ async function createCoversList(path: string): Promise<Cover[]> {
     for (const e of coverEntries) {
         if (e.isFile) {
             const coverPath = await join(path, e.name);
-            covers.push({ name: e.name, cover_image: coverPath });
+            covers.push({ name: e.name, cover_image: coverPath, local: true });
         }
     }
 

@@ -136,7 +136,6 @@ export async function AniListToLocalMetadata(seriesList: Series[]): Promise<Seri
             updatedSeries.al_rating = res.averageScore;
             updatedSeries.description = res.description.replace(/<br\s*\/?>/gi, '');
             updatedSeries.status = res.status;
-            updatedSeries.covers.push({ name: "AniList Cover", cover_image: res.coverImage.extraLarge})
             updatedSeries.banner = res.bannerImage;
             updatedSeries.start_year = res.startDate.year;
             updatedSeries.end_year = res.endDate.year;
@@ -156,6 +155,10 @@ export async function AniListToLocalMetadata(seriesList: Series[]): Promise<Seri
                     }
                 }
             }
+            
+            updatedSeries.covers.push({ name: "AniList Cover (XL)", cover_image: res.coverImage.extraLarge, local: false})
+            updatedSeries.covers.push({ name: "AniList Cover (LG)", cover_image: res.coverImage.large, local: false})
+            updatedSeries.covers.push({ name: "AniList Cover (MD)", cover_image: res.coverImage.medium, local: false})
            
             updatedSeriesList.push(updatedSeries);
         } catch (error) {

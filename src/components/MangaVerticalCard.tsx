@@ -4,6 +4,7 @@ import i18next from "i18next";
 
 import { toBlobUrl } from "../platform/fs";
 import { convertLngToType } from "../utils/utils";
+import { Cover } from "../models/Cover";
 
 export default function MangaVerticalCard(props) {
     const navigate = useNavigate();
@@ -16,7 +17,26 @@ export default function MangaVerticalCard(props) {
     
     onMount(async () => {
         // const AniListCover = props.covers.find(c => c.name === "AniList Cover");
-        const cover = props.series.covers[0].cover_image;
+        // const cover = props.series.covers[0].cover_image;
+        //
+        // if (typeof(cover) === "string" && cover.startsWith("http")) {
+        //     setCover(cover);
+        // } else {
+        //     const coverUri = await toBlobUrl(cover)
+        //         .catch(() => {
+        //             console.log("no permissions");
+        //         });
+        //     setCover(coverUri);
+        // }
+
+        let cover;
+        const localCovers: Cover[] = props.series.covers.filter((c) => c.local);
+        if (localCovers.length === 0) {
+            var find = props.series.covers.find((c) => c.name === "AniList Cover (LG)");
+            cover = find?.cover_image;
+        } else {
+            cover = localCovers[0].cover_image; // TODO: make this user selectable
+        }
 
         if (typeof(cover) === "string" && cover.startsWith("http")) {
             setCover(cover);
@@ -27,7 +47,7 @@ export default function MangaVerticalCard(props) {
                 });
             setCover(coverUri);
         }
-
+        
         setTitle(props.series.title);
         setAuthor(props.series.staff.join(", "));
         setType(convertLngToType(props.series.original_lang));

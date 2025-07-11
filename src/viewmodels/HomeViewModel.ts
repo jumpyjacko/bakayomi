@@ -85,7 +85,9 @@ export function createHomeViewModel() {
                     }
                 }
 
-                series.covers.push({ name: "AniList Cover", cover_image: res.coverImage.extraLarge });
+                series.covers.push({ name: "AniList Cover (XL)", cover_image: res.coverImage.extraLarge, local: false});
+                series.covers.push({ name: "AniList Cover (LG)", cover_image: res.coverImage.large, local: false});
+                series.covers.push({ name: "AniList Cover (MD)", cover_image: res.coverImage.medium, local: false});
                 
                 addItem<Series>("trending_series", series);
             }

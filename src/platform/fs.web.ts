@@ -94,7 +94,7 @@ async function createCoversList(handle: FileSystemDirectoryHandle): Promise<Cove
 
     for await (const [name, h] of handle.entries() as AsyncIterable<[string, FileSystemHandle]>) {
         if (h.kind === "file") {
-            covers.push({ name, cover_image: h as FileSystemFileHandle});
+            covers.push({ name, cover_image: h as FileSystemFileHandle, local: true});
         }
     }
 

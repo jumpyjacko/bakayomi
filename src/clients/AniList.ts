@@ -49,6 +49,8 @@ export async function searchMangaSeriesByName(search: string) {
             bannerImage
             coverImage {
                 extraLarge
+                large
+                medium
             }
             staff {
                 nodes {
@@ -96,6 +98,8 @@ export async function searchMangaSeriesById(id: number) {
             bannerImage
             coverImage {
                 extraLarge
+                large
+                medium
             }
             staff {
                 nodes {
@@ -152,6 +156,8 @@ export async function getTrendingSeries() {
                 bannerImage
                 coverImage {
                     extraLarge
+                    large
+                    medium
                 }
                 staff {
                     nodes {
