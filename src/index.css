@@ -199,24 +199,24 @@ button {
     cursor: pointer;
 }
 
-::view-transition-old(main-content),
-::view-transition-new(main-content) {
-  animation-duration: 300ms;
-  animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
-}
-
-::view-transition-new(main-content) {
-  animation-name: slide-up;
-}
-
-@keyframes slide-up {
-  from {
-    transform: translateY(100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
+::view-transition-old(main-content) {
     opacity: 1;
-  }
+}
+
+::view-transition-new(main-content) {
+    animation-duration: 300ms;
+    animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
+    animation-name: slide;
+}
+
+@keyframes slide {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
