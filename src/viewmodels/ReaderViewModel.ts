@@ -3,50 +3,41 @@ import { useParams } from "@solidjs/router";
 
 import { isTauri } from "@tauri-apps/api/core";
 
-import { getItem } from "../db/db";
 import { Volume } from "../models/Volume";
 import { Library } from "../models/Library";
 import { Series } from "../models/Series";
+import { Page } from "../models/Page";
+
 import { getChapterPages, verifyPermission } from "../platform/fs";
+import { getItem } from "../db/db";
 
 export function createReaderViewModel() {
     const params = useParams();
 
     const [loaded, setLoaded] = createSignal(false);
-    const [pageList, setPageList] = createSignal([]);
+    const [pageList, setPageList] = createSignal<Page[]>([]);
 
     onMount(async () => {
         const tauri = isTauri();
 
         if (!tauri) {
             const libraryHandle = await getItem<Library>("library_handle", "root");
-            await verifyPermission(libraryHandle.handle);
+            await verifyPermission(libraryHandle?.handle);
         }
 
-        const series = await getItem<Series>(
-            "local_library",
-            decodeURIComponent(params.title),
-        );
+        const seriesName = decodeURIComponent(params.series);
+        const volumeName = decodeURIComponent(params.volume);
+        const chapterName = decodeURIComponent(params.chapter);
 
-        if (series && series.volumes.length === 1) {
-            const chapterName = decodeURIComponent(params.chapter);
+        const series = await getItem<Series>("local_library", seriesName);
+        const volume = series?.volumes?.find((v) => v.title === volumeName);
+        const chapter = volume?.chapters.find((c) => c.title === chapterName);
 
-            const volume: Volume = series.volumes[0];
-            const chapter = volume.chapters.find(
-                (ch) => ch.title === chapterName,
-            );
+        const pages: Page[] = await getChapterPages(chapter?.handle);
+        pages.sort((a, b) => a.name.localeCompare(b.name));
 
-            if (chapter === undefined) {
-                // TODO: handle no chapters
-            }
-
-            const pages = await getChapterPages(chapter.handle);
-
-            pages.sort((a, b) => a.name.localeCompare(b.name));
-
-            setPageList(pages);
-            setLoaded(true);
-        }
+        setPageList(pages);
+        setLoaded(true);
     });
 
     return {

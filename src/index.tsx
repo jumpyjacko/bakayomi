@@ -51,7 +51,7 @@ render(() => {
             <Route path="/updates" component={UpdatesView} />
             <Route path="/settings" component={SettingsView} />
         </Route>
-        <Route path="/read/:title/:chapter" component={ReaderView} />
+        <Route path="/read/:series/:volume/:chapter" component={ReaderView} />
         </Router>
         </>
     );

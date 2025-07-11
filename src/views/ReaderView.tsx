@@ -8,13 +8,11 @@ export default function ReaderView() {
     return (
         <>
         <div class="flex flex-col min-h-screen justify-center items-center">
-        <Show when={vm.loaded} fallback="canvas goes here">
-            <For each={vm.pageList()} fallback="loading...">
-                {(item) =>
-                    <img src={item.uri} />
-                }
-            </For>
-        </Show>
+        <For each={vm.pageList()} fallback="loading...">
+            {(item) =>
+                <img src={item.uri} />
+            }
+        </For>
         </div>
         </>
     )

@@ -88,7 +88,7 @@ async function constructSeries(path: string, parentHandle: DirEntry): Promise<Se
         orphanedChapterList.sort((a, b) => a.title.localeCompare(b.title));
         
         const dummyVolume: Volume = {
-            title: "Orphaned Chapters",
+            title: "No Volume",
             chapter_count: orphanedChapterList.length,
             chapters: orphanedChapterList,
         };
