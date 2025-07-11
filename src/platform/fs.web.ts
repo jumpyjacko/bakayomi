@@ -85,6 +85,7 @@ async function constructSeries(handle: FileSystemDirectoryHandle): Promise<Serie
         chapter_count += vol.chapter_count;
     }
 
+    volumes.sort((a, b) => a.title.localeCompare(b.title));
 
     return { title: handle.name, volumes, covers, staff, chapter_count };
 }

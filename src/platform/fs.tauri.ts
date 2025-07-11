@@ -100,6 +100,8 @@ async function constructSeries(path: string, parentHandle: DirEntry): Promise<Se
     for (const vol of volumes) {
         chapter_count += vol.chapter_count;
     }
+    
+    volumes.sort((a, b) => a.title.localeCompare(b.title));
 
     return { title: parentHandle.name, volumes, covers, staff, chapter_count };
 }
