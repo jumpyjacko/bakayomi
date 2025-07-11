@@ -76,7 +76,12 @@ export default function SeriesView() {
                 </div>
             </div>
             <div class="flex flex-col-reverse flex-1 px-8 mt-8 xl:mt-[310px] h-fit justify-end">
-            <For each={vm.series().volumes}>
+            <For each={vm.series().volumes} fallback={
+                <>
+                <p class="pl-2"><i>{i18next.t("series_v:noSourceDesc")}</i></p>
+                <VolumeSeparator title={i18next.t("series_v:noSource")} />
+                </>
+            }>
             {(volume) => (
                 <div>
                 <VolumeSeparator title={volume.title}/>

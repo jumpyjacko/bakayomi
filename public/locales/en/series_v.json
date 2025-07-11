@@ -1,5 +1,8 @@
 {
     "published": "Published",
     "description": "Synopsis",
-    "noSpecifiedVolume": "< No Volume >"
+    "noSpecifiedVolume": "< No Volume >",
+    
+    "noSource": "No Chapters Found",
+    "noSourceDesc": "Try adding a source?"
 }
