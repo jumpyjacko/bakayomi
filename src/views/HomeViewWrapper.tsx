@@ -76,7 +76,7 @@ export default function HomeViewWrapper(props) {
                 </button>
                 </div>
             </div>
-            <div class="flex-1 mb-20 min-w-0 relative md:h-screen md:overflow-y-auto">
+            <div class="flex-1 mb-20 md:mb-0 min-w-0 relative md:h-screen md:overflow-y-auto">
                 {props.children}
             </div>
         </div>
