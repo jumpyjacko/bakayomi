@@ -101,11 +101,15 @@ export async function softRefreshLibrary(refreshIndicator) {
 
     const existingTitles = new Set(oldLibrary.map(item => item.title));
 
+    // notNewTitles -> new versions of previously existing existing
+    // updated -> individual series of above
+    // old -> individual series of previous versions (contains metadata)
     const notNewTitles = newLibrary.filter(item => existingTitles.has(item.title));
     for (let updated of notNewTitles) {
         let old = oldLibrary.find(s => s.title === updated.title);
         old.volumes = updated.volumes;
         old.covers = [...new Set([...old.covers, ...updated.covers])];
+        old.chapter_count = updated.chapter_count;
 
         putItem<Series>("local_library", old)
             .then(result => {
