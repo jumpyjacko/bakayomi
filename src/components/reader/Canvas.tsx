@@ -2,9 +2,8 @@ import { createEffect, onCleanup, onMount } from "solid-js";
 import { Point } from "../../utils/point";
 
 export default function Canvas(props) {
-    let canvasRef!: HTMLCanvasElement;
-
-    const image = new Image();
+    let canvas!: HTMLCanvasElement;
+    let image!: HTMLImageElement;
 
     let scale: number = 1;
     let translateX: number = 0;
@@ -12,10 +11,10 @@ export default function Canvas(props) {
     
     function setupCanvas() {
         const ratio = window.devicePixelRatio || 1;
-        const ctx = canvasRef.getContext("2d");
+        const ctx = canvas.getContext("2d");
         
-        canvasRef.width = canvasRef.clientWidth * ratio;
-        canvasRef.height = canvasRef.clientHeight * ratio;
+        canvas.width = canvas.clientWidth * ratio;
+        canvas.height = canvas.clientHeight * ratio;
         
         if (ctx) {
             ctx.scale(ratio, ratio);
@@ -23,19 +22,20 @@ export default function Canvas(props) {
     }
 
     function drawImage() {
-        const ctx = canvasRef.getContext("2d");
-        ctx?.clearRect(0, 0, canvasRef.width, canvasRef.height);
+        const ctx = canvas.getContext("2d");
+        ctx?.clearRect(0, 0, canvas.width, canvas.height);
 
-        const canvasCenter: Point = new Point(canvasRef.width / 2, canvasRef.height / 2);
+        const canvasCenter: Point = new Point(canvas.width / 2, canvas.height / 2);
         const imageCenter: Point = new Point(image.width / 2, image.height / 2);
-
+        
+        const imageSize: Point = new Point(image.clientWidth * scale, image.clientHeight * scale);
         const imagePos = canvasCenter.subtract(imageCenter);
 
-        ctx?.drawImage(image, imagePos.x, imagePos.y, image.width * scale, image.height * scale);
+        ctx?.drawImage(image, imagePos.x, imagePos.y, imageSize.x, imageSize.y);
     }
 
     createEffect(() => {
-        image.src = props.src;
+        image.src = props.src
 
         image.onload = () => {
             drawImage();
@@ -68,7 +68,8 @@ export default function Canvas(props) {
     
     return (
         <>
-        <canvas ref={canvasRef} class="absolute w-screen h-screen block top-0 left-0 z-0" />
+        <canvas ref={canvas} class="absolute w-screen h-screen block top-0 left-0 z-0" />
+        <img ref={image} class="invisible w-auto h-auto max-w-screen max-h-screen" />
         </>
     );
 }
