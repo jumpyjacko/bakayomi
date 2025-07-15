@@ -1,4 +1,4 @@
-import { createSignal, onMount } from "solid-js";
+import { createEffect, createSignal, onMount } from "solid-js";
 import { useParams } from "@solidjs/router";
 
 import { isTauri } from "@tauri-apps/api/core";
@@ -15,6 +15,7 @@ export function createReaderViewModel() {
     const params = useParams();
 
     const [pageList, setPageList] = createSignal<Page[]>([]);
+    const [pageNumber, setPageNumber] = createSignal(0);
     const [currentPage, setCurrentPage] = createSignal<Page>();
 
     onMount(async () => {
@@ -37,11 +38,30 @@ export function createReaderViewModel() {
         pages.sort((a, b) => a.name.localeCompare(b.name));
 
         setPageList(pages);
-        setCurrentPage(pageList()[0]);
+        setCurrentPage(pageList()[pageNumber()]);
     });
 
+    createEffect(() => {
+        const list = pageList();
+        const num = pageNumber();
+        setCurrentPage(list[num]);
+
+        console.log(num);
+    });
+
+    function nextPage() {
+        setPageNumber((last) => Math.min(last + 1, pageList().length - 1));
+    }
+
+    function prevPage() {
+        setPageNumber((last) => Math.max(last - 1, 0));
+    }
+    
     return {
         pageList,
         currentPage,
+
+        nextPage,
+        prevPage,
     };
 }

@@ -10,7 +10,7 @@ export default function ReaderView() {
         <>
         <div class="flex flex-col min-h-screen justify-center items-center">
         <Show when={vm.currentPage()}>
-            <Canvas src={vm.currentPage()?.uri} />
+            <Canvas src={vm.currentPage()?.uri} vm={vm} />
         </Show>
         </div>
         </>

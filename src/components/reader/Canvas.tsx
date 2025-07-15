@@ -13,7 +13,7 @@ export default function Canvas(props) {
     let scale: number = 1;
     let translation: Point = new Point(0, 0);
     let lastTranslation: Point = new Point(0, 0);
-    
+
     function setupCanvas() {
         const ratio = window.devicePixelRatio || 1;
         const ctx = canvas.getContext("2d");
@@ -64,6 +64,10 @@ export default function Canvas(props) {
         };
 
         const mouseDown = (e: MouseEvent) => {
+            if (e.button === 2) {
+                return;
+            }
+            
             isMouseDown = true;
             
             lastTranslation = Object.assign({}, translation);
@@ -71,13 +75,13 @@ export default function Canvas(props) {
             mDownPos.x = e.clientX;
             mDownPos.y = e.clientY;
 
-            mDownPos = mDownPos.subtract(lastTranslation);
+            // mDownPos = mDownPos.subtract(lastTranslation);
         };
 
         const mouseMove = (e: MouseEvent) => {
             if (isMouseDown) {
-                translation.x = e.clientX - mDownPos.x;
-                translation.y = e.clientY - mDownPos.y;
+                translation.x = e.clientX - (mDownPos.x - lastTranslation.x);
+                translation.y = e.clientY - (mDownPos.y - lastTranslation.y);
 
                 drawImage();
             }
@@ -85,6 +89,12 @@ export default function Canvas(props) {
 
         const mouseUp = (e: MouseEvent) => {
             isMouseDown = false;
+            mUpPos.x = e.clientX;
+            mUpPos.y = e.clientY;
+
+            if (mDownPos.distance(mUpPos) < 1) {
+                props.vm.nextPage();
+            }
         };
         
         window.addEventListener("wheel", wheelHandler, { passive: false });
