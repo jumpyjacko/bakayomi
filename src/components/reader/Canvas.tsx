@@ -22,7 +22,7 @@ export default function Canvas(props) {
         const ctx = canvasRef.getContext("2d");
         ctx?.clearRect(0, 0, canvasRef.width, canvasRef.height);
 
-        ctx?.drawImage(imageRef, 0, 0, imageRef.width * scale, imageRef.height * scale);
+        ctx?.drawImage(imageRef, 0, 0, imageRef.clientWidth * scale, imageRef.clientHeight * scale);
     }
 
     createEffect(() => {
@@ -60,7 +60,7 @@ export default function Canvas(props) {
     return (
         <>
         <canvas ref={canvasRef} class="absolute w-screen h-screen block top-0 left-0 z-0" />
-        <img ref={imageRef} src={props.src} class="hidden max-h-screen" />
+        <img ref={imageRef} src={props.src} class="invisible h-screen" />
         </>
     );
 }
