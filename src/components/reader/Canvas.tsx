@@ -60,7 +60,7 @@ export default function Canvas(props) {
     return (
         <>
         <canvas ref={canvasRef} class="absolute w-screen h-screen block top-0 left-0 z-0" />
-        <img ref={imageRef} src={props.src} class="invisible h-screen" />
+        <img ref={imageRef} src={props.src} class="invisible w-auto h-auto max-w-screen max-h-screen" />
         </>
     );
 }
