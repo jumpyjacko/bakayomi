@@ -14,8 +14,8 @@ import { getItem } from "../db/db";
 export function createReaderViewModel() {
     const params = useParams();
 
-    const [loaded, setLoaded] = createSignal(false);
     const [pageList, setPageList] = createSignal<Page[]>([]);
+    const [currentPage, setCurrentPage] = createSignal<Page>();
 
     onMount(async () => {
         const tauri = isTauri();
@@ -37,11 +37,11 @@ export function createReaderViewModel() {
         pages.sort((a, b) => a.name.localeCompare(b.name));
 
         setPageList(pages);
-        setLoaded(true);
+        setCurrentPage(pageList()[0]);
     });
 
     return {
-        loaded,
         pageList,
+        currentPage,
     };
 }

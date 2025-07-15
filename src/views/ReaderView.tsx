@@ -1,6 +1,7 @@
 import { For, Show } from "solid-js";
 
 import { createReaderViewModel } from "../viewmodels/ReaderViewModel";
+import Canvas from "../components/reader/Canvas";
 
 export default function ReaderView() {
     const vm = createReaderViewModel();
@@ -8,11 +9,9 @@ export default function ReaderView() {
     return (
         <>
         <div class="flex flex-col min-h-screen justify-center items-center">
-        <For each={vm.pageList()} fallback="loading...">
-            {(item) =>
-                <img src={item.uri} />
-            }
-        </For>
+        <Show when={vm.currentPage()}>
+            <Canvas src={vm.currentPage()?.uri} />
+        </Show>
         </div>
         </>
     )
