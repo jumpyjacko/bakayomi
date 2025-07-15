@@ -5,9 +5,14 @@ export default function Canvas(props) {
     let canvas!: HTMLCanvasElement;
     let image!: HTMLImageElement;
 
+    let isMouseDown: boolean = false;
+    
+    let mDownPos: Point = new Point(0, 0);
+    let mUpPos: Point = new Point(0, 0);
+    
     let scale: number = 1;
-    let translateX: number = 0;
-    let translateY: number = 0;
+    let translation: Point = new Point(0, 0);
+    let lastTranslation: Point = new Point(0, 0);
     
     function setupCanvas() {
         const ratio = window.devicePixelRatio || 1;
@@ -18,6 +23,8 @@ export default function Canvas(props) {
         
         if (ctx) {
             ctx.scale(ratio, ratio);
+            ctx.imageSmoothingEnabled = true;
+            ctx.imageSmoothingQuality = 'high';
         }
     }
 
@@ -26,10 +33,10 @@ export default function Canvas(props) {
         ctx?.clearRect(0, 0, canvas.width, canvas.height);
 
         const canvasCenter: Point = new Point(canvas.width / 2, canvas.height / 2);
-        const imageCenter: Point = new Point(image.width / 2, image.height / 2);
+        const imageCenter: Point = new Point(image.clientWidth / 2, image.clientHeight / 2);
         
         const imageSize: Point = new Point(image.clientWidth * scale, image.clientHeight * scale);
-        const imagePos = canvasCenter.subtract(imageCenter);
+        let imagePos = canvasCenter.subtract(imageCenter).add(translation);
 
         ctx?.drawImage(image, imagePos.x, imagePos.y, imageSize.x, imageSize.y);
     }
@@ -55,14 +62,44 @@ export default function Canvas(props) {
             scale *= factor;
             drawImage();
         };
-        window.addEventListener("wheel", wheelHandler, { passive: false });
 
+        const mouseDown = (e: MouseEvent) => {
+            isMouseDown = true;
+            
+            lastTranslation = Object.assign({}, translation);
+            
+            mDownPos.x = e.clientX;
+            mDownPos.y = e.clientY;
+
+            mDownPos = mDownPos.subtract(lastTranslation);
+        };
+
+        const mouseMove = (e: MouseEvent) => {
+            if (isMouseDown) {
+                translation.x = e.clientX - mDownPos.x;
+                translation.y = e.clientY - mDownPos.y;
+
+                drawImage();
+            }
+        }
+
+        const mouseUp = (e: MouseEvent) => {
+            isMouseDown = false;
+        };
+        
+        window.addEventListener("wheel", wheelHandler, { passive: false });
+        window.addEventListener("mousedown", mouseDown);
+        window.addEventListener("mousemove", mouseMove);
+        window.addEventListener("mouseup", mouseUp);
         
         onCleanup(() => {
             window.removeEventListener("resize", setupCanvas);
             window.removeEventListener("resize", drawImage);
 
             window.removeEventListener("wheel", wheelHandler);
+            window.removeEventListener("mousedown", mouseDown);
+            window.removeEventListener("mousemove", mouseMove);
+            window.removeEventListener("mouseup", mouseUp);
         });
     });
     
