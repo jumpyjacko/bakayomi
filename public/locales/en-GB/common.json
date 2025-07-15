@@ -1,0 +1,23 @@
+{
+    "intlNumber": "{{val, number}}",
+    
+    "chapter_one": "Chapter",
+    "chapter_other": "Chapters",
+    "chapterWithCount_one": "{{count, number}} Chapter",
+    "chapterWithCount_other": "{{count, number}} Chapters",
+    
+    "statusFinished": "Publishing Finished",
+    "statusReleasing": "Currently Publishing",
+    "statusCancelled": "Cancelled",
+    "statusHiatus": "Hiatus",
+    "statusNotReleased": "Not Released",
+
+    "nativeComic": "Comic",
+    "japaneseComic": "Manga",
+    "chineseComic": "Manhua",
+    "koreanComic": "Manhwa",
+
+    "startReading": "Start Reading",
+    "continueReading": "Continue Reading",
+    "details": "View Details"
+}
