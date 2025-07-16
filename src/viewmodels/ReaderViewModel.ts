@@ -75,20 +75,51 @@ export function createReaderViewModel() {
         navigate(`/read/${series!.title}/${volume.title}/${chapter.title}`);
         
         const pages: Page[] = await getChapterPages(chapter?.handle);
+        pages.sort((a, b) => a.name.localeCompare(b.name));
         setPageList(pages);
         setPageNumber(0);
+        setCurrentPage(pageList()[pageNumber()]);
+    }
+
+    async function prevChapter() {
+        if (chapterIdx > 0) {
+            chapterIdx--;
+        } else if (volumeIdx > 0) {
+            volumeIdx--;
+            
+            volume = series!.volumes![volumeIdx];
+            chapterIdx = volume.chapter_count - 1;
+        } else {
+            // TODO: show a "No previous chapters" screen
+            return;
+        }
+        
+        chapter = volume.chapters[chapterIdx];
+
+        navigate(`/read/${series!.title}/${volume.title}/${chapter.title}`);
+        
+        const pages: Page[] = await getChapterPages(chapter?.handle);
+        pages.sort((a, b) => a.name.localeCompare(b.name));
+        setPageList(pages);
+        setPageNumber(pages.length - 1);
         setCurrentPage(pageList()[pageNumber()]);
     }
 
     function nextPage() {
         if (pageNumber() === pageList().length - 1) {
             nextChapter();
+            return;
         }
         
         setPageNumber((last) => Math.min(last + 1, pageList().length - 1));
     }
 
     function prevPage() {
+        if (pageNumber() === 0) {
+            prevChapter();
+            return;
+        }
+        
         setPageNumber((last) => Math.max(last - 1, 0));
     }
     

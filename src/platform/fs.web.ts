@@ -122,7 +122,7 @@ async function constructVolume(handle: FileSystemDirectoryHandle): Promise<Volum
 async function constructChapter(handle: FileSystemDirectoryHandle): Promise<Chapter> {
     const pages = await handle.entries();
 
-    return { title: handle.name, downloaded: true, page_count: pages.length, handle };
+    return { title: handle.name, downloaded: true, handle };
 }
 
 export async function getChapterPages(handle: FileSystemDirectoryHandle): Promise<Page[]> {

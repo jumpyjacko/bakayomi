@@ -144,7 +144,7 @@ async function constructVolume(path: string, parentHandle: DirEntry): Promise<Vo
 async function constructChapter(path: string, parentHandle: DirEntry): Promise<Chapter> {
     const chapterEntries = await readDir(path);
 
-    return { title: parentHandle.name, downloaded: true, page_count: chapterEntries.length, handle: path };
+    return { title: parentHandle.name, downloaded: true, handle: path };
 }
 
 export async function getChapterPages(path: string): Promise<Page[]> {
