@@ -73,8 +73,10 @@ export function createReaderViewModel() {
         chapter = volume.chapters[chapterIdx];
 
         navigate(`/read/${series!.title}/${volume.title}/${chapter.title}`);
+        
         const pages: Page[] = await getChapterPages(chapter?.handle);
         setPageList(pages);
+        setPageNumber(0);
         setCurrentPage(pageList()[pageNumber()]);
     }
 
