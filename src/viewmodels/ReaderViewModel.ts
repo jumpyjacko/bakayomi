@@ -45,8 +45,6 @@ export function createReaderViewModel() {
         const list = pageList();
         const num = pageNumber();
         setCurrentPage(list[num]);
-
-        console.log(num);
     });
 
     function nextPage() {
@@ -57,11 +55,22 @@ export function createReaderViewModel() {
         setPageNumber((last) => Math.max(last - 1, 0));
     }
     
+    function firstPage() {
+        setPageNumber(0);
+    }
+
+    function lastPage() {
+        setPageNumber(pageList().length - 1);
+    }
+    
     return {
         pageList,
+        pageNumber,
         currentPage,
 
         nextPage,
         prevPage,
+        firstPage,
+        lastPage,
     };
 }

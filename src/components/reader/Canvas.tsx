@@ -92,7 +92,9 @@ export default function Canvas(props) {
             mUpPos.x = e.clientX;
             mUpPos.y = e.clientY;
 
-            if (mDownPos.distance(mUpPos) < 1) {
+            if (e.target !== canvas) return;
+
+            if (mDownPos.distance(mUpPos) < 5) {
                 if (e.clientX < canvas.width / 2) {
                     props.vm.nextPage();
                 } else {

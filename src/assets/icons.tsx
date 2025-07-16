@@ -264,3 +264,150 @@ export function SiMyAnimeList(props) {
         </svg>
     );
 }
+
+export function OcArrowleft3(props) {
+    return (
+        <svg
+        fill="currentColor"
+        stroke-width="0"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        style="overflow: visible; color: currentcolor;"
+        height="1em"
+        width="1em"
+        >
+        <path d="M10.78 19.03a.75.75 0 0 1-1.06 0l-6.25-6.25a.75.75 0 0 1 0-1.06l6.25-6.25a.749.749 0 0 1 1.275.326.749.749 0 0 1-.215.734L5.81 11.5h14.44a.75.75 0 0 1 0 1.5H5.81l4.97 4.97a.75.75 0 0 1 0 1.06Z"></path>
+        </svg>
+    );
+}
+
+export function OcArrowright3(props) {
+    return (
+        <svg
+        fill="currentColor"
+        stroke-width="0"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        style="overflow: visible; color: currentcolor;"
+        height="1em"
+        width="1em"
+        >
+        <path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.749.749 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path>
+        </svg>
+    );
+}
+
+export function OcMovetoend3(props) {
+    return (
+        <svg
+        fill="currentColor"
+        stroke-width="0"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        style="overflow: visible; color: currentcolor;"
+        height="1em"
+        width="1em"
+        >
+        <path d="M11.22 5.22a.749.749 0 0 1 1.06 0l6.25 6.25a.749.749 0 0 1 0 1.06l-6.25 6.25a.749.749 0 1 1-1.06-1.06l4.969-4.97H1.75a.75.75 0 0 1 0-1.5h14.439L11.22 6.28a.749.749 0 0 1 0-1.06Zm10.03-1.47a.75.75 0 0 1 .75.75v15a.75.75 0 0 1-1.5 0v-15a.75.75 0 0 1 .75-.75Z"></path>
+        </svg>
+    );
+}
+
+export function OcMovetostart3(props) {
+    return (
+        <svg
+        fill="currentColor"
+        stroke-width="0"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        style="overflow: visible; color: currentcolor;"
+        height="1em"
+        width="1em"
+        >
+        <path d="M12.78 18.78a.749.749 0 0 1-1.06 0l-6.25-6.25a.749.749 0 0 1 0-1.06l6.25-6.25a.749.749 0 1 1 1.06 1.06l-4.969 4.97H22.25a.75.75 0 0 1 0 1.5H7.811l4.969 4.97a.749.749 0 0 1 0 1.06ZM2.75 3.75a.75.75 0 0 1 .75.75v15a.75.75 0 0 1-1.5 0v-15a.75.75 0 0 1 .75-.75Z"></path>
+        </svg>
+    );
+}
+
+export function OcScreenfull3(props) {
+    return (
+        <svg
+        fill="currentColor"
+        stroke-width="0"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        style="overflow: visible; color: currentcolor;"
+        height="1em"
+        width="1em"
+        >
+        <path d="M3.75 15a.75.75 0 0 1 .75.75v3.5c0 .138.112.25.25.25h3.5a.75.75 0 0 1 0 1.5h-3.5A1.75 1.75 0 0 1 3 19.25v-3.5a.75.75 0 0 1 .75-.75Zm16.5 0a.75.75 0 0 1 .75.75v3.5A1.75 1.75 0 0 1 19.25 21h-3.5a.75.75 0 0 1 0-1.5h3.5a.25.25 0 0 0 .25-.25v-3.5a.75.75 0 0 1 .75-.75ZM4.75 4.5a.25.25 0 0 0-.25.25v3.5a.75.75 0 0 1-1.5 0v-3.5C3 3.784 3.784 3 4.75 3h3.5a.75.75 0 0 1 0 1.5ZM15 3.75a.75.75 0 0 1 .75-.75h3.5c.966 0 1.75.784 1.75 1.75v3.5a.75.75 0 0 1-1.5 0v-3.5a.25.25 0 0 0-.25-.25h-3.5a.75.75 0 0 1-.75-.75Z"></path>
+        </svg>
+    );
+}
+
+export function OcScreennormal3(props) {
+    return (
+        <svg
+        fill="currentColor"
+        stroke-width="0"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        style="overflow: visible; color: currentcolor;"
+        height="1em"
+        width="1em"
+        >
+        <path d="M15.75 3a.75.75 0 0 1 .75.75v3.5c0 .138.112.25.25.25h3.5a.75.75 0 0 1 0 1.5h-3.5A1.75 1.75 0 0 1 15 7.25v-3.5a.75.75 0 0 1 .75-.75Zm-7.5 0a.75.75 0 0 1 .75.75v3.5A1.75 1.75 0 0 1 7.25 9h-3.5a.75.75 0 0 1 0-1.5h3.5a.25.25 0 0 0 .25-.25v-3.5A.75.75 0 0 1 8.25 3ZM3 15.75a.75.75 0 0 1 .75-.75h3.5c.966 0 1.75.784 1.75 1.75v3.5a.75.75 0 0 1-1.5 0v-3.5a.25.25 0 0 0-.25-.25h-3.5a.75.75 0 0 1-.75-.75Zm12 1c0-.966.784-1.75 1.75-1.75h3.5a.75.75 0 0 1 0 1.5h-3.5a.25.25 0 0 0-.25.25v3.5a.75.75 0 0 1-1.5 0Z"></path>
+        </svg>
+    );
+}
+
+export function OcZoomin3(props) {
+    return (
+        <svg
+        fill="currentColor"
+        stroke-width="0"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        style="overflow: visible; color: currentcolor;"
+        height="1em"
+        width="1em"
+        >
+        <path d="M10.5 5.75a.75.75 0 0 1 .75.75v3.25h3.25a.75.75 0 0 1 0 1.5h-3.25v3.25a.75.75 0 0 1-1.5 0v-3.25H6.5a.75.75 0 0 1 0-1.5h3.25V6.5a.75.75 0 0 1 .75-.75Z"></path>
+        <path d="M0 10.5C0 4.701 4.701 0 10.5 0S21 4.701 21 10.5c0 2.63-.967 5.033-2.564 6.875l4.344 4.345a.749.749 0 1 1-1.06 1.06l-4.345-4.344A10.459 10.459 0 0 1 10.5 21C4.701 21 0 16.299 0 10.5Zm10.5-9a9 9 0 0 0-9 9 9 9 0 0 0 9 9 9 9 0 0 0 9-9 9 9 0 0 0-9-9Z"></path>
+        </svg>
+    );
+}
+
+export function OcZoomout3(props) {
+    return (
+        <svg
+        fill="currentColor"
+        stroke-width="0"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        style="overflow: visible; color: currentcolor;"
+        height="1em"
+        width="1em"
+        >
+        <path d="M14.5 11.25a.75.75 0 0 0 0-1.5h-8a.75.75 0 0 0 0 1.5h8Z"></path>
+        <path d="M0 10.5C0 4.701 4.701 0 10.5 0S21 4.701 21 10.5c0 2.63-.967 5.033-2.564 6.875l4.344 4.345a.749.749 0 1 1-1.06 1.06l-4.345-4.344A10.459 10.459 0 0 1 10.5 21C4.701 21 0 16.299 0 10.5Zm10.5-9a9 9 0 0 0-9 9 9 9 0 0 0 9 9 9 9 0 0 0 9-9 9 9 0 0 0-9-9Z"></path>
+        </svg>
+    );
+}
+
+export function OcCrossreference3(props) {
+    return (
+        <svg
+        fill="currentColor"
+        stroke-width="0"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        style="overflow: visible; color: currentcolor;"
+        height="1em"
+        width="1em"
+        >
+        <path d="M16.5 2.25a.75.75 0 0 1 .75-.75h5.5a.75.75 0 0 1 .75.75v5.5a.75.75 0 0 1-1.5 0V4.06l-6.22 6.22a.75.75 0 1 1-1.06-1.06L20.94 3h-3.69a.75.75 0 0 1-.75-.75Z"></path>
+        <path d="M3.25 4a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h2.5a.75.75 0 0 1 .75.75v3.19l3.72-3.72a.75.75 0 0 1 .53-.22h10a.25.25 0 0 0 .25-.25v-6a.75.75 0 0 1 1.5 0v6a1.75 1.75 0 0 1-1.75 1.75h-9.69l-3.573 3.573A1.457 1.457 0 0 1 5 21.043V18.5H3.25a1.75 1.75 0 0 1-1.75-1.75V4.25c0-.966.784-1.75 1.75-1.75h11a.75.75 0 0 1 0 1.5h-11Z"></path>
+        </svg>
+    );
+}
