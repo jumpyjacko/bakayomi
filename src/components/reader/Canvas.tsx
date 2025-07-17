@@ -9,6 +9,8 @@ export default function Canvas(props) {
     
     let mDownPos: Point = Point.zero();
     let mUpPos: Point = Point.zero();
+
+    let lastTranslation: Point = Point.zero();
     
     function setupCanvas() {
         const ratio = window.devicePixelRatio || 1;
@@ -40,10 +42,13 @@ export default function Canvas(props) {
     createEffect(() => {
         image.src = props.src
 
+        props.vm.pageScale();
+        props.vm.pageTranslation();
+        
         image.onload = () => {
             drawImage();
         }
-    })
+    });
 
     onMount(() => {
         setupCanvas();
@@ -56,7 +61,6 @@ export default function Canvas(props) {
             const factor = e.deltaY < 0 ? 1.05 : 0.95;
 
             props.vm.setPageScale((last: number) => last * factor);
-            drawImage();
         };
 
         const mouseDown = (e: MouseEvent) => {
@@ -66,7 +70,7 @@ export default function Canvas(props) {
             
             isMouseDown = true;
             
-            props.vm.setPageLastTranslation(Object.assign({}, props.vm.pageTranslation()));
+            lastTranslation = Object.assign({}, props.vm.pageTranslation());
             
             mDownPos.x = e.clientX;
             mDownPos.y = e.clientY;
@@ -74,8 +78,8 @@ export default function Canvas(props) {
 
         const mouseMove = (e: MouseEvent) => {
             if (isMouseDown) {
-                props.vm.pageTranslation().x = e.clientX - (mDownPos.x - props.vm.pageLastTranslation().x);
-                props.vm.pageTranslation().y = e.clientY - (mDownPos.y - props.vm.pageLastTranslation().y);
+                props.vm.pageTranslation().x = e.clientX - (mDownPos.x - lastTranslation.x);
+                props.vm.pageTranslation().y = e.clientY - (mDownPos.y - lastTranslation.y);
 
                 drawImage();
             }

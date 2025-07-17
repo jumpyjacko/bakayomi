@@ -30,7 +30,6 @@ export function createReaderViewModel() {
 
     const [pageScale, setPageScale] = createSignal(1);
     const [pageTranslation, setPageTranslation] = createSignal<Point>(Point.zero());
-    const [pageLastTranslation, setPageLastTranslation] = createSignal<Point>(Point.zero());
 
     onMount(async () => {
         const tauri = isTauri();
@@ -135,6 +134,11 @@ export function createReaderViewModel() {
     function lastPage() {
         setPageNumber(pageList().length - 1);
     }
+
+    function resetTransform() {
+        setPageScale(1);
+        setPageTranslation(Point.zero());
+    }
     
     return {
         pageList,
@@ -148,10 +152,10 @@ export function createReaderViewModel() {
 
         pageScale,
         pageTranslation,
-        pageLastTranslation,
 
         setPageScale,
         setPageTranslation,
-        setPageLastTranslation,
+
+        resetTransform,
     };
 }

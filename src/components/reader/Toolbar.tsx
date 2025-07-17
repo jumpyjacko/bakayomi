@@ -1,6 +1,8 @@
 import { useNavigate, useParams } from "@solidjs/router";
-import { OcArrowleft3, OcArrowright3, OcCrossreference3, OcHome3, OcMovetoend3, OcMovetostart3, OcScreenfull3, OcScreennormal3, OcZoomin3, OcZoomout3 } from "../../assets/icons";
+import { OcArrowleft3, OcArrowright3, OcCrossreference3, OcHome3, OcMovetoend3, OcMovetostart3, OcScreenfull3, OcScreennormal3, OcSync3, OcZoomin3, OcZoomout3 } from "../../assets/icons";
 import { createSignal, Show } from "solid-js";
+import i18next from "i18next";
+import { Point } from "../../utils/point";
 
 export default function Toolbar(props) {
     const params = useParams();
@@ -30,7 +32,8 @@ export default function Toolbar(props) {
         <div class="
         flex flex-row md:flex-col gap-4
         absolute left-0 top-0 z-50
-        m-2 p-2 rounded-[8px]
+        md:w-8 m-2 p-2 rounded-[8px]
+        items-center justify-center
         bg-surface text-text
         shadow-2
         ">
@@ -42,12 +45,20 @@ export default function Toolbar(props) {
                     <OcScreennormal3 />
                 </Show>
             </button>
-            <button>
+            <button onclick={() => props.vm.setPageScale((last: number) => last * 1.05)}>
                 <OcZoomin3 />
             </button>
-            <button>
+            <button onclick={props.vm.resetTransform} class="w-max text-xs overflow-ellipsis">
+            {i18next.t("intlDecimal", { val: props.vm.pageScale()}) }x
+            </button>
+            <button onclick={() => props.vm.setPageScale((last: number) => last * 0.95)}>
                 <OcZoomout3 />
             </button>
+            <Show when={props.vm.pageScale() !== 1}>
+            <button onclick={props.vm.resetTransform}>
+                <OcSync3 />
+            </button>
+            </Show>
             <button>
                 <OcCrossreference3 />
             </button>
