@@ -2,7 +2,6 @@ import { useNavigate, useParams } from "@solidjs/router";
 import { OcArrowleft3, OcArrowright3, OcCrossreference3, OcHome3, OcMovetoend3, OcMovetostart3, OcScreenfull3, OcScreennormal3, OcSync3, OcZoomin3, OcZoomout3 } from "../../assets/icons";
 import { createSignal, Show } from "solid-js";
 import i18next from "i18next";
-import { Point } from "../../utils/point";
 
 export default function Toolbar(props) {
     const params = useParams();

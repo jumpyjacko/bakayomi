@@ -13,15 +13,15 @@ export default function Canvas(props) {
 
     let lastTranslation: Point = Point.zero();
     
+    let ratio: number = 1;
     function setupCanvas() {
-        const ratio = window.devicePixelRatio || 1;
+        ratio = window.devicePixelRatio || 1;
         const ctx = canvas.getContext("2d");
         
         canvas.width = canvas.clientWidth * ratio;
         canvas.height = canvas.clientHeight * ratio;
         
         if (ctx) {
-            ctx.scale(ratio, ratio);
             ctx.imageSmoothingEnabled = true;
             ctx.imageSmoothingQuality = 'high';
         }
@@ -31,11 +31,11 @@ export default function Canvas(props) {
         const ctx = canvas.getContext("2d");
         ctx?.clearRect(0, 0, canvas.width, canvas.height);
 
-        const canvasCenter: Point = new Point(canvas.width / 2, canvas.height / 2);
-        const imageCenter: Point = new Point(image.clientWidth / 2, image.clientHeight / 2);
+        const canvasCenter: Point = new Point(canvas.width, canvas.height).scale(1 / (2 * ratio));
+        const imageCenter: Point = new Point(image.clientWidth, image.clientHeight).scale(1 / 2);
         
-        const imageSize: Point = new Point(image.clientWidth * props.vm.pageScale(), image.clientHeight * props.vm.pageScale());
-        let imagePos = canvasCenter.subtract(imageCenter).add(props.vm.pageTranslation());
+        const imageSize: Point = new Point(image.clientWidth, image.clientHeight).scale(props.vm.pageScale()).scale(ratio);
+        let imagePos = canvasCenter.subtract(imageCenter).add(props.vm.pageTranslation()).scale(ratio);
 
         ctx?.drawImage(image, imagePos.x, imagePos.y, imageSize.x, imageSize.y);
     }
@@ -94,7 +94,7 @@ export default function Canvas(props) {
             if (e.target !== canvas) return;
 
             if (mDownPos.distance(mUpPos) < 5) {
-                if (e.clientX < canvas.width / 2) {
+                if (e.clientX * ratio < canvas.width / 2) {
                     props.vm.nextPage();
                 } else {
                     props.vm.prevPage();
@@ -120,7 +120,7 @@ export default function Canvas(props) {
     
     return (
         <>
-        <canvas ref={overlayCanvas} class="absolute w-screen h-screen block top-0 left-0 z-1" />
+        <canvas ref={overlayCanvas} class="absolute pointer-events-none w-screen h-screen block top-0 left-0 z-1" />
         <canvas ref={canvas} class="absolute w-screen h-screen block top-0 left-0 z-0" />
         <img ref={image} class="invisible w-auto h-auto max-w-screen max-h-screen" />
         </>
