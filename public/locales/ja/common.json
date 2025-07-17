@@ -1,6 +1,6 @@
 {
     "intlNumber": "{{val, numbers}}",
-    "intlDecimal": "{{val, number(minimumFractionDigits: 1)}}",
+    "intlDecimal": "{{val, number(maximumSignificantDigits: 2)}}",
     
     "chapter_one": "話",
     "chapter_other": "話",

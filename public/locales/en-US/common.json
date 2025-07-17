@@ -1,6 +1,6 @@
 {
     "intlNumber": "{{val, number}}",
-    "intlDecimal": "{{val, number(minimumFractionDigits: 1)}}",
+    "intlDecimal": "{{val, number(maximumSignificantDigits: 2)}}",
     
     "chapter_one": "Chapter",
     "chapter_other": "Chapters",
