@@ -3,6 +3,7 @@ import { Point } from "../../utils/point";
 
 export default function Canvas(props) {
     let canvas!: HTMLCanvasElement;
+    let overlayCanvas!: HTMLCanvasElement;
     let image!: HTMLImageElement;
 
     let isMouseDown: boolean = false;
@@ -119,6 +120,7 @@ export default function Canvas(props) {
     
     return (
         <>
+        <canvas ref={overlayCanvas} class="absolute w-screen h-screen block top-0 left-0 z-1" />
         <canvas ref={canvas} class="absolute w-screen h-screen block top-0 left-0 z-0" />
         <img ref={image} class="invisible w-auto h-auto max-w-screen max-h-screen" />
         </>

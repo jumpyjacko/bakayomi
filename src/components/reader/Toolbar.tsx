@@ -59,7 +59,7 @@ export default function Toolbar(props) {
                 <OcSync3 />
             </button>
             </Show>
-            <button>
+            <button onclick={props.vm.setOcrActive(true)}>
                 <OcCrossreference3 />
             </button>
             

@@ -31,6 +31,8 @@ export function createReaderViewModel() {
     const [pageScale, setPageScale] = createSignal(1);
     const [pageTranslation, setPageTranslation] = createSignal<Point>(Point.zero());
 
+    const [ocrActive, setOcrActive] = createSignal(false);
+
     onMount(async () => {
         const tauri = isTauri();
 
@@ -157,5 +159,8 @@ export function createReaderViewModel() {
         setPageTranslation,
 
         resetTransform,
+
+        ocrActive,
+        setOcrActive,
     };
 }
