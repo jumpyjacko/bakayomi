@@ -123,8 +123,7 @@ export default function Canvas(props) {
                     return;
                 }
                 
-                props.vm.pageTranslation().x = e.clientX - (mDownPos.x - lastTranslation.x);
-                props.vm.pageTranslation().y = e.clientY - (mDownPos.y - lastTranslation.y);
+                props.vm.setPageTranslation(new Point(e.clientX - (mDownPos.x - lastTranslation.x), e.clientY - (mDownPos.y - lastTranslation.y)));
 
                 drawImage();
             }
