@@ -53,6 +53,7 @@ export default function Toolbar(props) {
             <button onclick={() => props.vm.setPageScale((last: number) => last * 0.95)}>
                 <OcZoomout3 />
             </button>
+            <Show when={props.vm.pageScale() !== 1 || props.vm.pageTranslation().x !== 0 || props.vm.pageTranslation().y !== 0}>
             <button onclick={props.vm.resetTransform}>
                 <OcSync3 />
             </button>

@@ -3,7 +3,9 @@ import { Point } from "../../utils/point";
 
 export default function Canvas(props) {
     let canvas!: HTMLCanvasElement;
+    let cCtx!: CanvasRenderingContext2D;
     let overlayCanvas!: HTMLCanvasElement;
+    let oCtx!: CanvasRenderingContext2D;
     let image!: HTMLImageElement;
 
     let isMouseDown: boolean = false;
@@ -17,27 +19,26 @@ export default function Canvas(props) {
     let ratio: number = 1;
     function setupCanvas() {
         ratio = window.devicePixelRatio || 1;
-        const ctx = canvas.getContext("2d");
+        cCtx = canvas.getContext("2d", { willReadFrequently: true });
         
         canvas.width = canvas.clientWidth * ratio;
         canvas.height = canvas.clientHeight * ratio;
         
-        if (ctx) {
-            ctx.imageSmoothingEnabled = true;
-            ctx.imageSmoothingQuality = 'high';
+        if (cCtx) {
+            cCtx.imageSmoothingEnabled = true;
+            cCtx.imageSmoothingQuality = 'high';
         }
     }
 
     function setupOverlayCanvas() {
-        const ctx = overlayCanvas.getContext("2d");
+        oCtx = overlayCanvas.getContext("2d");
         overlayCanvas.width = overlayCanvas.clientWidth;
         overlayCanvas.height = overlayCanvas.clientHeight;
-        ctx?.clearRect(0, 0, overlayCanvas.width, overlayCanvas.height);
+        oCtx?.clearRect(0, 0, overlayCanvas.width, overlayCanvas.height);
     }
 
     function drawImage() {
-        const ctx = canvas.getContext("2d");
-        ctx?.clearRect(0, 0, canvas.width, canvas.height);
+        cCtx?.clearRect(0, 0, canvas.width, canvas.height);
 
         const canvasCenter: Point = new Point(canvas.width, canvas.height).scale(1 / (2 * ratio));
         const imageCenter: Point = new Point(image.clientWidth, image.clientHeight).scale(1 / 2);
@@ -45,33 +46,54 @@ export default function Canvas(props) {
         const imageSize: Point = new Point(image.clientWidth, image.clientHeight).scale(props.vm.pageScale()).scale(ratio);
         let imagePos = canvasCenter.subtract(imageCenter).add(props.vm.pageTranslation()).scale(ratio);
 
-        ctx?.drawImage(image, imagePos.x, imagePos.y, imageSize.x, imageSize.y);
+        cCtx?.drawImage(image, imagePos.x, imagePos.y, imageSize.x, imageSize.y);
     }
 
     function drawIntermediarySelectionArea() {
-        const ctx = overlayCanvas.getContext("2d");
-        ctx?.clearRect(0, 0, overlayCanvas.width, overlayCanvas.height);
+        oCtx?.clearRect(0, 0, overlayCanvas.width, overlayCanvas.height);
         
         let s = mDownPos;
         let d = mInterPos.subtract(mDownPos);
 
-        ctx.strokeStyle = "rgb(107, 179, 255)";
-        ctx?.strokeRect(s.x, s.y, d.x, d.y);
+        oCtx.strokeStyle = "rgb(107, 179, 255)";
+        oCtx?.strokeRect(s.x, s.y, d.x, d.y);
     }
 
     function drawFinalSelectionArea() {
-        const ctx = overlayCanvas.getContext("2d");
-        ctx?.clearRect(0, 0, overlayCanvas.width, overlayCanvas.height);
+        oCtx?.clearRect(0, 0, overlayCanvas.width, overlayCanvas.height);
         
         let s = mDownPos;
         let d = mUpPos.subtract(mDownPos);
 
-        ctx.fillStyle = "rgba(107, 179, 255, 0.2)";
-        ctx.fillRect(s.x, s.y, d.x, d.y);
-        ctx.strokeStyle = "rgb(107, 179, 255)";
-        ctx?.strokeRect(s.x, s.y, d.x, d.y);
+        oCtx.fillStyle = "rgba(107, 179, 255, 0.2)";
+        oCtx.fillRect(s.x, s.y, d.x, d.y);
+        oCtx.strokeStyle = "rgb(107, 179, 255)";
+        oCtx?.strokeRect(s.x, s.y, d.x, d.y);
 
         props.vm.setOcrActive(false);
+
+        captureSelectionArea(s, d);
+    }
+
+    async function captureSelectionArea(start: Point, dimensions: Point) {
+        const s: Point = start.scale(ratio);
+        const d: Point = dimensions.scale(ratio);
+
+        console.log(s, d);
+
+        const capture = cCtx?.getImageData(s.x, s.y, d.x, d.y);
+
+        const offscreen = new OffscreenCanvas(Math.abs(d.x), Math.abs(d.y));
+        const offCtx = offscreen.getContext("2d");
+
+        offCtx?.putImageData(capture, 0, 0);
+
+        const blob = await offscreen.convertToBlob();
+        
+        const url = URL.createObjectURL(blob);
+        console.log(url);
+
+        return blob;
     }
 
     createEffect(() => {
