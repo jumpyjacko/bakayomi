@@ -94,7 +94,7 @@ export function createHomeViewModel() {
         }
 
         let trending = await getAllItems<Series>("trending_series");
-        setTrendingSeries(trending);
+        setTrendingSeries([...trending]);
         createALTrendingCarousel();
         
         shuffleArray(trending);
