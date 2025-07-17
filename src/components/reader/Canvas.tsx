@@ -8,8 +8,9 @@ export default function Canvas(props) {
 
     let isMouseDown: boolean = false;
     
-    let mDownPos: Point = Point.zero();
-    let mUpPos: Point = Point.zero();
+    const mDownPos: Point = Point.zero();
+    const mUpPos: Point = Point.zero();
+    const mInterPos: Point = Point.zero();
 
     let lastTranslation: Point = Point.zero();
     
@@ -27,6 +28,13 @@ export default function Canvas(props) {
         }
     }
 
+    function setupOverlayCanvas() {
+        const ctx = overlayCanvas.getContext("2d");
+        overlayCanvas.width = overlayCanvas.clientWidth;
+        overlayCanvas.height = overlayCanvas.clientHeight;
+        ctx?.clearRect(0, 0, overlayCanvas.width, overlayCanvas.height);
+    }
+
     function drawImage() {
         const ctx = canvas.getContext("2d");
         ctx?.clearRect(0, 0, canvas.width, canvas.height);
@@ -40,6 +48,32 @@ export default function Canvas(props) {
         ctx?.drawImage(image, imagePos.x, imagePos.y, imageSize.x, imageSize.y);
     }
 
+    function drawIntermediarySelectionArea() {
+        const ctx = overlayCanvas.getContext("2d");
+        ctx?.clearRect(0, 0, overlayCanvas.width, overlayCanvas.height);
+        
+        let s = mDownPos;
+        let d = mInterPos.subtract(mDownPos);
+
+        ctx.strokeStyle = "rgb(107, 179, 255)";
+        ctx?.strokeRect(s.x, s.y, d.x, d.y);
+    }
+
+    function drawFinalSelectionArea() {
+        const ctx = overlayCanvas.getContext("2d");
+        ctx?.clearRect(0, 0, overlayCanvas.width, overlayCanvas.height);
+        
+        let s = mDownPos;
+        let d = mUpPos.subtract(mDownPos);
+
+        ctx.fillStyle = "rgba(107, 179, 255, 0.2)";
+        ctx.fillRect(s.x, s.y, d.x, d.y);
+        ctx.strokeStyle = "rgb(107, 179, 255)";
+        ctx?.strokeRect(s.x, s.y, d.x, d.y);
+
+        props.vm.setOcrActive(false);
+    }
+
     createEffect(() => {
         image.src = props.src
 
@@ -48,13 +82,16 @@ export default function Canvas(props) {
         
         image.onload = () => {
             drawImage();
+            setupOverlayCanvas();
         }
     });
 
     onMount(() => {
         setupCanvas();
+        setupOverlayCanvas();
         
         window.addEventListener("resize", setupCanvas);
+        window.addEventListener("resize", setupOverlayCanvas);
         window.addEventListener("resize", drawImage);
 
         const wheelHandler = (e: WheelEvent) => {
@@ -79,6 +116,13 @@ export default function Canvas(props) {
 
         const mouseMove = (e: MouseEvent) => {
             if (isMouseDown) {
+                if (props.vm.ocrActive()) {
+                    mInterPos.x = e.clientX;
+                    mInterPos.y = e.clientY;
+                    drawIntermediarySelectionArea();
+                    return;
+                }
+                
                 props.vm.pageTranslation().x = e.clientX - (mDownPos.x - lastTranslation.x);
                 props.vm.pageTranslation().y = e.clientY - (mDownPos.y - lastTranslation.y);
 
@@ -100,6 +144,10 @@ export default function Canvas(props) {
                     props.vm.prevPage();
                 }
             }
+
+            if (props.vm.ocrActive()) {
+                drawFinalSelectionArea();
+            }
         };
         
         window.addEventListener("wheel", wheelHandler, { passive: false });
@@ -120,7 +168,7 @@ export default function Canvas(props) {
     
     return (
         <>
-        <canvas ref={overlayCanvas} class="absolute pointer-events-none w-screen h-screen block top-0 left-0 z-1" />
+        <canvas ref={overlayCanvas} class="absolute pointer-events-none w-screen h-screen block top-0 left-0 z-10" />
         <canvas ref={canvas} class="absolute w-screen h-screen block top-0 left-0 z-0" />
         <img ref={image} class="invisible w-auto h-auto max-w-screen max-h-screen" />
         </>
