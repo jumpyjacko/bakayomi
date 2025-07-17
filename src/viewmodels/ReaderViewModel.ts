@@ -11,6 +11,7 @@ import { Page } from "../models/Page";
 
 import { getChapterPages, verifyPermission } from "../platform/fs";
 import { getItem } from "../db/db";
+import { Point } from "../utils/point";
 
 export function createReaderViewModel() {
     const params = useParams();
@@ -26,6 +27,10 @@ export function createReaderViewModel() {
     let series: Series | undefined;
     let volume: Volume;
     let chapter: Chapter;
+
+    const [pageScale, setPageScale] = createSignal(1);
+    const [pageTranslation, setPageTranslation] = createSignal<Point>(Point.zero());
+    const [pageLastTranslation, setPageLastTranslation] = createSignal<Point>(Point.zero());
 
     onMount(async () => {
         const tauri = isTauri();
@@ -140,5 +145,13 @@ export function createReaderViewModel() {
         prevPage,
         firstPage,
         lastPage,
+
+        pageScale,
+        pageTranslation,
+        pageLastTranslation,
+
+        setPageScale,
+        setPageTranslation,
+        setPageLastTranslation,
     };
 }

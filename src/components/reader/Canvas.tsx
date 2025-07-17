@@ -7,13 +7,9 @@ export default function Canvas(props) {
 
     let isMouseDown: boolean = false;
     
-    let mDownPos: Point = new Point(0, 0);
-    let mUpPos: Point = new Point(0, 0);
+    let mDownPos: Point = Point.zero();
+    let mUpPos: Point = Point.zero();
     
-    let scale: number = 1;
-    let translation: Point = new Point(0, 0);
-    let lastTranslation: Point = new Point(0, 0);
-
     function setupCanvas() {
         const ratio = window.devicePixelRatio || 1;
         const ctx = canvas.getContext("2d");
@@ -35,8 +31,8 @@ export default function Canvas(props) {
         const canvasCenter: Point = new Point(canvas.width / 2, canvas.height / 2);
         const imageCenter: Point = new Point(image.clientWidth / 2, image.clientHeight / 2);
         
-        const imageSize: Point = new Point(image.clientWidth * scale, image.clientHeight * scale);
-        let imagePos = canvasCenter.subtract(imageCenter).add(translation);
+        const imageSize: Point = new Point(image.clientWidth * props.vm.pageScale(), image.clientHeight * props.vm.pageScale());
+        let imagePos = canvasCenter.subtract(imageCenter).add(props.vm.pageTranslation());
 
         ctx?.drawImage(image, imagePos.x, imagePos.y, imageSize.x, imageSize.y);
     }
@@ -59,7 +55,7 @@ export default function Canvas(props) {
             e.preventDefault();
             const factor = e.deltaY < 0 ? 1.05 : 0.95;
 
-            scale *= factor;
+            props.vm.setPageScale((last: number) => last * factor);
             drawImage();
         };
 
@@ -70,18 +66,16 @@ export default function Canvas(props) {
             
             isMouseDown = true;
             
-            lastTranslation = Object.assign({}, translation);
+            props.vm.setPageLastTranslation(Object.assign({}, props.vm.pageTranslation()));
             
             mDownPos.x = e.clientX;
             mDownPos.y = e.clientY;
-
-            // mDownPos = mDownPos.subtract(lastTranslation);
         };
 
         const mouseMove = (e: MouseEvent) => {
             if (isMouseDown) {
-                translation.x = e.clientX - (mDownPos.x - lastTranslation.x);
-                translation.y = e.clientY - (mDownPos.y - lastTranslation.y);
+                props.vm.pageTranslation().x = e.clientX - (mDownPos.x - props.vm.pageLastTranslation().x);
+                props.vm.pageTranslation().y = e.clientY - (mDownPos.y - props.vm.pageLastTranslation().y);
 
                 drawImage();
             }

@@ -1,6 +1,10 @@
 export class Point {
     constructor(public x: number, public y: number) {}
 
+    static zero(): Point {
+        return new Point(0, 0);
+    }
+
     add(other: Point): Point {
         return new Point(this.x + other.x, this.y + other.y);
     }
