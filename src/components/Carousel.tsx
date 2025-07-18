@@ -1,14 +1,14 @@
-import { createEffect, createSignal, For, onCleanup } from "solid-js";
+import { createSignal, For, onCleanup, onMount } from "solid-js";
 import MangaVerticalCard from "./MangaVerticalCard";
 
 export default function Carousel(props: any) {
-    const BATCH_SIZE = 10;
+    const BATCH_SIZE = 7;
     const [visibleCount, setVisibleCount] = createSignal(BATCH_SIZE);
     const visibleEntries = () => props.entries.slice(0, visibleCount());
     
     let sentinelRef: HTMLDivElement;
 
-    createEffect(() => {
+    onMount(() => {
         const observer = new IntersectionObserver(([entry]) => {
             if (entry.isIntersecting) {
                 setVisibleCount((prev) => Math.min(prev + BATCH_SIZE, props.entries.length));
