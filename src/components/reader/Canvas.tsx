@@ -116,6 +116,7 @@ export default function Canvas(props) {
         window.addEventListener("resize", setupOverlayCanvas);
         window.addEventListener("resize", drawImage);
 
+        // NOTE: Mouse event handlers
         const wheelHandler = (e: WheelEvent) => {
             e.preventDefault();
             const factor = e.deltaY < 0 ? 1.05 : 0.95;
@@ -175,6 +176,40 @@ export default function Canvas(props) {
         window.addEventListener("mousedown", mouseDown);
         window.addEventListener("mousemove", mouseMove);
         window.addEventListener("mouseup", mouseUp);
+
+        // NOTE: Touch event handlers
+        const touchStart = (e: TouchEvent) => {
+            e.preventDefault();
+
+            isMouseDown = true;
+
+            lastTranslation = Object.assign({}, props.vm.pageTranslation());
+            
+            mDownPos.x = e.touches.item(0)!.clientX;
+            mDownPos.y = e.touches.item(0)!.clientY;
+        };
+        
+        const touchMove = (e: TouchEvent) => {
+            e.preventDefault();
+
+            if (isMouseDown && props.vm.pageScale() !== 1) {
+                let touchPos: Point = new Point(e.touches.item(0)!.clientX, e.touches.item(0)!.clientY);
+                
+                if (props.vm.ocrActive()) {
+                    mInterPos.x = e.touches.item(0)!.clientX;
+                    mInterPos.y = e.touches.item(0)!.clientY;
+                    drawIntermediarySelectionArea();
+                    return;
+                }
+                
+                props.vm.setPageTranslation(new Point(touchPos.x - (mDownPos.x - lastTranslation.x), touchPos.y - (mDownPos.y - lastTranslation.y)));
+
+                drawImage();
+            }
+        };
+        
+        window.addEventListener("touchstart", touchStart);
+        window.addEventListener("touchmove", touchMove, { passive: false });
         
         onCleanup(() => {
             window.removeEventListener("resize", setupCanvas);
@@ -184,6 +219,9 @@ export default function Canvas(props) {
             window.removeEventListener("mousedown", mouseDown);
             window.removeEventListener("mousemove", mouseMove);
             window.removeEventListener("mouseup", mouseUp);
+
+            window.removeEventListener("touchstart", touchStart);
+            window.removeEventListener("touchmove", touchMove);
         });
     });
     
