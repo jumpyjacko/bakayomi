@@ -9,11 +9,11 @@ export default function ReaderView() {
 
     return (
         <>
-        <div class="flex flex-col min-h-screen justify-center items-center">
+        <div class="flex flex-col min-h-full justify-center items-center">
             <Toolbar vm={vm} />
             <Show when={vm.currentPage()}>
                 <Canvas src={vm.currentPage()?.uri} vm={vm} />
-                <div class="absolute bottom-0 text-white text-lg text-border">
+                <div class="fixed bottom-0 text-white text-lg text-border">
                 {vm.pageNumber() + 1}/{vm.pageList().length}
                 </div>
             </Show>

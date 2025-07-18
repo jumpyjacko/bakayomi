@@ -189,9 +189,9 @@ export default function Canvas(props) {
     
     return (
         <>
-        <canvas ref={overlayCanvas} class="absolute pointer-events-none w-screen h-screen block top-0 left-0 z-10" />
-        <canvas ref={canvas} class="absolute w-screen h-screen block top-0 left-0 z-0" />
-        <img ref={image} class="invisible w-auto h-auto max-w-screen max-h-screen" />
+        <canvas ref={overlayCanvas} class="absolute pointer-events-none w-full h-full md:w-screen md:h-screen block top-0 left-0 z-10" />
+        <canvas ref={canvas} class="absolute w-full h-full md:w-screen md:h-screen block top-0 left-0 z-0" />
+        <img ref={image} class="invisible w-auto h-auto max-w-full max-h-full md:max-w-screen md:max-h-screen" />
         </>
     );
 }

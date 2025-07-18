@@ -30,7 +30,7 @@ export default function Toolbar(props) {
     return (
         <div class="
         flex flex-row md:flex-col gap-4
-        absolute left-0 top-0 z-50
+        fixed left-0 top-0 z-50
         md:w-8 m-2 p-2 rounded-[8px]
         items-center justify-center
         bg-surface text-text
