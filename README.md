@@ -16,10 +16,10 @@ Web: `deno task build`
 Tauri: `denot task tauri build`
 
 # Gallery
-![Home Page Wide](./screenshots/home_wide.png)
-![Series Page Wide](./screenshots/series_wide.png)
-![Reader Wide](./screenshots/read_wide.png)
+![Home Page Wide](./screenshots/home_wide.jpg)
+![Series Page Wide](./screenshots/series_wide.jpg)
+![Reader Wide](./screenshots/read_wide.jpg)
 
-<img src="./screenshots/home_thin.png" width="100">
-<img src="./screenshots/series_thin.png" width="100">
-<img src="./screenshots/read_thin.png" width="100">
+<img src="./screenshots/home_thin.jpg" width="100">
+<img src="./screenshots/series_thin.jpg" width="100">
+<img src="./screenshots/read_thin.jpg" width="100">
