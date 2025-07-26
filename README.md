@@ -20,6 +20,4 @@ Tauri: `denot task tauri build`
 ![Series Page Wide](./screenshots/series_wide.jpg)
 ![Reader Wide](./screenshots/read_wide.jpg)
 
-<img src="./screenshots/home_thin.jpg" width="100">
-<img src="./screenshots/series_thin.jpg" width="100">
-<img src="./screenshots/read_thin.jpg" width="100">
+<img src="./screenshots/home_thin.jpg" height="400"><img src="./screenshots/series_thin.jpg" height="400"><img src="./screenshots/read_thin.jpg" height="400">
