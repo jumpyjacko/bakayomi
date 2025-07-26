@@ -1,7 +1,25 @@
-# Tauri + Solid + Typescript
+# bakayomi
+A multi-platform Comic reader with built-in OCR capabilities, aimed at new and long-term language learners.
 
-This template should help get you started developing with Tauri, Solid and Typescript in Vite.
+## Development
+_Uses Deno (able to substitute with any runtime), Vite, and Tauri._
 
-## Recommended IDE Setup
+Install packages
+`npm install`
 
-- [VS Code](https://code.visualstudio.com/) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)
+### Development Server
+Start development server by running `deno task dev`
+Start Tauri development server by running `deno task tauri dev`
+
+### Building
+Web: `deno task build`
+Tauri: `denot task tauri build`
+
+# Gallery
+![Home Page Wide](./screenshots/home_wide.png)
+![Series Page Wide](./screenshots/series_wide.png)
+![Reader Wide](./screenshots/read_wide.png)
+
+![Home Page Thin](./screenshots/home_thin.png)
+![Series Page Thin](./screenshots/series_thin.png)
+![Reader Thin](./screenshots/read_thin.png)
